@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var $j = jQuery.noConflict();
+
+new GlideModal().get("dialog_loading").destroy();
+
+$j('#confirmAct').mousedown(runAction);
+$j('#cancelAct').mousedown(cancelDialog);
+
+function runAction() {
+	
+	$j('#confirmAct').prop("disabled", true);
+	$j('#cancelAct').prop("disabled", true);
+	
+	var act_sys_id = gel("action_snapshot_restore_sys_id").value + "";
+	var snapshot_uuid = gel("snapshot_uuid").value + "";
+	
+	var delete_vm_check = $j('#delete_vm_restore').is(":checked").toString();
+	
+var json_var = [{"name":"snapshot_id","value": gel("snapshot_metadata").value + '' },{"name":"delete_vm","value":delete_vm_check},{"name":"snapshot","value":""},{"name":"new_name","value":"@@{calm_random_hash}@@"}];
+	
+	
+	
+	var gajax = new GlideAjax('Run_App_Actions');
+	gajax.addParam('sysparm_name', 'runAction');
+	gajax.addParam('sysparm_actionsysid', act_sys_id + '');
+	gajax.addParam('sysparm_actionVars', JSON.stringify(json_var));
+	gajax.getXML(getResponse);
+		
+	function getResponse(response) {
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+		g_form.addInfoMessage(answer);
+		GlideModal.get().destroy();
+	}
+}
+
+function cancelDialog() {
+	GlideDialogWindow.get().destroy();
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_nuta2_nutanix_ca_Snapshot_Restore_Azure.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<j:set var="jvar_element_id" value="${JS:sysparm_sysId}"/>
+	<g:evaluate var="jvar_not" object="true">
+		var appUtil= new Nutanix_Calm_Utils();
+		var snapshot_uuid;
+		var app_id;
+		var metadata ;
+		var not = new GlideRecordSecure(appUtil.configuration.table.recoveryPoints);
+		if (not.get('${jvar_element_id}'))
+		{
+		app_id = not.parent_uuid + "";
+		snapshot_uuid = not.uuid + "";
+		metadata = not.metadata;
+		}
+		var action_snapshot_restore_sys_id = "";
+		var actGR = new GlideRecordSecure(appUtil.configuration.table.NutanixCalmAction);
+		actGR.addQuery("parent_uuid",app_id + "");
+		actGR.addQuery("type","system");
+		actGR.addQuery("name","action_restore");
+		actGR.query();
+		if(actGR.next()) {
+			action_snapshot_restore_sys_id = actGR.sys_id + "";
+		}
+		
+		action_snapshot_restore_sys_id;
+		snapshot_uuid;
+		metadata;
+	</g:evaluate>
+	
+	<input type="hidden" name="action_snapshot_restore_sys_id" id="action_snapshot_restore_sys_id" value="${JS:action_snapshot_restore_sys_id}"/>
+	<input type="hidden" name="snapshot_uuid" id="snapshot_uuid" value="${JS:snapshot_uuid}"/>
+	<input type="hidden" name="snapshot_metadata" id="snapshot_metadata" value="${JS:metadata}"/>
+	
+	
+<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;">The restore action uses the selected snapshot to create a new VM provisioned with dynamic IP(s)</div>
+	<div class="form-group">
+				<label class="modal_label"><strong>Restore Suffix Name</strong></label>
+				<input type="text" class="form-control" name="snapshot_name" value="@@{calm_random_hash}@@" id="snapshot_name" placeholder="This suffix name will be appended to all the resources name" maxlength="64" />
+			</div>
+	<div class="form-group">
+			<span class="input-group-checkbox">
+				<input id="delete_vm_restore" class="checkbox" type="checkbox" value="false"/>
+				<label for="delete_vm_restore" class="checkbox-label" id="delete_vm_restore_label"><strong>Delete existing VM after restore</strong></label>
+			</span>
+		</div>
+	<div class="modal-footer">
+		<div class="row">
+			<div class="col-sm-9 pull-right" style="width: max-content;">
+				<button class="btn btn-default" id="cancelAct">Cancel</button>
+				<button class="btn btn-primary" id="confirmAct">Confirm Restore</button>
+			</div>
+		</div>
+	</div>
+	
+</j:jelly>]]></html>
+        <name>Snapshot_Restore_Azure</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-05-31 10:33:28</sys_created_on>
+        <sys_id>7e868b4807e870103670ff1d7c1ed0f2</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>Snapshot_Restore_Azure</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_page_7e868b4807e870103670ff1d7c1ed0f2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-06-03 06:05:08</sys_updated_on>
+    </sys_ui_page>
+</record_update>

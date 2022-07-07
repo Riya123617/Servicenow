@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="sys_import_set_row" label="Nutanix Staging EndPoint" max_length="40" name="x_nuta2_nutanix_ca_nutanix_staging_endpoint" sizeclass="37" type="collection">
+        <element hint="Names" label="Name" max_length="500" name="name" type="string"/>
+        <element hint="Project uuids" label="Project uuid" max_length="500" name="project_uuid" type="string"/>
+        <element hint="UUID" label="UUID" max_length="500" name="uuid" type="string"/>
+    </element>
+</database>

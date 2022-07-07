@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="Gravity Zone">99342ea29754111027f8fbc71153afa3</sc_cat_item>
+        <sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:32:09</sys_created_on>
+        <sys_id>dd34a2e29754111027f8fbc71153af25</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Gravity Zone</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_dd34a2e29754111027f8fbc71153af25</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:32:09</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_dd34a2e29754111027f8fbc71153af25</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="Gravity Zone">99342ea29754111027f8fbc71153afa3</sc_cat_item><sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:32:09</sys_created_on><sys_id>dd34a2e29754111027f8fbc71153af25</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Marketplace Blueprint.Gravity Zone</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_dd34a2e29754111027f8fbc71153af25</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:32:09</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-129401891</payload_hash>
+        <record_name>Marketplace Blueprint.Gravity Zone</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:32:09</sys_created_on>
+        <sys_id>9934a2e29754111027f8fbc71153af28</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a97079c10000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:32:09</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>9134a2e2b6541110c2ec1f9539157228</update_guid>
+        <update_guid_history>9134a2e2b6541110c2ec1f9539157228:-129401891</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Marketplace Blueprint.Gravity Zone">aeb33de49728951027f8fbc71153af97</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:08:12</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>5adb1b14db9048e483d61508721c7a84</sys_id>
+        <sys_metadata>dd34a2e29754111027f8fbc71153af25</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Gravity Zone</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_dd34a2e29754111027f8fbc71153af25</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_dd34a2e29754111027f8fbc71153af25">9934a2e29754111027f8fbc71153af28</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:08:12</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

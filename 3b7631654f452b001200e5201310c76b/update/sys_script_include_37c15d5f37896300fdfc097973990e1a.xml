@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_nuta2_nutanix_ca.Nutanix_ImportApplicationProfiles</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Nutanix_ImportApplicationProfiles</name>
+        <script><![CDATA[var Nutanix_ImportApplicationProfiles = Class.create();
+Nutanix_ImportApplicationProfiles.prototype = {
+    initialize: function() {
+        this.appUtil = new Nutanix_Calm_Utils();
+        this.logger = new Nutanix_Calm_Logger();
+        this.dateFormat = gs.getProperty('glide.sys.date_format');
+        this.timeFormat = gs.getProperty('glide.sys.time_format');
+        this.order = 1;
+    },
+
+
+    _invalidateCatalogItem: function(CatSysId) {
+        var grCat = new GlideRecord("x_nuta2_nutanix_ca_nutanix_runtime_configuration");
+        grCat.addQuery("blueprint", CatSysId);
+        grCat.query();
+        while (grCat.next()) {
+            grCat.state = "inactive";
+            grCat.update();
+            this.logger.debug("Nutanix_ImportApplicationProfiles.processApplicationProfiles Deactivated catalog item " + grCat.item_name + "Logic associated profile deleted");
+        }
+    },
+
+	_updateCatalogItem: function(profileVarArray, CatSysId, profileSysId) {
+        try {
+            var arr_var_updated = {};
+            for (var i in profileVarArray) {
+                arr_var_updated[profileVarArray[i].uuid] = {
+                    "varType": this._returnVarType(profileVarArray[i])
+                };
+            }
+            var grCat = new GlideRecord("x_nuta2_nutanix_ca_nutanix_runtime_configuration");
+            grCat.addQuery("blueprint", CatSysId);
+            grCat.addQuery('state', 'Active');
+            grCat.query();
+            while (grCat.next()) {
+                gs.info(grCat.item_name.name + '' + "RV: Catalog item: " + grCat.item_name.sys_id + '');
+                var cat_sys_id = grCat.item_name.sys_id + '';
+                var arr_var_current = {};
+                var grCatVar = new GlideRecord(this.appUtil.configuration.table.variablesProperties + '');
+                grCatVar.addQuery('application_profile', profileSysId);
+                grCatVar.addQuery('type', 'Profile');
+                grCatVar.addQuery('catalog_item', CatSysId);
+                grCatVar.query();
+                while (grCatVar.next()) {
+                    var grCatVar2 = new GlideRecord(this.appUtil.configuration.table.variablesProperties + '');
+                    grCatVar2.addQuery('uuid', grCatVar.uuid + '');
+                    grCatVar2.addQuery('catalog_item', cat_sys_id);
+                    grCatVar2.addQuery('isprofilevariable', 'true');
+                    grCatVar2.query();
+                    if (grCatVar2.next()) {
+                        grCatVar2.default_value = grCatVar.default_value + '';
+                        grCatVar2.runtime_config = grCatVar.runtime_config + '';
+                        grCatVar2.is_hidden = grCatVar.is_hidden + '';
+                        grCatVar2.field_regex = grCatVar.field_regex + '';
+                        grCatVar2.field_json = grCatVar.field_json + '';
+                        grCatVar2.data_type = grCatVar.data_type + '';
+                        grCatVar2.value_type = grCatVar.value_type + '';
+                        grCatVar2.update();
+
+                        if (grCatVar.variable.question_text != grCatVar2.variable.question_text) { // if profile variable's name is changed
+                            var column_fields = {};
+                            column_fields.question_text = grCatVar.variable.question_text + '';
+                            column_fields.name = grCatVar.variable.name + '';
+                            var fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable(grCatVar2.variable.sys_id, column_fields, 'update');
+                        }
+                        if (grCatVar.variable.mandatory != grCatVar2.variable.mandatory) {
+                            var column_fields = {};
+                            column_fields.mandatory = grCatVar.variable.mandatory + '';
+                            var fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable(grCatVar2.variable.sys_id, column_fields, 'update');
+                        }
+                        if (grCatVar.variable.type != grCatVar2.variable.type) {
+                            var column_fields = {};
+                            column_fields.type = grCatVar.variable.type + '';
+                            var varType = arr_var_updated[grCatVar.uuid].varType;
+                            if (varType.type == 21) {
+                                column_fields.list_table = this.appUtil.configuration.table.dropDownTable + '';
+                                column_fields.attributes = "glide_list";
+                            }
+                            var fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable(grCatVar2.variable.sys_id, column_fields, 'update');
+                            if (varType.type + '' == '5' || varType.type + '' == '21') {
+                                this._updateOtions(fieldSysd, varType.opt, varType.type);
+                            }
+                        }
+                    } else {
+                        this._invalidateCatalogItem(cat_sys_id);
+                    }
+                }
+            }
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles._updateCatalogItem: Error:- " + e);
+        }
+    },
+	
+    _checkVarNegativeSync: function(profileVarArray, profileSysId, catSysId) {
+
+        var arr_var_current = {};
+        var arr_var_updated = {};
+
+        var grCatVar = new GlideRecord(this.appUtil.configuration.table.variablesProperties + '');
+        grCatVar.addQuery('application_profile', profileSysId);
+        grCatVar.addQuery('type', 'Profile');
+        grCatVar.addQuery('catalog_item', catSysId);
+        grCatVar.query();
+        while (grCatVar.next())
+            arr_var_current[grCatVar.uuid] = {
+                "variable": grCatVar.variable + "",
+                "var_name": grCatVar.variable.question_text + ""
+            };
+
+        for (var i in profileVarArray)
+            arr_var_updated[profileVarArray[i].uuid] = {
+                "var_name": (profileVarArray[i].label && (profileVarArray[i].label).trim() != "") ? profileVarArray[i].label + '' : profileVarArray[i].name + '',
+                "var_value": profileVarArray[i].value + ""
+            };
+
+        for (var uuid in arr_var_current) {
+
+            if (!(uuid in arr_var_updated) || (uuid in arr_var_updated && (arr_var_current[uuid].var_name + "" != arr_var_updated[uuid].var_name + ""))) {
+
+                if (!(uuid in arr_var_updated)) {
+                    this.logger.debug("Nutanix_ImportApplicationProfiles._checkVarNegativeSync Deactivated catalog item  associated with blueprint " + catSysId + "as existing variable is deleted");
+                    this._invalidateCatalogItem(catSysId);
+                }
+                var column_fields = {};
+                column_fields.cat_item = "";
+                var fieldSysId = new Nutanix_ConfigureSettingScripts().updateVariableTable(arr_var_current[uuid].variable + "", column_fields, 'update');
+                var grCatVarDel = new GlideRecord(this.appUtil.configuration.table.variablesProperties + '');
+                grCatVarDel.addQuery('catalog_item', catSysId + "");
+                grCatVarDel.addQuery('uuid', uuid + "");
+                grCatVarDel.query();
+                while (grCatVarDel.next())
+                    grCatVarDel.deleteRecord();
+            }
+        }
+		for (var uuid in arr_var_updated) {
+            if (!(uuid in arr_var_current)) {
+                this.logger.debug("Nutanix_ImportApplicationProfiles._checkVarNegativeSync Deactivated catalog item  associated with blueprint " + catSysId + "as new variable is added.");
+                this._invalidateCatalogItem(catSysId);
+            }
+        }
+    },
+
+    processApplicationProfiles: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles.processApplicationProfiles");
+
+            var payload = this.appUtil.parse(current.payload);
+
+            var catSysId = current.parameter + '';
+
+            var activeProfiles = [];
+
+            this._createContainer(catSysId);
+            if (current.substrate) {
+                var substrate = this.appUtil.parse(current.substrate);
+                var sub_type_rel = [];
+
+                for (var l = 0; l < substrate.length; l++) {
+                    var sub_entity = substrate[l];
+                    sub_type_rel[l] = {
+                        "uuid": sub_entity.uuid + "",
+                        "type": (sub_entity.type + "").replace("_VM", "")
+                    };
+                }
+            }
+            for (var i = 0; i < payload.length; i++) {
+                this.logger.info("Retrieved Number of Application Profiles " + payload.length);
+                var profile = payload[i];
+
+                activeProfiles.push(profile.uuid + '');
+
+                var profileGR = new GlideRecord(this.appUtil.configuration.table.applicationProfiles + '');
+                profileGR.addQuery('uuid', profile.uuid + '');
+                profileGR.query();
+
+                var profileSysId;
+
+                if (profileGR.next()) {
+                    profileSysId = profileGR.sys_id;
+
+                    profileGR.name = profile.name + '';
+                    profileGR.description = profile.description + '';
+                    profileGR.update();
+
+                } else {
+                    profileGR.initialize();
+                    profileGR.name = profile.name + '';
+                    profileGR.description = profile.description + '';
+                    profileGR.uuid = (profile.uuid) ? profile.uuid + '' : '';
+                    profileSysId = profileGR.insert();
+                }
+
+                this.logger.debug("Successful record insertion in App Profile Table. Record name:- " + profile.name);
+                var variablesList = profile.variable_list;
+
+                this._checkVarNegativeSync(variablesList, profileSysId, current.parameter);
+
+                for (var j = 0; j < variablesList.length; j++) {
+
+                    var field = variablesList[j];
+                    var fieldSysd = '';
+
+                    var fieldGR = new GlideRecord(this.appUtil.configuration.table.varaiblesTable + '');
+                    fieldGR.addQuery('description', field.uuid + '');
+                    fieldGR.addQuery('cat_item', current.parameter + '');
+                    fieldGR.query();
+
+                    var varType = this._returnVarType(field);
+                    if (fieldGR.next()) {
+                        var column_fields = {};
+                        column_fields.type = varType.type + ''; //(field.type+'' == 'SECRET') ? 25 : 6;
+                        column_fields.cat_item = current.parameter + '';
+                        column_fields.active = true;
+                        column_fields.question_text = (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '';
+                        column_fields.name = field.name + '_' + profileSysId;
+                        column_fields.tooltip = field.description + '';
+                        column_fields.variable_width = '50';
+                        column_fields.order = 11;
+                        column_fields.description = field.uuid;
+                        column_fields.show_help = true;
+                        column_fields.help_text = (field.description + '') ? field.description + '' : '';
+                        column_fields.mandatory = (field.is_mandatory + '') ? field.is_mandatory : '';
+                        if (varType.type == 21) {
+                            column_fields.list_table = this.appUtil.configuration.table.dropDownTable + '';
+                            column_fields.attributes = "glide_list";
+                        }
+                        fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable(fieldGR.sys_id, column_fields, 'update');
+                        this.logger.debug("Nutanix_ImportApplicationProfiles.processApplicationProfiles fieldSysd update: " + fieldSysd);
+                        if (varType.type + '' == '5' || varType.type + '' == '21') {
+                            this._updateOtions(fieldSysd, varType.opt, varType.type);
+
+                        }
+
+                    } else {
+                        var column_fields = {};
+                        column_fields.type = (varType).type + ''; //(field.type+'' == 'SECRET') ? 25 : 6;
+                        column_fields.cat_item = current.parameter + '';
+                        column_fields.active = true;
+                        column_fields.question_text = (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '';
+                        column_fields.name = field.name + '_' + profileSysId;
+                        column_fields.tooltip = field.description + '';
+                        column_fields.variable_width = '50';
+                        column_fields.order = 11;
+                        column_fields.description = field.uuid;
+                        column_fields.show_help = true;
+                        column_fields.help_text = (field.description + '') ? field.description + '' : '';
+                        column_fields.mandatory = (field.is_mandatory + '') ? field.is_mandatory : '';
+                        if (varType.type == 21) {
+                            column_fields.list_table = this.appUtil.configuration.table.dropDownTable + '';
+                            column_fields.attributes = "glide_list";
+                        }
+                        fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable('', column_fields, 'insert');
+                        this.logger.debug("Nutanix_ImportApplicationProfiles.processApplicationProfiles insert fieldSysd : " + fieldSysd + " field.label : " + field.label + " field.label : " + field.label + " | " + (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '');
+                        if (varType.type + '' == '5' || varType.type + '' == '21') {
+                            this._updateOtions(fieldSysd, varType.opt, varType.type);
+                        }
+                    }
+
+                    this._insertCatalogVariableProperties(profileSysId, field, fieldSysd, current.parameter + '', field.uuid);
+                    this.order++;
+                    this.logger.debug("Successful record insertion in App Profile Variable Set. Record Name:- " + field.name);
+                }
+                
+				this._updateCatalogItem(variablesList, current.parameter, profileSysId);
+				
+                if (profile.deployment_create_list) {
+                    var deployment = profile.deployment_create_list;
+                    var provider = "";
+
+                    //var len = deployment.length-1;
+                    for (var k = 0; k < deployment.length; k++) {
+                        var dep_entity = deployment[k];
+                        var subs_entity = (dep_entity.substrate_local_reference) ? dep_entity.substrate_local_reference.uuid : "";
+                        for (var c = 0; c < sub_type_rel.length; c++) {
+                            var subs_rel_entity = sub_type_rel[c];
+                            if (subs_rel_entity.uuid == subs_entity && !provider.includes(subs_rel_entity.type)) {
+                                //provider = (k != (deployment.length-1) ) ? provider + subs_rel_entity.type + "," : provider + subs_rel_entity.type + "";
+                                provider = (k == 0) ? subs_rel_entity.type : provider + "," + subs_rel_entity.type + "";
+                                break;
+                            }
+                        }
+                    }
+
+                }
+
+                ///////
+                var setProfileGR = new GlideRecord(this.appUtil.configuration.table.catalogProfileRelation + '');
+                setProfileGR.addQuery('application_profile', profileSysId + '');
+                setProfileGR.addQuery('catalog_item', current.parameter + '');
+                setProfileGR.query();
+
+                if (!setProfileGR.hasNext()) {
+                    setProfileGR.initialize();
+                    setProfileGR.application_profile = profileSysId + '';
+                    setProfileGR.catalog_item = current.parameter + '';
+                    setProfileGR.providers = provider;
+
+                    setProfileGR.state = 'active';
+
+                    setProfileGR.insert();
+
+                    this.logger.info("Nutanix_ImportApplicationProfiles.processApplicationProfiles:" + setProfileGR.sys_id + " record inserted application_profile " + setProfileGR.application_profile + " catalog_item " + setProfileGR.catalog_item + " provider " + setProfileGR.providers + " state " + setProfileGR.state);
+                } else if (setProfileGR.next()) {
+
+                    setProfileGR.application_profile = profileSysId + '';
+                    setProfileGR.catalog_item = current.parameter + '';
+                    setProfileGR.providers = provider;
+
+                    setProfileGR.state = 'active';
+
+                    setProfileGR.update();
+                    this.logger.info("Nutanix_ImportApplicationProfiles.processApplicationProfiles:" + setProfileGR.sys_id + " record updated application_profile " + setProfileGR.application_profile + " catalog_item " + setProfileGR.catalog_item + " provider " + setProfileGR.providers + " state " + setProfileGR.state);
+                }
+
+            }
+
+            var queryString = 'state=active^catalog_item=' + current.parameter;
+
+            for (var i in activeProfiles)
+                queryString += '^application_profile.uuid!=' + activeProfiles[i];
+
+            var inactiveProfileSysID = [];
+
+            var gr = new GlideRecord(this.appUtil.configuration.table.catalogProfileRelation + "");
+            gr.addEncodedQuery(queryString);
+            gr.query();
+
+            while (gr.next()) {
+                gr.state = 'inactive';
+                gr.update();
+                inactiveProfileSysID.push(gr.application_profile + '');
+                this.logger.info("Nutanix_ImportApplicationProfiles.processApplicationProfiles: Deactivated catalogProfileRelation " + gr.sys_id);
+            }
+
+            // 			var inactiveCatItems = [];
+
+            // 			var catGr = new GlideRecord(this.appUtil.configuration.table.runtimeConfig+'');
+            // 			catGr.addEncodedQuery('state!=inactive^state!=deleted^multiple_application_profileIN' + inactiveProfileSysID.toString());
+            // 			catGr.query();
+
+            // 			while(catGr.next()){
+
+            // 				inactiveCatItems.push(catGr.item_name.name);
+
+            // 				catGr.state = 'inactive';
+            // 				catGr.update();			
+            // 				this.logger.info("Nutanix_ImportApplicationProfiles.processApplicationProfiles: Deactivated catalog item "+catGr.item_name.name+" logic associated application profile mark inactive");
+            // 			}
+
+            // 			this.logger.info("Deactivated " + catGr.getRowCount() + " catalog items (" + inactiveCatItems.toString() + ") as there PRofiles got into a Non-Active State.");
+
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles.processApplicationProfiles: Error:- " + e);
+        }
+
+    },
+
+    _updateOtions: function(fieldSysid, opt, type) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles._updateOtions");
+            if (type == 5) {
+                var grQust = new GlideRecord('question_choice');
+                grQust.addQuery('question', fieldSysid);
+                grQust.query();
+                while (grQust.next()) {
+                    grQust.setValue('question', '');
+                    grQust.update();
+                }
+                grQust.deleteMultiple();
+
+                for (var i in opt) {
+                    grQust = new GlideRecord('question_choice');
+                    grQust.initialize();
+                    grQust.sys_class_name = "question_choice";
+                    grQust.question = fieldSysid + '';
+                    grQust.text = opt[i] + '';
+                    grQust.value = opt[i] + '';
+                    grQust.insert();
+                }
+            } else if (type == 21) {
+                var grQust = new GlideRecord(this.appUtil.configuration.table.dropDownTable);
+                grQust.addQuery('variable', fieldSysid);
+                grQust.deleteMultiple();
+
+                for (var i in opt) {
+                    grQust = new GlideRecord(this.appUtil.configuration.table.dropDownTable);
+                    grQust.initialize();
+                    grQust.variable = fieldSysid;
+                    grQust.name = opt[i];
+                    grQust.value = opt[i];
+                    grQust.insert();
+                }
+                var fGR = new GlideRecord('item_option_new');
+                fGR.addQuery('sys_id', fieldSysid);
+                fGR.query();
+                if (fGR.next()) {
+                    var column_fields = {};
+                    column_fields.reference_qual = "variable=" + fieldSysid;
+                    var fieldSysId = new Nutanix_ConfigureSettingScripts().updateVariableTable(fGR.sys_id, column_fields, 'update');
+                }
+
+            }
+        } catch (e) {
+            this.logger.error("Inside Nutanix_ImportApplicationProfiles._updateOtions " + e);
+        }
+
+    },
+
+    _returnVarType: function(field) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles._returnVarType field.data_type " + field.data_type + " field.type " + field.type);
+            var options;
+            if (field.data_type + '' == "BASE") {
+                if (field.type + '' == "EXEC_LOCAL" || field.type + '' == "HTTP_SECRET" || field.type + '' == "EXEC_SECRET" || (field.type + '' == "HTTP_LOCAL"))
+                    options = {
+                        "type": 5,
+                        "opt": []
+                    };
+
+                else if (field.type + '' == "LOCAL" && field.options && field.options.type + '' == "PREDEFINED" && field.options.choices && (field.options.choices).length > 0)
+                    options = {
+                        "type": 5,
+                        "opt": field.options.choices
+                    };
+
+                else if (field.type + '' == "SECRET" || field.attrs.type + '' == "SECRET")
+                    options = {
+                        "type": 25,
+                        "opt": []
+                    };
+
+                else if (field.val_type + '' == 'MULTILINE_STRING')
+                    options = {
+                        "type": 2,
+                        "opt": []
+                    };
+
+                else if (field.val_type + '' == 'DATE')
+                    options = {
+                        "type": 9,
+                        "opt": []
+                    };
+
+                else if (field.val_type + '' == 'DATE_TIME')
+                    options = {
+                        "type": 10,
+                        "opt": []
+                    };
+
+                else
+                    options = {
+                        "type": 6,
+                        "opt": []
+                    };
+
+            } else if (field.data_type + '' == "LIST") {
+
+                if (field.type + '' == "EXEC_LOCAL" || field.type + '' == "HTTP_SECRET" || field.type + '' == "EXEC_SECRET" || (field.type + '' == "HTTP_LOCAL"))
+                    options = {
+                        "type": 5,
+                        "opt": []
+                    };
+
+                else if (field.type + '' == "LOCAL" && (field.options) && field.options.type + '' == "PREDEFINED" && field.options.choices && (field.options.choices).length > 0)
+                    options = {
+                        "type": 21,
+                        "opt": field.options.choices
+                    };
+            }
+            if (!options) options = {
+                "type": 6,
+                "opt": []
+            };
+            return options;
+        } catch (e) {
+            this.logger.error("Inside Nutanix_ImportApplicationProfiles._returnVarType" + e);
+        }
+
+    },
+
+    _createContainer: function(catSysId) {
+
+        try {
+            var containerCheck = new GlideRecord(this.appUtil.configuration.table.varaiblesTable + '');
+            containerCheck.addEncodedQuery('name=profile_configuration^cat_item=' + catSysId);
+            containerCheck.query();
+
+            if (!containerCheck.hasNext()) {
+                this._createContainerStart(catSysId + '');
+                this._createContainerEnd(catSysId + '');
+            }
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles._createContainer: Error:- " + e);
+        }
+
+    },
+
+    _createContainerStart: function(catSysID) {
+
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles._createContainerStart");
+            var cat_item_class = '';
+            var cat_item = new GlideRecord('sc_cat_item');
+            if (cat_item.get(catSysID)) {
+                cat_item_class = cat_item.sys_class_name + '';
+            }
+            var column_fields = {};
+            column_fields.type = '19';
+            column_fields.display_title = 'true';
+            column_fields.cat_item = catSysID;
+            column_fields.active = 'true';
+            column_fields.order = 10;
+            if (cat_item_class == 'x_nuta2_nutanix_ca_runbooks')
+                column_fields.question_text = 'Variable Configuration';
+            else
+                column_fields.question_text = 'Profile Configuration';
+            column_fields.name = 'profile_configuration';
+            column_fields.layout = 'normal'; //2across';
+            var fieldSysId = new Nutanix_ConfigureSettingScripts().updateVariableTable("", column_fields, 'insert');
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles._createContainerStart: Error:- " + e);
+        }
+
+    },
+
+    _createContainerEnd: function(catSysID) {
+
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles._createContainerEnd");
+            var column_fields = {};
+            column_fields.type = '20';
+            column_fields.cat_item = catSysID;
+            column_fields.active = 'true';
+            column_fields.order = 12;
+            var fieldSysId = new Nutanix_ConfigureSettingScripts().updateVariableTable("", column_fields, 'insert');
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles._createContainerEnd: Error:- " + e);
+        }
+    },
+
+    _insertCatalogVariableProperties: function(profileSysId, field, fieldSysd, catalogSysId, field_uuid) {
+
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles._insertCatalogVariableProperties:\n profileSysId : " + profileSysId + "\n field : " + JSON.stringify(field) + "\n fieldSysd : " + fieldSysd + "\n catalogSysId : " + catalogSysId + "\n field_uuid : " + field_uuid);
+            var gr = new GlideRecord(this.appUtil.configuration.table.variablesProperties + '');
+            gr.addQuery('application_profile', profileSysId);
+            gr.addQuery('catalog_item', catalogSysId);
+            gr.addQuery('variable.description', field_uuid);
+            gr.query();
+
+            if (gr.next()) {
+
+                if (field.is_hidden && (field.is_hidden + '' != gr.is_hidden + "")) {
+                    //this._invalidateCatalogItem(catalogSysId);
+                    //this.logger.info("Deactivated catalog due to a change in profile variable's private state!");
+                }
+
+                if (field && field.editables && field.editables.value) {
+                    if (field.editables.value + "" != gr.runtime_config + "") {
+                    //    this._invalidateCatalogItem(catalogSysId);
+                    //    this.logger.info("Deactivated catalog due to a change in profile variable's runtime-config!");
+                    }
+                }
+
+                if (gr.value_type + "" != field.val_type + '') {
+                  //  this._invalidateCatalogItem(catalogSysId);
+                   // this.logger.info("Deactivated catalog due to a change in profile variable's type!");
+                }
+
+                gr.application_profile = profileSysId + '';
+                gr.catalog_item = catalogSysId;
+                gr.default_value =
+                    (field.val_type + '' == 'DATE' || field.val_type + '' == 'DATE_TIME') ? this._formttedDateTime(field.value + '', field.val_type + '') : ((field.value) ? (field.value).includes("@@{") ? "@@{" + this.appUtil._createMacroArray(field.value + "") + "_" + profileSysId + "}@@" : field.value + '' : '');
+                //gr.runtime_config = (field.editables && field.editables.value+'' == 'true' && field.is_hidden+'' == 'false') ? "true" : "false"; //((field.value+'').indexOf('@@') != -1) ? false : field.editables.value+'';
+                if (field.is_hidden && field.is_hidden + '' == 'true') {
+                    gr.runtime_config = "false";
+                } else {
+                    gr.runtime_config = (field.editables && field.editables.value + '' == 'true') ? "true" : "false";
+                }
+                gr.uuid = field.uuid + '';
+                gr.variable = fieldSysd;
+                gr.isprofilevariable = true;
+                gr.type = "Profile";
+                //gr.isdisabled = (field.editables && field.editables.value+'' == 'true' && field.is_hidden+'' == 'false') ? false : true;//((field.value+'').indexOf('@@') != -1) ? true : (field.editables.value+'' == 'true') ? false : true;
+                /**advanced var**/
+                if (field.is_hidden && field.is_hidden + '' == 'true') {
+                    gr.isdisabled = true;
+                } else {
+                    gr.isdisabled = (field.editables && field.editables.value + '' == 'true') ? false : true;
+                }
+                gr.value_type = field.val_type + '';
+                gr.data_type = (field.type + '' == "LOCAL" && field.options && field.options.type + '' == "PREDEFINED" && field.options.choices && (field.options.choices).length > 0) ? "PREDEFINED" : field.type + '';
+                //gr.field_regex = (field.regex && field.regex.should_validate && gr.data_type != "LOCAL" && field.val_type != "DATE"  && field.val_type != "DATE_TIME") ? field.regex.value+'' : this._fieldRegex(field);
+
+
+                var k = (field.regex && field.regex.should_validate) ? field.regex.value + '' : this._fieldRegex(field);
+
+                if (gr.data_type + '' == "LOCAL" && (field.val_type + '' == "DATE" || field.val_type + '' == "DATE_TIME"))
+                    k = this._fieldRegex(field);
+
+                gr.field_regex = k;
+                gr.is_hidden = (field.is_hidden + '' == 'true') ? true : false;
+
+                if (field) {
+                    gr.field_json = JSON.stringify(field);
+                }
+
+                /**advanced var**/
+                gr.update();
+
+            } else {
+
+              //  this._invalidateCatalogItem(catalogSysId);
+
+                gr.initialize();
+                gr.application_profile = profileSysId + '';
+                gr.catalog_item = catalogSysId + '';
+                gr.default_value = (field.val_type + '' == 'DATE' || field.val_type + '' == 'DATE_TIME') ? this._formttedDateTime(field.value + '', field.val_type + '') : ((field.value) ? ((field.value).includes("@@{") ? "@@{" + this.appUtil._createMacroArray(field.value + "") + "_" + profileSysId + "}@@" : (field.value)) : '');
+
+                //gr.runtime_config = (field.editables && field.editables.value+'' == 'true' && field.is_hidden+'' == 'false') ? "true" : "false";//((field.value+'').indexOf('@@') != -1) ? false : field.editables.value+'';
+                if (field.is_hidden && field.is_hidden + '' == 'true') {
+                    gr.runtime_config = "false";
+                } else {
+                    gr.runtime_config = (field.editables && field.editables.value + '' == 'true') ? "true" : "false";
+                }
+                gr.uuid = field.uuid + '';
+                gr.variable = fieldSysd;
+
+                gr.isprofilevariable = true;
+                gr.type = "Profile";
+                //gr.isdisabled = (field.editables && field.editables.value+'' == 'true' && field.is_hidden+'' == 'false') ? false : true;//((field.value+'').indexOf('@@') != -1) ? true : (field.editables.value+'' == 'true') ? false : true;
+                if (field.is_hidden && field.is_hidden + '' == 'true') {
+                    gr.isdisabled = true;
+                } else {
+                    gr.isdisabled = (field.editables && field.editables.value + '' == 'true') ? false : true;
+                }
+                /**advanced var**/
+
+                gr.value_type = field.val_type + '';
+                gr.data_type = (field.type + '' == "LOCAL" && field.options && field.options.type + '' == "PREDEFINED" && field.options.choices && (field.options.choices).length > 0) ? "PREDEFINED" : field.type + '';
+
+                var k = (field.regex && field.regex.should_validate) ? field.regex.value + '' : this._fieldRegex(field);
+
+                if (gr.data_type + '' == "LOCAL" && (field.val_type + '' == "DATE" || field.val_type + '' == "DATE_TIME"))
+                    k = this._fieldRegex(field);
+
+                gr.field_regex = k;
+
+                gr.field_regex = (field.regex && field.regex.should_validate && gr.data_type != "LOCAL" && field.val_type != "DATE" && field.val_type != "DATE_TIME") ? field.regex.value + '' : this._fieldRegex(field);
+                gr.is_hidden = (field.is_hidden + '' == 'true') ? true : false;
+                /**advanced var**/
+                if (field) {
+                    gr.field_json = JSON.stringify(field);
+                }
+
+                gr.insert();
+
+            }
+
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles._insertCatalogVariableProperties: Error:- " + e);
+        }
+
+    },
+
+    _fieldRegex: function(field) {
+
+        var reg = "";
+        switch (field.val_type + '') {
+
+            case "INT":
+                reg = '^[\\d]*$';
+                break;
+
+            case "STRING":
+                reg = '^.*$';
+                break;
+
+            case "DATE":
+                reg = '^.*$'; //'^((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})$';
+                break;
+
+            case "TIME":
+                reg = '^([01]\\d|2[0-3]):[0-5][\\d]:[0-5][\\d]$';
+                break;
+
+            case "DATE_TIME":
+                reg = '^.*$'; //'^((0[1-9]|[12]\\d|3[01])/(0[1-9]|1[0-2])/[12]\\d{3})((T)|(\\s-\\s))[\\d]{2}:[\\d]{2}(:[0-5]\\d)?$';
+                break;
+
+            case "MULTILINE_STRING":
+                reg = '^(.|\n)*$';
+                break;
+
+        }
+        return reg;
+
+
+    },
+
+    _formttedDateTime: function(value, type, getDate) {
+
+        var newVal = '';
+        if (getDate === true) {
+            if (type == "DATE") {
+                var gdt = new GlideDate();
+                gdt.setValue(value);
+                return gdt.getByFormat(this.dateFormat);
+            } else {
+                var gdt = new GlideDateTime();
+                gdt.setValue(value);
+                return gdt.getDate().getByFormat(this.dateFormat) + ' ' + gdt.getTime().getByFormat(this.timeFormat);
+            }
+        } else {
+            var arr = value.split('/');
+            if (type == "DATE") {
+                newVal = arr[2] + '-' + arr[1] + '-' + arr[0];
+                var gdt = new GlideDate();
+                gdt.setValue(newVal);
+                return gdt.getValue();
+                //return gdt.getByFormat(this.dateFormat);
+            } else {
+                var year = arr[2].split(' ');
+                newVal = year[0] + '-' + arr[1] + '-' + arr[0] + ' ' + year[2];
+                var gdt = new GlideDateTime();
+                gdt.setValue(newVal);
+                return gdt.getValue();
+                //return gdt.getDate().getByFormat(this.dateFormat)+' '+gdt.getTime().getByFormat(this.timeFormat);
+            }
+        }
+    },
+    processRunbookVariable: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportApplicationProfiles.processRunbookVariable current " + JSON.stringify(current));
+
+            var payload = current.payload;
+
+            var catSysId = current.parameter + '';
+
+            this._createContainer(catSysId);
+
+            for (var i = 0; i < payload.length; i++) {
+                this.logger.info("Retrieved Number of Application Profiles " + payload.length);
+                var profile = payload[i];
+
+                var profileGR = new GlideRecord(this.appUtil.configuration.table.applicationProfiles + '');
+                profileGR.addQuery('uuid', profile.uuid + '');
+                profileGR.query();
+
+                var profileSysId;
+
+                if (profileGR.next()) {
+                    profileSysId = profileGR.sys_id;
+
+                    profileGR.name = profile.name + '';
+                    profileGR.description = profile.description + '';
+                    profileGR.update();
+                } else {
+                    profileGR.initialize();
+                    profileGR.name = profile.name + '';
+                    profileGR.description = profile.description + '';
+                    profileGR.uuid = (profile.uuid) ? profile.uuid + '' : '';
+                    profileSysId = profileGR.insert();
+                }
+
+                this.logger.debug("Successful record insertion in App Profile Table. Record name:- " + profile.name + ' profile.variable_list ' + JSON.stringify(profile.variable_list));
+
+                var variablesList = profile.variable_list;
+
+				this._checkVarNegativeSync(variablesList, profileSysId, current.parameter);
+				
+                for (var j = 0; j < variablesList.length; j++) {
+                    var field = variablesList[j];
+                    var fieldSysd = '';
+
+                    var fieldGR = new GlideRecord(this.appUtil.configuration.table.varaiblesTable + '');
+                    fieldGR.addQuery('description', field.uuid + '');
+                    fieldGR.addQuery('cat_item', current.parameter + '');
+                    fieldGR.query();
+                    var varType = this._returnVarType(field);
+                    if (fieldGR.next()) {
+                        var column_fields = {};
+                        column_fields.type = varType.type + ''; //(field.type+'' == 'SECRET') ? 25 : 6;					
+                        column_fields.cat_item = current.parameter + '';
+                        column_fields.active = true;
+                        column_fields.question_text = (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '';
+                        column_fields.name = field.name + '_' + profileSysId;
+                        column_fields.tooltip = field.description + '';
+                        column_fields.variable_width = '50';
+                        column_fields.order = 11;
+                        column_fields.description = field.uuid;
+                        column_fields.show_help = true;
+                        column_fields.help_text = (field.description + '') ? field.description + '' : '';
+                        column_fields.mandatory = (field.is_mandatory + '') ? field.is_mandatory : '';
+                        if (varType.type == 21) {
+                            column_fields.list_table = this.appUtil.configuration.table.dropDownTable + '';
+                            column_fields.attributes = "glide_list";
+                        }
+                        fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable(fieldGR.sys_id, column_fields, 'update');
+                        this.logger.debug("Nutanix_ImportApplicationProfiles.processRunbookVariable fieldSysd update: " + fieldSysd);
+                        if (varType.type + '' == '5' || varType.type + '' == '21') {
+                            this._updateOtions(fieldSysd, varType.opt, varType.type);
+
+                        }
+                    } else {
+                        gs.info("possible inside else" + (varType).type + ' current.parameter ' + current.parameter + ' field.name ' + field.name + ' field.description ' + field.description + ' field.uuid ' + field.uuid + 'field.description ' + field.description + ' is_mandatory ' + field.is_mandatory);
+                        var column_fields = {};
+                        column_fields.type = (varType).type + ''; //(field.type+'' == 'SECRET') ? 25 : 6;
+                        column_fields.cat_item = current.parameter + '';
+                        column_fields.active = true;
+                        column_fields.question_text = (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '';
+                        column_fields.name = field.name + '_' + profileSysId;
+                        column_fields.tooltip = field.description + '';
+                        column_fields.variable_width = '50';
+                        column_fields.order = 11;
+                        column_fields.description = field.uuid;
+                        column_fields.show_help = true;
+                        column_fields.help_text = (field.description + '') ? field.description + '' : '';
+                        column_fields.mandatory = (field.is_mandatory + '') ? field.is_mandatory : '';
+                        if (varType.type == 21) {
+                            column_fields.list_table = this.appUtil.configuration.table.dropDownTable + '';
+                            column_fields.attributes = "glide_list";
+                        }
+                        fieldSysd = new Nutanix_ConfigureSettingScripts().updateVariableTable('', column_fields, 'insert');
+                        this.logger.debug("Nutanix_ImportApplicationProfiles.processRunbookVariable insert fieldSysd : " + fieldSysd + " field.label : " + field.label + " field.label : " + field.label + " | " + (field.label && (field.label).trim() != "") ? field.label + '' : field.name + '');
+                        if (varType.type + '' == '5' || varType.type + '' == '21') {
+                            this._updateOtions(fieldSysd, varType.opt, varType.type);
+                        }
+                    }
+
+                    this._insertCatalogVariableProperties(profileSysId, field, fieldSysd, current.parameter + '', field.uuid);
+                    this.order++;
+                    this.logger.debug("Successful record insertion in App Profile Variable Set. Record Name:- " + field.name);
+                }
+
+				this._updateCatalogItem(variablesList, current.parameter, profileSysId);
+                
+                var setProfileGR = new GlideRecord(this.appUtil.configuration.table.catalogProfileRelation + '');
+                setProfileGR.addQuery('application_profile', profileSysId + '');
+                setProfileGR.addQuery('catalog_item', current.parameter + '');
+                setProfileGR.query();
+
+                if (!setProfileGR.hasNext()) {
+                    setProfileGR.initialize();
+                    setProfileGR.application_profile = profileSysId + '';
+                    setProfileGR.catalog_item = current.parameter + '';
+                    setProfileGR.providers = 'runbook';
+                    setProfileGR.state = 'active';
+                    setProfileGR.insert();
+                    this.logger.info("Nutanix_ImportApplicationProfiles.processRunbookVariable:" + setProfileGR.sys_id + " record inserted application_profile " + setProfileGR.application_profile + " catalog_item " + setProfileGR.catalog_item + " provider " + setProfileGR.providers + " state " + setProfileGR.state);
+                } else if (setProfileGR.next()) {
+
+                    setProfileGR.application_profile = profileSysId + '';
+                    setProfileGR.catalog_item = current.parameter + '';
+                    setProfileGR.providers = 'runbook';
+                    setProfileGR.state = 'active';
+                    setProfileGR.update();
+                    this.logger.info("Nutanix_ImportApplicationProfiles.processRunbookVariable:" + setProfileGR.sys_id + " record updated application_profile " + setProfileGR.application_profile + " catalog_item " + setProfileGR.catalog_item + " provider " + setProfileGR.providers + " state " + setProfileGR.state);
+                }
+
+            }
+
+        } catch (e) {
+            this.logger.error("Error Nutanix_ImportApplicationProfiles.processRunbookVariable: Error:- " + e);
+        }
+
+    },
+    type: 'Nutanix_ImportApplicationProfiles'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>girishgyani</sys_created_by>
+        <sys_created_on>2018-10-14 20:00:23</sys_created_on>
+        <sys_id>37c15d5f37896300fdfc097973990e1a</sys_id>
+        <sys_mod_count>304</sys_mod_count>
+        <sys_name>Nutanix_ImportApplicationProfiles</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_script_include_37c15d5f37896300fdfc097973990e1a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-05-16 13:06:06</sys_updated_on>
+    </sys_script_include>
+</record_update>

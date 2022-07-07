@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="newTest_Blueprint_01">cc9875da9790111027f8fbc71153afd6</sc_cat_item>
+        <sc_category display_value="Blueprint">7a30431637512300fdfc097973990ec8</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:43:00</sys_created_on>
+        <sys_id>889875da9790111027f8fbc71153affd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Blueprint.newTest_Blueprint_01</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_889875da9790111027f8fbc71153affd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:43:00</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_889875da9790111027f8fbc71153affd</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="newTest_Blueprint_01">cc9875da9790111027f8fbc71153afd6</sc_cat_item><sc_category display_value="Blueprint">7a30431637512300fdfc097973990ec8</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 10:43:00</sys_created_on><sys_id>889875da9790111027f8fbc71153affd</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Blueprint.newTest_Blueprint_01</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_889875da9790111027f8fbc71153affd</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 10:43:00</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>1590948619</payload_hash>
+        <record_name>Blueprint.newTest_Blueprint_01</record_name>
+        <reverted_from/>
+        <source>9197755a9790111027f8fbc71153af96</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:43:00</sys_created_on>
+        <sys_id>cc98b5da9790111027f8fbc71153af00</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a4c1e88d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:43:00</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>c498b5da76901110523885de16030d00</update_guid>
+        <update_guid_history>c498b5da76901110523885de16030d00:1590948619</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Blueprint.newTest_Blueprint_01">5c416e2697d0111027f8fbc71153afc5</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:19:15</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>24d155b0b902426d857f6653e9f6d821</sys_id>
+        <sys_metadata>889875da9790111027f8fbc71153affd</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Blueprint.newTest_Blueprint_01</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_889875da9790111027f8fbc71153affd</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_889875da9790111027f8fbc71153affd">cc98b5da9790111027f8fbc71153af00</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:19:15</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

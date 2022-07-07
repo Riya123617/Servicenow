@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems">
+    <x_nuta2_nutanix_ca_nutanix_marketplaceitems action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_state>PUBLISHED</app_state>
+        <appfamily>Networking</appfamily>
+        <author>Nutanix</author>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <bp_type>blueprint</bp_type>
+        <category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</category>
+        <checked_out/>
+        <cloned_bp_json/>
+        <cloned_bp_name/>
+        <cloned_bp_uuid/>
+        <cost>0</cost>
+        <creation_time>1654755899586106</creation_time>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <deprecation_reason/>
+        <description><![CDATA[<p>Aviatrix provides a centralized controller and lightweight gateway software that simplifies hybrid cloud networking.
+Aviatrix solution enables enterprises to build seamless, secure and scalable hybrid clouds with no changes to the enterprise IP and security architecture. 
+The solution is architected for the cloud. It can also enable scaling to multiple sites or branches, multiple VPCs, and multiple clouds without complex reconfiguration and changes. 
+You can easily build multi-cloud architectures including connectivity between different public cloud providers.
+Key benefits include:</p>
+<ol><li>Point and click UI. Minimal networking expertise.</li><li>Multi-cloud connectivity: Private Clouds, Amazon WebServices, Microsoft Azure and Google Cloud Platform </li><li>Out of the box HA connectivity.</li></ol>
+<strong id="license">License:</strong>
+<ul style="list-style-position: inside;"><li><a href="https://www.aviatrix.com/solutions/nutanix/free-trial-license/" rel="nofollow">Request Trial License</a></li></ul>
+<strong id="hardwarerequirement">Hardware Requirement:</strong>
+<ul style="list-style-position: inside;"><li>2 vCPUs, 4 GBs of Memory and 20 GB</li></ul>
+<strong id="platform">Platform:</strong>
+<ul style="list-style-position: inside;"><li>AHV</li></ul>
+<strong id="supportinformation">Support Information:</strong>
+<ul style="list-style-position: inside;"><li>Email: info&#64;aviatrix.com</li></ul>
+<strong id="accessibility">Accessibility:</strong>
+<ul style="list-style-position: inside;"><li>https://[IP_ADDRESS]</li></ul>]]></description>
+        <description_markdown>Aviatrix provides a centralized controller and lightweight gateway software that simplifies hybrid cloud networking.
+Aviatrix solution enables enterprises to build seamless, secure and scalable hybrid clouds with no changes to the enterprise IP and security architecture. 
+The solution is architected for the cloud. It can also enable scaling to multiple sites or branches, multiple VPCs, and multiple clouds without complex reconfiguration and changes. 
+You can easily build multi-cloud architectures including connectivity between different public cloud providers.
+Key benefits include:
+1. Point and click UI. Minimal networking expertise.
+2. Multi-cloud connectivity: Private Clouds, Amazon WebServices, Microsoft Azure and Google Cloud Platform 
+3. Out of the box HA connectivity.
+#### License:
+* [Request Trial License](https://www.aviatrix.com/solutions/nutanix/free-trial-license/)
+#### Hardware Requirement:
+* 2 vCPUs, 4 GBs of Memory and 20 GB
+#### Platform:
+* AHV
+#### Support Information:
+* Email: info@aviatrix.com
+#### Accessibility:
+* https://[IP_ADDRESS]
+</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>false</ignore_price>
+        <image/>
+        <last_update_time>1654769646172570</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Aviatrix</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=5e26f1a897a8951027f8fbc71153af5d&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>240abede37112300fdfc097973990e24</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>Aviatrix</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <spec_version>2</spec_version>
+        <start_closed>false</start_closed>
+        <state>active</state>
+        <support_status>SUPPORTED</support_status>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:18:49</sys_created_on>
+        <sys_id>5e26f1a897a8951027f8fbc71153af5d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Aviatrix</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_5e26f1a897a8951027f8fbc71153af5d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:18:49</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>5bbda01f-5a91-4301-9770-7276b91ff563</uuid>
+        <vendor/>
+        <version>2.0.0</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_marketplaceitems>
+    <sys_translated_text action="delete_multiple" query="documentkey=5e26f1a897a8951027f8fbc71153af5d"/>
+    <fx_price action="delete_multiple" query="id=5e26f1a897a8951027f8fbc71153af5d"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>5e26f1a897a8951027f8fbc71153af5d</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:18:49</sys_created_on>
+        <sys_id>5226f1a897a8951027f8fbc71153af5f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:18:49</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

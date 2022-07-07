@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <entered_time>1970-01-01 00:00:00</entered_time>
+        <name>Profile Variable Field JSON update as part of 1.4.4 migration</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as/>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2021-04-23 07:30:11</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>on_demand</run_type>
+        <script><![CDATA[try {
+/* 
+   Below code fix for an issue in migrating catalog item from V1.4.3 to V1.4.4.
+   Issue : Field JSON was carapted in V1.4.3 in case of dependent variable. 
+   Resolution : Below code replaces field JSON of catalog item variables with their respective blueprint variable JSON.
+   
+   Note : Execute below code after sync operation. 
+*/
+    var created_cat_item = new GlideRecord('x_nuta2_nutanix_ca_nutanix_runtime_configuration');
+    created_cat_item.addQuery('state', '!=', 'inactive');
+    created_cat_item.query();
+
+    while (created_cat_item.next()) {
+        var blueprint = created_cat_item.blueprint + '';
+
+        var variables_pro = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+        variables_pro.addQuery('catalog_item', created_cat_item.item_name);
+        variables_pro.addQuery('isprofilevariable', true);
+        variables_pro.addQuery('field_json', 'CONTAINS', '}@@');
+        variables_pro.query();
+
+        while (variables_pro.next()) {
+
+            var profile = variables_pro.application_profile + '';
+            var field_json = variables_pro.field_json + '';
+            var variable_name = variables_pro.variable.question_text + '';
+
+            var blueprint_json = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+            blueprint_json.addQuery('catalog_item', blueprint);
+            blueprint_json.addQuery('application_profile', profile);
+            blueprint_json.addQuery('variable.question_text', variable_name);
+            blueprint_json.query();
+            if (blueprint_json.next()) {
+                variables_pro.field_json = blueprint_json.field_json + '';
+                variables_pro.update();
+                gs.info('field json of ' + variable_name + '(catalog item : ' + created_cat_item.item_name.name + ' ) migrated to 1.4.4');
+            }
+        }
+    }
+
+} catch (e) {
+    gs.info(e);
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-23 07:32:18</sys_created_on>
+        <sys_id>17c0befb07efa010ed23f2508c1ed08f</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Profile Variable Field JSON update as part of 1.4.4 migration</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sysauto_script_17c0befb07efa010ed23f2508c1ed08f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-07-16 12:53:05</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

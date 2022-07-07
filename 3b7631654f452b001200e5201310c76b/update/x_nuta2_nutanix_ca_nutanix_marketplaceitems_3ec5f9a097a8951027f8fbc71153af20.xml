@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems">
+    <x_nuta2_nutanix_ca_nutanix_marketplaceitems action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_state>PUBLISHED</app_state>
+        <appfamily>DevOps</appfamily>
+        <author>Nutanix</author>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <bp_type>blueprint</bp_type>
+        <category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</category>
+        <checked_out/>
+        <cloned_bp_json/>
+        <cloned_bp_name/>
+        <cloned_bp_uuid/>
+        <cost>0</cost>
+        <creation_time>1654755907801279</creation_time>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <deprecation_reason/>
+        <description><![CDATA[<p>An IIS web server accepts requests from remote client computers and returns the appropriate response. This basic functionality allows web servers to share and deliver information across local area networks (LAN), such as corporate intranets, and wide area networks (WAN), such as the internet.</p>
+<strong id="license">License:</strong>
+<ul style="list-style-position: inside;"><li>Proprietary software</li></ul>
+<strong id="hardwarerequirement">Hardware Requirement:</strong>
+<ul style="list-style-position: inside;"><li>By default, one VM with 4 vCPU, 4GB RAM</li></ul>
+<strong id="operatingsystem">Operating System:</strong>
+<ul style="list-style-position: inside;"><li>Windows Server 2016/2019</li></ul>
+<strong id="platform">Platform:</strong>
+<ul style="list-style-position: inside;"><li>AHV</li></ul>
+<strong id="otherinstructions">Other Instructions:</strong>
+<ul style="list-style-position: inside;"><li>Please refer to the Marketplace guide on https://portal.nutanix.com for more information.</li></ul>]]></description>
+        <description_markdown>An IIS web server accepts requests from remote client computers and returns the appropriate response. This basic functionality allows web servers to share and deliver information across local area networks (LAN), such as corporate intranets, and wide area networks (WAN), such as the internet.
+
+#### License:
+* Proprietary software
+#### Hardware Requirement:
+* By default, one VM with 4 vCPU, 4GB RAM
+#### Operating System:
+* Windows Server 2016/2019
+#### Platform:
+* AHV
+#### Other Instructions:
+* Please refer to the Marketplace guide on https://portal.nutanix.com for more information.
+</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>false</ignore_price>
+        <image/>
+        <last_update_time>1654768432667371</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>IIS</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=3ec5f9a097a8951027f8fbc71153af20&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>240abede37112300fdfc097973990e24</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>IIS</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <spec_version>2</spec_version>
+        <start_closed>false</start_closed>
+        <state>active</state>
+        <support_status>SUPPORTED</support_status>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:17:13</sys_created_on>
+        <sys_id>3ec5f9a097a8951027f8fbc71153af20</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>IIS</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_3ec5f9a097a8951027f8fbc71153af20</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:17:13</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>c499e0f0-54b1-4dbb-9d5b-ccf5d611f096</uuid>
+        <vendor/>
+        <version>1.0.0</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_marketplaceitems>
+    <sys_translated_text action="delete_multiple" query="documentkey=3ec5f9a097a8951027f8fbc71153af20"/>
+    <fx_price action="delete_multiple" query="id=3ec5f9a097a8951027f8fbc71153af20"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>3ec5f9a097a8951027f8fbc71153af20</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:17:13</sys_created_on>
+        <sys_id>32c5f9a097a8951027f8fbc71153af22</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:17:13</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_nuta2_nutanix_ca.Nutanix_ServicePortalConfiguration</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Nutanix_ServicePortalConfiguration</name>
+        <script><![CDATA[var Nutanix_ServicePortalConfiguration = Class.create();
+Nutanix_ServicePortalConfiguration.prototype = {
+    initialize: function() {
+		this.appUtil = new Nutanix_Calm_Utils();
+        this.logger = new Nutanix_Calm_Logger();
+    },
+	getFieldDetails: function(fieldNames, cat_item_sys_id) {
+        try {
+
+            this.logger.debug("Inside Nutanix_ServicePortalConfiguration.getFieldDetails");
+            var field_array = fieldNames.split(',');
+            var qc;
+            var field_details = [];
+            var item_option = new GlideRecord('item_option_new');
+            item_option.addQuery('cat_item.sys_id', cat_item_sys_id);
+            for (var i in field_array) {
+                if (i == 0)
+                    qc = item_option.addQuery('name', field_array[i]);
+                else
+                    qc.addOrCondition('name', field_array[i]);
+            }
+            item_option.query();
+            while (item_option.next()) {
+                var object = {};
+                object.var_sys_id = item_option.getUniqueValue();
+                object.var_type = item_option.getDisplayValue('type');
+                object.var_name = item_option.getDisplayValue('name');
+                field_details.push(object);
+            }
+            return JSON.stringify(field_details);
+        } catch (e) {
+            this.logger.error("Error Nutanix_ServicePortalConfiguration.getFieldDetails: Error:- " + e);
+        }
+    },
+    getoneFieldDetail: function(fieldNames, cat_item_sys_id) {
+        try {
+
+            this.logger.debug("Inside Nutanix_ServicePortalConfiguration.getoneFieldDetail");
+            var qc;
+            var item_option = new GlideRecord('item_option_new');
+            item_option.addQuery('cat_item.sys_id', cat_item_sys_id);
+            item_option.addQuery('name', fieldNames);
+            item_option.query();
+            while (item_option.next()) {
+                var object = {};
+                object.var_sys_id = item_option.getUniqueValue();
+                object.var_type = item_option.getDisplayValue('type');
+                object.var_name = item_option.getDisplayValue('name');
+            }
+            return JSON.stringify(object);
+        } catch (e) {
+            this.logger.error("Error Nutanix_ServicePortalConfiguration.getoneFieldDetail: Error:- " + e);
+        }
+    },
+    getCatalogItemDetails: function(cat_item_sys_id) {
+        try {
+            gs.info(" $$## Inside Nutanix_ServicePortalConfiguration.getCatalogItemDetails cat_item_sys_id : " + cat_item_sys_id);
+            var blueprintType = '';
+            var blueprintUUID = '';
+            var profileSysId = '';
+            var projectUUID = '';
+
+            var getParam = new GlideRecord('x_nuta2_nutanix_ca_nutanix_runtime_configuration');
+            getParam.addQuery('item_name.sys_id', cat_item_sys_id);
+            getParam.query();
+
+            if (getParam.next()) {
+                if (getParam.getDisplayValue('item_name.category') == 'Blueprint')
+                    blueprintType = "x_nuta2_nutanix_ca_nutanix_blueprints";
+                if (getParam.getDisplayValue('item_name.category') == 'Marketplace Blueprint')
+                    blueprintType = "x_nuta2_nutanix_ca_nutanix_marketplaceitems";
+                blueprintUUID = getParam.blueprint.uuid + '';
+                profileSysId = getParam.multiple_application_profile + '';
+                projectUUID = getParam.multiple_projects + '';
+            }
+
+            var object = {};
+            object.blueprintType = blueprintType;
+            object.blueprintUUID = blueprintUUID;
+            object.profileSysId = profileSysId;
+            object.projectUUID = projectUUID;
+
+            gs.info(" $$## Inside Nutanix_ServicePortalConfiguration.getCatalogItemDetails object : " + JSON.stringify(object));
+            return JSON.stringify(object);
+        } catch (e) {
+            this.logger.error("Error Nutanix_ServicePortalConfiguration.getCatalogItemDetails: Error:- " + e);
+        }
+    },
+    variable_info: function(fieldNames, cat_item_sys_id) {
+        try {
+            this.logger.debug("Inside Nutanix_ServicePortalConfiguration.getCatalogItemDetails");
+            var field_array = fieldNames.split(',');
+            var field_details = [];
+            var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+            gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+            gr.addQuery('isdisabled', false);
+            gr.addQuery('runtime_config', true);
+            gr.query();
+            while (gr.next()) {
+                var object = {};
+                object.variable_name = gr.getDisplayValue('variable.name');
+                object.variable_type = gr.getDisplayValue('variable.type');
+                field_details.push(object);
+            }
+            return JSON.stringify(field_details);
+        } catch (e) {
+            this.logger.error("Error Nutanix_ServicePortalConfiguration.getCatalogItemDetails: Error:- " + e);
+        }
+    },
+    extraFields: function(fieldNames, cat_item_sys_id, profile) {
+
+        var field_array = fieldNames.split(',');
+        var hide_field = [];
+        for (var i in field_array) {
+            var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+            gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+            gr.addQuery('application_profile', profile);
+            gr.addQuery('variable.name', field_array[i]);
+            gr.query();
+            if (!gr.next()) {
+                hide_field.push(field_array[i]);
+            }
+        }
+
+        var final_arr = [];
+        for (var i in hide_field) {
+            if (hide_field[i] == 'default_project' || hide_field[i] == 'default_app_name' || hide_field[i] == 'default_profile' || hide_field[i] == 'default_environment' || hide_field[i].includes('_password') || hide_field[i].includes('_private_key') || hide_field[i].includes('_passphrase') ) {
+                continue;
+            } else {
+                var gr = new GlideRecord('item_option_new');
+                gr.addQuery('cat_item.sys_id', cat_item_sys_id);
+                gr.addQuery('name', hide_field[i]);
+                gr.addQuery('type', '!=', '19');
+                gr.query();
+                while (gr.next()) {
+                    final_arr.push(hide_field[i]);
+                }
+            }
+        }
+
+        var object = {};
+        object.extraFields = JSON.stringify(final_arr);
+        object.privateFields = this.privateField(cat_item_sys_id, profile);
+        object.showRuntimeVariables = this.showRuntimeVariable(cat_item_sys_id, profile);
+        object.secretVariables = this.secretVariables(cat_item_sys_id, profile);
+        object.extraCredentials = this.extraCredentials(cat_item_sys_id, profile);
+
+        return JSON.stringify(object);
+    },
+    privateField: function(cat_item_sys_id, profile) {
+        var hide_field = [];
+        var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+        gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+        gr.addQuery('application_profile', profile);
+        gr.addQuery('isdisabled', true);
+        gr.query();
+        while (gr.next()) {
+            hide_field.push(gr.variable.name + '');
+        }
+        var answer = JSON.stringify(hide_field);
+        return answer;
+    },
+    showRuntimeVariable: function(cat_item_sys_id, profile) {
+        var show_field = [];
+        var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+        gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+        gr.addQuery('application_profile', profile);
+        gr.addQuery('isdisabled', false);
+        gr.addQuery('runtime_config', true);
+        gr.query();
+        while (gr.next()) {
+            show_field.push(gr.variable.name + '');
+        }
+        var answer = JSON.stringify(show_field);
+        return answer;
+    },
+    secretVariables: function(cat_item_sys_id, profile) {
+        var appUtil = new Nutanix_Calm_Utils();
+        var secret_field = [];
+        var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+        gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+        gr.addQuery('application_profile', profile);
+        gr.addQuery('variable.type', '25');
+        gr.query();
+        while (gr.next()) {
+            secret_field.push(gr.variable.name + '');
+        }
+        var answer = JSON.stringify(secret_field);
+        return answer;
+    },
+    ClearSecretVariables: function(cat_item_sys_id) {
+        var appUtil = new Nutanix_Calm_Utils();
+        var secret_field = [];
+        var gr = new GlideRecord('x_nuta2_nutanix_ca_catalog_variables_properties');
+        gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+        gr.addQuery('variable.type', '25');
+        gr.query();
+        while (gr.next()) {
+			var onChangecatalogClientScript = new sn_sc.CatalogClientScript();
+				onChangecatalogClientScript.setAttributes({
+					"name": "ServicePortal fix" + gr.variable.name,
+					"type": "onLoad",
+					"applies_to": "item",
+					"cat_item":  cat_item_sys_id + '',
+					"cat_variable": gr.variable.name + "",
+					"active": true,
+					"order": 50000,
+					"description": "This script is auto created thorugh runtime module for fetching and setting form data and visibility.",
+					"applies_catalog": true,
+					"ui_type": "10",
+					"applies_req_item": false,
+					"applies_sc_task": false,
+					"script": "function onLoad()  {g_form.setValue(gr.variable.name+'','')}",
+				});
+				onChangecatalogClientScript.appliesToCatalogItem(true);
+				var OnChangeCatalogScriptId = onChangecatalogClientScript.create();
+			
+        }		
+    },
+    extraCredentials: function(cat_item_sys_id, profile) {
+        var show_field = [];
+
+        var gr = new GlideRecord('x_nuta2_nutanix_ca_nutanix_calm_credential');
+        gr.addQuery('catalog_item.sys_id', cat_item_sys_id);
+        gr.query();
+        if (gr.next()) {
+            if (gr.username_editable) {
+                show_field.push(gr.name + '_username');
+            }
+            if (gr.secret_editable) {
+                show_field.push(gr.name + '_secret');
+            }
+            if (gr.ssh_private_key_editable) {
+                show_field.push(gr.name + '_ssh_private_key');
+            }
+            if (gr.passphrase_editable) {
+                show_field.push(gr.name + '_passphrase');
+            }
+        }
+        return JSON.stringify(show_field);
+    },
+
+    type: 'Nutanix_ServicePortalConfiguration'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-08-12 06:45:31</sys_created_on>
+        <sys_id>067ec2af1b3d301098a61f4a234bcbc9</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Nutanix_ServicePortalConfiguration</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_script_include_067ec2af1b3d301098a61f4a234bcbc9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-10-28 14:37:01</sys_updated_on>
+    </sys_script_include>
+</record_update>

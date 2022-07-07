@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
+    <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
+        <dependency display_value="System Import Sets" source="com.glide.system_import_set">3d0cb984752001100acb0f6766fcbf1c</dependency>
+        <min_version>1.0.0</min_version>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-06 05:47:08</sys_created_on>
+        <sys_id>8e65bdd29790111027f8fbc71153af20</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-11-06 05:47:08</sys_updated_on>
+    </sys_package_dependency_m2m>
+</record_update>

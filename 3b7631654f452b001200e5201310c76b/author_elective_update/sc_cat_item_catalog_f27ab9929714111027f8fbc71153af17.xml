@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Docker Registry Opensource">727ab9929714111027f8fbc71153af15</sc_cat_item>
+        <sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:51:22</sys_created_on>
+        <sys_id>f27ab9929714111027f8fbc71153af17</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Docker Registry Opensource</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_f27ab9929714111027f8fbc71153af17</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:51:22</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_catalog_f27ab9929714111027f8fbc71153af17</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Docker Registry Opensource">727ab9929714111027f8fbc71153af15</sc_cat_item><sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 10:51:22</sys_created_on><sys_id>f27ab9929714111027f8fbc71153af17</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Nutanix Calm.Docker Registry Opensource</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_catalog_f27ab9929714111027f8fbc71153af17</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 10:51:22</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>735450767</payload_hash>
+        <record_name>Nutanix Calm.Docker Registry Opensource</record_name>
+        <reverted_from/>
+        <source>9197755a9790111027f8fbc71153af96</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:51:22</sys_created_on>
+        <sys_id>ba7ab9929714111027f8fbc71153af19</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a4c993e40000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:51:22</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>b27ab992461411100831fb17fabd1319</update_guid>
+        <update_guid_history>b27ab992461411100831fb17fabd1319:735450767</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Nutanix Calm.Docker Registry Opensource">6ea1eee697d0111027f8fbc71153afc8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:21:03</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>6ed1e19ce2164470abd4fd68e771b9b9</sys_id>
+        <sys_metadata>f27ab9929714111027f8fbc71153af17</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Docker Registry Opensource</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent display_value="">727ab9929714111027f8fbc71153af15</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_f27ab9929714111027f8fbc71153af17</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_f27ab9929714111027f8fbc71153af17">ba7ab9929714111027f8fbc71153af19</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:21:03</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="type_of_blueprint" label="Type of Blueprint" language="en" table="x_nuta2_nutanix_ca_nutanix_runtime_configuration">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>type_of_blueprint</element>
+            <help/>
+            <hint/>
+            <label>Type of Blueprint</label>
+            <language>en</language>
+            <name>x_nuta2_nutanix_ca_nutanix_runtime_configuration</name>
+            <plural>Type of Blueprints</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-08-09 10:43:33</sys_created_on>
+            <sys_id>78c82fee2f3530109a34f64ef699b607</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Type of Blueprint</sys_name>
+            <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+            <sys_update_name>sys_documentation_x_nuta2_nutanix_ca_nutanix_runtime_configuration_type_of_blueprint_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-08-09 10:43:33</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

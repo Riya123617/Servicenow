@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_nuta2_nutanix_ca.Nutanix_ImportRunbooks</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Nutanix_ImportRunbooks</name>
+        <script><![CDATA[var Nutanix_ImportRunbooks = Class.create();
+Nutanix_ImportRunbooks.prototype = {
+    initialize: function() {
+        this.appUtil = new Nutanix_Calm_Utils();
+        this.logger = new Nutanix_Calm_Logger();
+        this.pageBreaker = 20;
+		this.activeBP = [];
+    },
+
+	_deactivateDeletedBPandcatalogs: function(){
+		try{
+			this.logger.debug("Inside Nutanix_ImportRunbooks._deactivateDeletedBPandcatalogs");
+			
+			var queryString = 'state=ACTIVE';
+
+			for(var i in this.activeBP)
+				queryString += '^uuid!='+this.activeBP[i];
+
+			var inactiveBPSysID = [];
+			
+			var gr = new GlideRecord(this.appUtil.configuration.table.Runbooks+"");
+			gr.addEncodedQuery(queryString);
+			gr.query();		
+
+			while(gr.next()){
+				gr.state = 'INACTIVE';
+				inactiveBPSysID.push(gr.update());
+				this.logger.debug("Inside Nutanix_ImportRunbooks._deactivateDeletedBPandcatalogs Deactivated Runbook "+gr.sys_id);
+			}
+			
+			var inactiveCatItems = [];
+
+			var catGr = new GlideRecord(this.appUtil.configuration.table.runtimeConfig+'');
+			catGr.addEncodedQuery('state!=inactive^state!=deleted^blueprintIN' + inactiveBPSysID.toString());
+			catGr.query();
+			
+			while(catGr.next()){
+				
+				inactiveCatItems.push(catGr.item_name.name);
+				
+				catGr.state = 'inactive';
+				catGr.update();	
+				this.logger.debug("Inside Nutanix_ImportBlueprints._deactivateDeletedBPandcatalogs Deactivated catalog item "+catGr.item_name.name+" logic associated runbook deactivated");
+			}
+			
+			this.logger.info("Deactivated " + catGr.getRowCount() + " catalog items (" + inactiveCatItems.toString() + ") as there Runbook got into a Non-Active State.");
+		}catch(e){
+			this.logger.error("Exception caught inside Nutanix_ImportRunbooks._deactivateDeletedBPandcatalogs. Error :- "+e);
+		}		
+	},
+	
+    startImportRunbooks: function() {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.startImportRunbooks");
+            var body = {
+                "kind": "runbook",
+                "offset": 0,
+                "length": 1,
+				"filter" : "state==ACTIVE"
+            };
+            var response = this.appUtil.makeCalmApiCall("POST", this.appUtil.configuration.api.getRunbooksList + "", this.appUtil.stringify(body));
+            if (response.getStatusCode() == '200' || response.getStatusCode() == '201') {
+                this.logger.info("Connection established to " + this.appUtil.configuration.api.getRunbooksList);
+                var parsed = this.appUtil.parse(response.getBody());
+                var records = parsed.metadata.total_matches;
+                var pages = parseInt(records / this.pageBreaker);
+                this.logger.debug("Number of Runbooks JSON pages " + (pages + 1));
+                for (var i = 0, k = 0; i <= pages; i++, k += 19) {
+                    body = {
+                        "kind": "runbook",
+                        "offset": i + k,
+                        "length": this.pageBreaker,
+						"filter" : "state==ACTIVE"
+                    };
+                    this.logger.debug("Call number to ImportRunbookData:" + (i + 1));
+                    var answer = {
+                        "method": "POST",
+                        "parameter": this.appUtil.stringify(body),
+                        "payload": this.appUtil.configuration.api.getRunbooksList + ""
+                    };
+                    this.importRunbookData(answer);
+                }
+                this.logger.info("Completed importing and processing of Runbook.");
+				this._deactivateDeletedBPandcatalogs();
+				
+            } else {
+                this.logger.debug("Nutanix_ImportRunbooks.startImportRunbooks :- Connection to runbooks/list not established :- " + response.haveError() + " Status code :- " + response.getStatusCode());
+            }
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.startImportRunbooks :- Exception caught during retrieval of runbook. Error: " + e);
+            this.logger.error("Exception caught during retrieval of runbook. Error: " + e);
+        }
+    },
+
+    importRunbookData: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.importRunbookData");
+            var response = this.appUtil.makeCalmApiCall(current.method + '', current.payload + '', current.parameter + '');
+            if (response.getStatusCode() == '200' || response.getStatusCode() == '201') {
+                var parsedJSON = this.appUtil.parse(response.getBody());
+                var entities = parsedJSON.entities;
+                this.logger.info("Number of imported Runbook:" + entities.length);
+                for (var i = 0; i < entities.length; i++) {
+                    var entity = entities[i];
+                    var uuid = entity.metadata.uuid;
+					this.activeBP.push(uuid+'');
+					
+                    this.appUtil.insertIntoQueue("processImportRunbookData", "get", this.appUtil.stringify(entity), this.appUtil.configuration.api.getRunbookDetail + '' + uuid, 'Process Runbook data', 'This job processes the imported runbook data.');
+                }
+            } else {
+                this.logger.debug("Nutanix_ImportRunbooks.processImportRunbookData :- Connection runbooks/list not established :- " + response.haveError() + " Status code :- " + response.getStatusCode());
+            }
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.importRunbookData :- Exception caught during retrieval of runbook. Error:- " + e);
+            this.logger.error("Exception caught during retrieval of runbook. Error :- " + e);
+        }
+    },
+
+    importRunbookDataByUUID: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.importRunbook DataBy UUID");
+
+            var response = this.appUtil.makeCalmApiCall("get", current.payload + '', "");
+            if (response.getStatusCode() == '200' || response.getStatusCode() == '201') {
+                this.appUtil.insertIntoQueue("processImportRunbookDataByUUID", "", response.getBody(), current.parameter, 'Process Runbook Data By UUID', 'This job processes the imported Runbook data.');
+            } else {
+                this.logger.debug("Error while retrieving Runbook  " + this.appUtil.configuration.api.getBlueprintDetail + " :" + response.getBody());
+                this.logger.error("Error while retrieving Runbook  " + this.appUtil.configuration.api.getBlueprintDetail );
+                return response.getStatusCode();
+            }
+
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.importRunbookDataByUUID :- Exception caught during retrieval of blueprints. Error :- " + e);
+            this.logger.error("Exception caught during retrieval of blueprints. Error :- " + e);
+        }
+    },
+
+    processImportRunbookDataByUUID: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.processImportRunbookData");
+            var runbooks = [];
+            var insertData = new GlideRecord(this.appUtil.configuration.table.NutanixStagingRunbooks + "");
+			
+            var entity = this.appUtil.parse(current.payload); //containing Runbook list JSON
+			var parsed = this.appUtil.parse(current.parameter);
+			
+            var status = entity.status;
+            var metadata = entity.metadata;
+            var spec = entity.spec;
+			
+            insertData.initialize();
+            var field;
+            //To insert status data
+            for (var key in status) {
+                field = status[key];
+                insertData[key] = (field.constructor === Object || field.constructor === Array) ? JSON.stringify(field) : field + '';
+            }
+            //To insert resources data
+            for (var key in spec) {
+                field = spec[key];
+                insertData[key] = (field.constructor === Object || field.constructor === Array) ? JSON.stringify(field) : field + '';
+             }
+
+            //To insert metadata
+            for (var key in metadata) {
+                field = metadata[key];
+                insertData[key] = (field.constructor === Object || field.constructor === Array) ? JSON.stringify(field) : field + '';
+            }
+			gs.info("***resources 88 "+JSON.stringify(status)+" | "+JSON.stringify(status.resources));
+			var resources = parsed.status.resources;
+			for(var key in resources){
+				var field = resources[key];
+				insertData[key] = (field.constructor === Object || field.constructor === Array ) ? JSON.stringify(field) : field+'';
+			}
+
+            insertData.insert();
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.processImportRunbookDataByUUID :- Exception caught during retrieval of runbook. Error :- " + e);
+            this.logger.error("Exception caught during retrieval of runbook. Error :- " + e);
+        }
+    },
+	
+	processRunbookEndPoint: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.processRunbookEndPoint");
+			
+            var body = {
+                "kind": "endpoint",
+                "offset": 0,
+                "length": 1
+            };
+            var response = this.appUtil.makeCalmApiCall("POST", this.appUtil.configuration.api.getEndpointsList + "", this.appUtil.stringify(body));
+            if (response.getStatusCode() == '200' || response.getStatusCode() == '201') {
+                this.logger.info("Connection established to " + this.appUtil.configuration.api.getEndpointsList);
+                var parsed = this.appUtil.parse(response.getBody());
+                var records = parsed.metadata.total_matches;
+                var pages = parseInt(records / this.pageBreaker);
+                this.logger.debug("Number of Endpoint JSON pages " + (pages + 1));
+                for (var i = 0, k = 0; i <= pages; i++, k += 19) {
+                    body = {
+                        "kind": "endpoint",
+                        "offset": i + k,
+                        "length": this.pageBreaker
+                    };
+                    this.logger.debug("Call number to ImportEndPointData:" + (i + 1));
+                    var answer = {
+                        "method": "POST",
+                        "parameter": this.appUtil.stringify(body),
+                        "payload": this.appUtil.configuration.api.getEndpointsList + ""
+                    };
+                    this.importEndpoinData(answer);
+                }
+                this.logger.info("Completed importing and processing of Runbook.");
+			}
+         
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.processRunbookEndPoint :- Exception caught during retrieval of Endpoint. Error :- " + e);
+            this.logger.error("Exception caught during retrieval of Endpoint. Error :- " + e);
+        }
+    },
+	importEndpoinData: function(current) {
+        try {
+            this.logger.debug("Inside Nutanix_ImportRunbooks.importRunbookData");
+            var response = this.appUtil.makeCalmApiCall(current.method + '', current.payload + '', current.parameter + '');
+            if (response.getStatusCode() == '200' || response.getStatusCode() == '201') {
+                var parsedJSON = this.appUtil.parse(response.getBody());
+                var entities = parsedJSON.entities;
+                this.logger.info("Number of imported Endpoint:" + entities.length+" "+JSON.stringify(entities));
+                for (var i = 0; i < entities.length; i++) {
+                    var entity = entities[i];
+                    var uuid = entity.metadata.uuid+'';
+					var name = entity.metadata.name+'';
+					gs.info('entity'+JSON.stringify(entity)+"\n project refernce "+JSON.stringify(entity.metadata)+"\n uuid "+entity.metadata.project_reference.uuid);
+					var project = entity.metadata.project_reference.uuid+'';
+					
+					var insertData = new GlideRecord(this.appUtil.configuration.table.NutanixStagingEndPoints+ "");	           			
+					insertData.initialize();
+					insertData.name = name;
+					insertData.uuid = uuid; 
+					insertData.project_uuid = project;
+					insertData.insert();
+					
+                }
+            } else {
+                this.logger.debug("Nutanix_ImportRunbooks.processImportRunbookData :- Connection runbooks/list not established :- " + response.haveError() + " Status code :- " + response.getStatusCode());
+            }
+        } catch (e) {
+            this.logger.debug("Nutanix_ImportRunbooks.importEndpoinData :- Exception caught during retrieval of Endpoint. Error:- " + e);
+            this.logger.error("Exception caught during retrieval of endpoint. Error :- " + e);
+        }
+    },
+    type: 'Nutanix_ImportRunbooks'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-05-31 08:03:50</sys_created_on>
+        <sys_id>35dd5a481ba074104debece4604bcbf3</sys_id>
+        <sys_mod_count>45</sys_mod_count>
+        <sys_name>Nutanix_ImportRunbooks</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_script_include_35dd5a481ba074104debece4604bcbf3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-05-16 12:57:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

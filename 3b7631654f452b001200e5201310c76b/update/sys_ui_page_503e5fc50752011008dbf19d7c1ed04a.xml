@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var status = gel("check").value + "";
+var migrat = gel("migrate").value + "";
+function myfunc(onclick) {
+    GlideModal.get().destroy();
+    importApp();
+    var gajax = new GlideAjax('Nutanix_ClientServerScriptBridge');
+    gajax.addParam('sysparm_name', 'InventorySync');
+    gajax.addParam('sysparm_value', onclick);
+    gajax.addParam('sysparm_check', status);
+    gajax.getXML(getResponse);
+}
+
+function getResponse(response) {
+    var answer = response.responseXML.documentElement.getAttribute("answer");
+}
+
+function importApp() {
+    var href = parent.location.toString();
+    if (href.indexOf("nav_to.do?uri=%2F") >= 0) {
+        parent.location = "/nav_to.do?uri=%2Fx_nuta2_nutanix_ca_nutanix_process_queue_list.do%3Fsysparm_userpref_module%3D91e0175a37152300d27b8cf6c3990e07%26sysparm_query%3Dstate!%3Dcomplete%5EEQ%26sysparm_clear_stack%3Dtrue";
+
+    } else {
+        parent.location = "/x_nuta2_nutanix_ca_nutanix_process_queue_list.do?sysparm_userpref_module=91e0175a37152300d27b8cf6c3990e07&sysparm_query=state!=complete^EQ&sysparm_clear_stack=true";
+    }
+    //gsftSubmit(null, g_form.getFormElement(), 'nutanix_sync');
+}
+
+function closeMe() {
+    GlideModal.get().destroy();
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_nuta2_nutanix_ca_sync_Now_UI_page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+ 
+	<g:evaluate var="jvar_not" object="true">
+		var check = gs.getProperty('x_nuta2_nutanix_ca.1_6') +'';
+		var migrate='0';
+		if(check =='0')
+		migrate='1';
+		
+		check;
+		migrate;
+	</g:evaluate>
+	
+	<input type="hidden" name="check" id="check" value="${JS:check}"/>
+	<input type="hidden" name="migrate" id="migrate" value="${JS:migrate}"/>
+	
+	<div style="padding:12px">
+	<p>
+	Select the Calm entity you want to sync with ServiceNow.
+	</p>
+	<p>
+	<j:if test="${JS:check}" >
+			<select name="import" id="import" style="border-color:#87cefa; width: 500px; height: 30px;">
+				<option value="all" >All</option>
+				<option value="project">Projects</option>
+				<option value="blueprint">Blueprints</option>
+				<option value="runbook">Runbooks</option>		
+				<option value="marketplaceItem">Marketplace Items</option>
+				<option value="application">Applications</option>
+			</select>
+		</j:if>	
+		<j:if test="${JS:migrate}" >
+			<select name="import" disabled='' id="import" style="border-color:#87cefa; width: 500px; height: 30px;">
+				<option value="all" >All</option>
+			</select>
+		</j:if>	
+	</p>
+	<p>
+		All Calm entities will be synced  after new installation and upgrade. <br></br> Launching blueprints, catalogs and execution of day 2 actions will not be possible when the sync is in progress.
+	</p>
+	<div style="padding:5px;float:right">
+	 <button type="button" style="background-color:#D4EFDF" id="test" onclick="myfunc(jQuery('#import').val())">Sync</button>
+	 <button type="button" id="test" onclick="closeMe()">Cancel</button>
+	</div>
+	 </div>
+</j:jelly>]]></html>
+        <name>sync_Now_UI_page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-16 10:50:39</sys_created_on>
+        <sys_id>503e5fc50752011008dbf19d7c1ed04a</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>sync_Now_UI_page</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_page_503e5fc50752011008dbf19d7c1ed04a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-16 12:46:28</sys_updated_on>
+    </sys_ui_page>
+</record_update>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="Aviatrix">f59ab9169714111027f8fbc71153affe</sc_cat_item>
+        <sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:51:51</sys_created_on>
+        <sys_id>759af9169714111027f8fbc71153af03</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Aviatrix</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_759af9169714111027f8fbc71153af03</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:51:51</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_759af9169714111027f8fbc71153af03</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="Aviatrix">f59ab9169714111027f8fbc71153affe</sc_cat_item><sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 10:51:51</sys_created_on><sys_id>759af9169714111027f8fbc71153af03</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Marketplace Blueprint.Aviatrix</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_759af9169714111027f8fbc71153af03</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 10:51:51</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-2017538426</payload_hash>
+        <record_name>Marketplace Blueprint.Aviatrix</record_name>
+        <reverted_from/>
+        <source>9197755a9790111027f8fbc71153af96</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:51:51</sys_created_on>
+        <sys_id>7d9a3d169714111027f8fbc71153af55</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a4ca04bb0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:51:51</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>759a3d16ee141110a95b41d651498655</update_guid>
+        <update_guid_history>759a3d16ee141110a95b41d651498655:-2017538426</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Marketplace Blueprint.Aviatrix">e842aa2e97d0111027f8fbc71153af16</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:23:39</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>0db0c150641040c28fc0dc50eeccafb9</sys_id>
+        <sys_metadata>759af9169714111027f8fbc71153af03</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Aviatrix</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_759af9169714111027f8fbc71153af03</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_759af9169714111027f8fbc71153af03">7d9a3d169714111027f8fbc71153af55</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:23:39</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
+    <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
+        <dependency display_value="User Criteria Scoped API" source="com.glideapp.user_criteria.scoped.api">c9df295a9750111027f8fbc71153afca</dependency>
+        <min_version/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-11-06 05:47:08</sys_created_on>
+        <sys_id>e31e0579db5c20503e3c6a5b8a96195d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-11-06 05:47:08</sys_updated_on>
+    </sys_package_dependency_m2m>
+</record_update>

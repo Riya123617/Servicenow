@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var actSysId = "${JS:sysparm_sysId}";
+var act_vars = "${JS:sysparm_actVarsArr}";
+var action_name = "${JS:sysparm_actionName}";
+var appName = "${JS:sysparm_appName}";
+var parsedApp = "${JS:sysparm_parsedApp}";
+var credential_list = "${JS:sysparm_credential_list}";
+var subnet_reference = "${JS:sysparm_subnet_reference}";
+var discLength = 0;
+var nicLength = 0;
+var tmp_array = [];
+var nic_details = [];
+var disc_details = [];
+var categories_delete_allowed = 'false';
+var categories_add_allowed = 'false';
+var nic_delete_allowed = 'false';
+var disk_delete_allowed = 'false';
+var existing_nic_array = [];
+var pre_defined_categories = [];
+new GlideModal().get("dialog_loading").destroy();
+
+var parsedAppBp = JSON.parse(act_vars);
+var credential_list_parsed = JSON.parse(credential_list);
+addLoadEvent(function() {
+    firstCheck();
+});
+
+var $j = jQuery.noConflict();
+
+$j("input").click(function() {
+    $j(".errorData").html('');
+});
+
+$j('#cancelAct').mousedown(cancelDialog);
+$j('#Update').mousedown(checkValueinJson);
+$j('#cancelAct').mousedown(cancelDialog);
+$j('#backToUpdate').mousedown(backToUpdate);
+$j('#Confirm_Submission').mousedown(submitBlueprint);
+
+function backToUpdate() {
+    $j("#Confirm_Submission").hide();
+    $j("#backToUpdate").hide();
+    $j("#update_form").show();
+    $j("#Update").show();
+    $j("#diff_page").html('');
+    $j("#diff_page").hide();
+}
+
+function cancelDialog() {
+    GlideModal.get().destroy();
+}
+// Section: VM Configuration
+function firstCheck() {
+    var parsedAppBp = JSON.parse(act_vars);
+    var resourceList = parsedAppBp.create_spec.resources;
+    setFieldValues(resourceList);
+}
+
+function setFieldValues(resource_array) {
+    for (var i in resource_array) {
+        if (typeof resource_array[i] != 'object') {
+            if (i == 'memory_size_mib')
+                $j("#" + i).val(resource_array[i] / 1024);
+            else
+                $j("#" + i).val(resource_array[i]);
+        }
+    }
+    validatepatchResponse(parsedApp);
+}
+
+function validatepatchResponse(response) {
+    parsedApp = JSON.parse(response);
+    var data = parsedApp.attrs_list[0].data;
+    var backend_name = {
+        "num_sockets_ruleset": "num_sockets",
+        "num_vcpus_per_socket_ruleset": "num_vcpus_per_socket",
+        "memory_size_mib_ruleset": "memory_size_mib"
+    };
+    for (var i in data) {
+        if (i == 'num_sockets_ruleset' || i == 'num_vcpus_per_socket_ruleset' || i == 'memory_size_mib_ruleset') {
+            if (data[i].editable && data[i].editable + '' == 'true') {
+                $j("#" + backend_name[i]).prop("min_value", data[i].min_value);
+                $j("#" + backend_name[i]).prop("max_value", data[i].max_value);
+                $j("#" + backend_name[i]).prop("disabled", false);
+            }
+        }
+    }
+}
+
+function checkValueinJson() {
+    var regex = /^\d+$/g;
+    var num_sockets = $j("#num_sockets").val() + "";
+    var cores = $j("#num_vcpus_per_socket").val() + "";
+    var memory = $j("#memory_size_mib").val() + "";
+
+    if (num_sockets.length != (parseInt(num_sockets) + "").length) {
+        var error_div = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Numeric Value for VCPUs</div>';
+        $j(".errorData").html(error_div);
+        return;
+    } else if (($j("#num_sockets").prop("disabled") + '' == 'false') && (parseInt(num_sockets) < parseInt($j("#num_sockets").prop("min_value")) || parseInt(num_sockets) > parseInt($j("#num_sockets").prop("max_value")))) {
+        var error_div = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Value between ' + $j("#num_sockets").prop("min_value") + ' and ' + $j("#num_sockets").prop("max_value") + ' for VCPUs</div>';
+        $j(".errorData").html(error_div);
+        return;
+    }
+
+    if (cores.length != (parseInt(cores) + "").length) {
+        var error_div1 = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Numeric Value for Cores Per VCPUs</div>';
+        $j(".errorData").html(error_div1);
+        return;
+    } else if (($j("#num_vcpus_per_socket").prop("disabled") + '' == 'false') && (parseInt(cores) < parseInt($j("#num_vcpus_per_socket").prop("min_value")) || parseInt(cores) > parseInt($j("#num_vcpus_per_socket").prop("max_value")))) {
+        var error_div = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Value between ' + $j("#num_vcpus_per_socket").prop("min_value") + ' and ' + $j("#num_vcpus_per_socket").prop("max_value") + ' for Cores</div>';
+        $j(".errorData").html(error_div);
+        return;
+    }
+
+    if (memory.length != (parseInt(memory) + "").length) {
+        var error_div2 = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Numeric Value for Memory </div>';
+        $j(".errorData").html(error_div2);
+        return;
+    } else if (($j("#memory_size_mib").prop("disabled") + '' == 'false') && (parseInt(memory) < parseInt($j("#memory_size_mib").prop("min_value")) / 1024 || parseInt(memory) > parseInt($j("#memory_size_mib").prop("max_value")) / 1024)) {
+        var error_div = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Value between ' + $j("#memory_size_mib").prop("min_value") + ' and ' + $j("#memory_size_mib").prop("max_value") + ' for Memory</div>';
+        $j(".errorData").html(error_div);
+        return;
+    }
+    for (var i = 1; i < disc_details.length; i++) {
+		if(disc_details[i].operation !='delete') {
+       /* if (($j("#disk-" + i).val() + "").length != (parseInt($j("#disk-" + i).val() + "") + "").length) {
+            var error_div2 = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Numeric Value for Disk' + i + ' </div>';
+            $j(".errorData").html(error_div2);
+            return;
+        } */
+		if (($j("#disk-" + i).prop("disabled") + '' == 'false') && (parseInt($j("#disk-" + i).val() + "") < parseInt($j("#disk-" + i).prop("min_value")) || parseInt($j("#disk-" + i).val() + "") > parseInt($j("#disk-" + i).prop("max_value")))) {
+            var error_div = '<div class="alert alert-danger" style="padding: 5px 16px; position: relative; margin: 5px 0px;">Enter Value between ' + $j("#disk-" + i).prop("min_value") + ' and ' + $j("#disk-" + i).prop("max_value") + ' for DISK' + i + '</div>';
+            $j(".errorData").html(error_div);
+            return;
+        }
+	}
+    }
+    submitBlueprint();
+}
+
+function submitBlueprint() {
+
+    $j("#Confirm_Submission").prop("disabled", true);
+    $j("#backToUpdate").prop("disabled", true);
+    $j("#cancelAct").prop("disabled", true);
+    $j("#Update").prop("disabled", true);
+
+    $j("#final_status").show();
+    $j("#final_status").html('<strong>Updating application configuration...</strong>');
+    //VM Configuration
+    if ($j("#num_sockets").prop("disabled") + '' == 'false')
+        parsedApp.attrs_list[0].data["num_sockets_ruleset"].value = $j("#num_sockets").val();
+    if ($j("#num_vcpus_per_socket").prop("disabled") + '' == 'false')
+        parsedApp.attrs_list[0].data["num_vcpus_per_socket_ruleset"].value = $j("#num_vcpus_per_socket").val();
+    if ($j("#memory_size_mib").prop("disabled") + '' == 'false')
+        parsedApp.attrs_list[0].data["memory_size_mib_ruleset"].value = $j("#memory_size_mib").val();
+
+    //Disc details
+    console.log("Submit: disc=>" + JSON.stringify(disc_details));
+    for (var i = 1; i < discLength; i++) {
+        if ($j("#disk-" + i).prop("disabled") + '' == 'false') {
+            disc_details[i]["disk_size_mib"].value = $j("#disk-" + i).val() * 1024;
+        }
+        delete disc_details[i]["identifier"];
+    }
+    parsedApp.attrs_list[0].data["pre_defined_disk_list"] = disc_details;
+
+    //Network Adaptors
+    for (var i = 0; i < nicLength; i++) {
+        if ($j("#nic-" + i).prop("disabled") + '' == 'false') {
+            nic_details[i]["subnet_reference"].uuid = $j("#nic-" + i).val() + '';
+            nic_details[i]["subnet_reference"].name = '';
+        }
+        delete nic_details[i]["subnet_reference"]["cluster_name"];
+    }
+    parsedApp.attrs_list[0].data["pre_defined_nic_list"] = nic_details;
+
+    //Categories
+    parsedApp.attrs_list[0].data["pre_defined_categories"] = [];
+	for(var k = 0;k < pre_defined_categories.length; k++) {
+		//var set = 0;
+		var cat =(pre_defined_categories[k].value).split(":");
+		console.log("cat: "+cat[0]);
+		var index = tmp_array.indexOf(pre_defined_categories[k].value);
+		if (index > -1) {
+			tmp_array.splice(index, 1);
+			parsedApp.attrs_list[0].data["pre_defined_categories"].push({
+					"operation": "modify",
+					"value": tmp_array[index] + ''
+			});
+		}
+		else {
+			parsedApp.attrs_list[0].data["pre_defined_categories"].push({
+					"operation": "delete",
+					"value": pre_defined_categories[k].value + ''
+				});
+		}
+		
+	}
+    for (var i = 0; i < tmp_array.length; i++) {
+        parsedApp.attrs_list[0].data["pre_defined_categories"].push({
+            "operation": "add",
+            "value": tmp_array[i] + ''
+        });
+    }
+    console.log("final=>>" + JSON.stringify(parsedApp));
+    updateBpResponse(parsedApp);
+}
+
+function updateBpResponse(response) {
+
+    $j("#final_status").html('<strong>Applying changes...</strong>');
+    var gajax = new GlideAjax('Run_App_Actions');
+    gajax.addParam('sysparm_name', 'runAction');
+    gajax.addParam('sysparm_actionsysid', actSysId);
+    gajax.addParam('sysparm_actionVars', JSON.stringify(parsedApp));
+    gajax.getXML(getResponse);
+
+    function getResponse(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+        g_form.addInfoMessage(answer);
+        GlideModal.get().destroy();
+    }
+}
+// Section: DISC
+function Disks() {
+    var parsedAppBp = JSON.parse(act_vars);
+    var existing_discs = parsedAppBp.create_spec.resources['disk_list'];
+    for (var i = 0; i < existing_discs.length; i++) {
+        existing_discs[i].operation = 'modify';
+        if (i != 0) {
+            var temp_value = existing_discs[i].disk_size_mib;
+            existing_discs[i].disk_size_mib = {
+                "editable": "false",
+                "operation": "equal",
+                "value": temp_value + ''
+            };
+        }
+        disc_details.push(existing_discs[i]);
+    }
+    var parsedData = JSON.parse(parsedApp);
+    var data = parsedData.attrs_list[0].data;
+    disk_delete_allowed = data.disk_delete_allowed + '';
+    for (var i = 1; i < data.pre_defined_disk_list.length; i++) {
+        disc_details.push(data.pre_defined_disk_list[i]);
+    }
+    discLength = disc_details.length;
+    for (var i = 1; i < discLength; i++) {
+        disc_details[i].identifier = i + '';
+        selectDiscOption('addOption', JSON.stringify(disc_details[i]), '');
+    }
+    console.log("RV: disc det=>" + JSON.stringify(disc_details));
+}
+
+function check2(multiValOption) {
+    for (var i = 1; i < disc_details.length; i++) {
+        if (disc_details[i].identifier + '' == multiValOption.identifier + '') {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function selectDiscOption(type, multiValOption, key) {
+    var unesc_multiValOption = unescape(multiValOption);
+    var parsedValue = JSON.parse(unesc_multiValOption);
+    if (type == 'addOption' && check2(parsedValue) == -1 && parsedValue != '') {
+        disc_details.push(parsedValue);
+    }
+    if (type == 'removeOption' && check2(parsedValue) != -1) {
+        var index = check2(parsedValue);
+        if (index > -1) {
+            //disc_details.splice(index, 1);
+			if(disc_details[index].operation == 'add') {
+				disc_details.splice(index, 1);
+			}
+            else 
+				disc_details[index].operation = 'delete';
+        }
+    }
+    var spanOptions = '';
+    for (var i = 1; i < disc_details.length; i++) {
+        var temp = JSON.stringify(disc_details[i]);
+		var adapter_type='';
+		if(disc_details[i].device_properties && disc_details[i].device_properties.disk_address && disc_details[i].device_properties.disk_address.adapter_type) {
+		   adapter_type=disc_details[i].device_properties.disk_address.adapter_type+'';
+		}
+		if (disc_details[i].operation + '' == 'add') {
+			var exist='<span style="color: #22a5f7;border: 1px solid #91d2fb;border-radius: 4px;padding: 2px;margin:6px;">New</span>';
+		}
+		else {
+			var exist='<span style="color: #696969;border: 1px solid #a9a9a9;border-radius: 4px;padding: 2px;margin:6px;">Existing</span>';
+		}
+        var disk_value = disc_details[i].disk_size_mib.value / 1024;
+        if (disc_details[i].operation + '' != 'delete') {
+            if (disk_delete_allowed == 'true') {
+                spanOptions += '<div style="display: -webkit-inline-box; margin: 10px;"><span class="list-options" style="margin: 3px; padding-bottom: 10px; border: 1px solid rgb(242, 244, 245); line-height: 13px; font-size: 12px; display: inline-block; background-color: rgb(242, 244, 245); color: #000000;padding:10px; position: relative;width:440px;"><a href="#" onclick="selectDiscOption(\'removeOption\',\'' + escape(temp) + '\', \'' + '' + '\')"><i class="fa fa-trash-o" style="padding-left: 400px;font-size: 13px;margin-top: -4px;color:#22a5f7"></i></a><div style="width: 400px;"><label>Disk '+i+': '+adapter_type+' <\/label>'+exist+'<input type=\"text\" class=\"form-control\" name=\"disk-' + i + '\" id=\"disk-' + i + '\" placeholder=\"Size (GiB)\" value=\"' + disk_value + '\" \/><\/div></span></div>';
+            } else {
+                spanOptions += '<div style="display: -webkit-inline-box; margin: 10px;"><span class="list-options" style="margin: 3px; padding-bottom: 10px; border: 1px solid rgb(242, 244, 245); line-height: 13px; font-size: 12px; display: inline-block; background-color: rgb(242, 244, 245); color: #000000;padding:10px; position: relative;width:440px;"><a href="#" onclick="selectDiscOption(\'removeOption\',\'' + escape(temp) + '\', \'' + '' + '\')"></a><div style="width: 400px;padding:5px;"><label>Disk '+i+': '+adapter_type+' <\/label>'+exist+'<input type=\"text\" class=\"form-control\" name=\"disk-' + i + '\" id=\"disk-' + i + '\" placeholder=\"Size (GiB)\" value=\"' + disk_value + '\" \/><\/div></span></div>';
+            }
+        }
+    }
+
+    $j(".bodyData_DISK").html(spanOptions);
+	for (var i = 1; i < disc_details.length; i++) {
+        $j('#disk-' + i).val(disc_details[i].disk_size_mib.value / 1024);
+        if (disc_details[i].disk_size_mib.editable + '' == 'true') {
+            $j('#disk-' + i).prop("disabled", false);
+            $j('#disk-' + i).prop("min_value", disc_details[i].disk_size_mib.min_value / 1024);
+            $j('#disk-' + i).prop("max_value", disc_details[i].disk_size_mib.max_value / 1024);
+        } else {
+            $j('#disk-' + i).prop("disabled", true);
+        }
+    }
+}
+//To add or delete Network Adaptors
+
+function NetworkAdaptors() {
+    var parsedAppBp = JSON.parse(act_vars);
+    var exixting_nics = parsedAppBp.create_spec.resources['nic_list'];
+    var ni_details = [];
+    for (var i = 0; i < exixting_nics.length; i++) {
+        exixting_nics[i].identifier = i + '';
+        exixting_nics[i].operation = 'modify';
+        ni_details.push(exixting_nics[i]);
+    }
+    console.log("RV:ni_details=>" + JSON.stringify(ni_details));
+    var parsedData = JSON.parse(parsedApp);
+    var data = parsedData.attrs_list[0].data;
+    nic_delete_allowed = data.nic_delete_allowed + '';
+    for (var i = 1; i < data.pre_defined_nic_list.length; i++) {
+        ni_details.push(data.pre_defined_nic_list[i]);
+    }
+    console.log("RV2:ni_details=>" + JSON.stringify(ni_details));
+    //var ni_details = data.pre_defined_nic_list;
+    var gajax = new GlideAjax('Run_App_Actions');
+    gajax.addParam('sysparm_name', 'getNicDetails');
+    gajax.addParam('sysparm_nic_details', JSON.stringify(ni_details));
+    gajax.getXML(setNicDetails);
+}
+
+function setNicDetails(response) {
+    var answer = response.responseXML.documentElement.getAttribute("answer");
+    nic_details = JSON.parse(answer);
+    nicLength = nic_details.length;
+    console.log("RV:nic_details=>" + JSON.stringify(nic_details));
+    for (var i = 0; i < nic_details.length; i++) {
+        selectNicOption('addOption', JSON.stringify(nic_details[i]), '');
+    }
+    console.log("RV2:nic_details=>" + JSON.stringify(nic_details));
+}
+
+function check(multiValOption) {
+    for (var i = 0; i < nic_details.length; i++) {
+        if (nic_details[i].identifier + '' == multiValOption.identifier) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function selectNicOption(type, multiValOption, key) {
+    var unesc_multiValOption = unescape(multiValOption);
+    var parsedValue = JSON.parse(unesc_multiValOption);
+    if (type == 'addOption' && check(parsedValue) == -1 && parsedValue != '') {
+        nic_details.push(parsedValue);
+    }
+    if (type == 'removeOption' && check(parsedValue) != -1) {
+        var index = check(parsedValue);
+        if (index > -1) {
+            //nic_details.splice(index, 1);
+			if(nic_details[index].operation == 'add') {
+				nic_details.splice(index, 1);
+			}
+            else 
+				nic_details[index].operation = 'delete';
+        }
+    }
+    var spanOptions = '';
+    for (var i = 0; i < nic_details.length; i++) {
+        if (nic_details[i].operation + '' != 'delete') {
+			if (nic_details[i].operation + '' == 'add') {
+			var exist='<span style="color: #22a5f7;border: 1px solid #91d2fb;border-radius: 4px;padding: 2px; margin:6px;">New</span>';
+		}
+		else {
+			var exist='<span style="color: #696969;border: 1px solid #a9a9a9;border-radius: 4px;padding: 2px;margin:6px;">Existing</span>';
+		}
+            var temp = JSON.stringify(nic_details[i]);
+            if (nic_delete_allowed == 'true' && i > 0) {
+                console.log(i + nic_delete_allowed);
+                spanOptions += '<div style="display: -webkit-inline-box; margin: 10px;"><span class="list-options" style="margin: 3px; padding-bottom: 10px; padding-top:5px; border: 1px solid rgb(242, 244, 245); line-height: 13px; font-size: 12px; display: inline-block; border-radius: 2px; background-color: rgb(242, 244, 245); color: #007eff;"><a href="#" onclick="selectNicOption(\'removeOption\',\'' + escape(temp) + '\', \'' + '' + '\')"><i class="fa fa-trash-o" style="padding-left: 420px;font-size: 13px;margin-top: -4px;color:#22a5f7"></i></a><div class="info-message" style=" color: #000000;padding-left:10px;padding-bottom:10px;position: relative; width:440px;"><div style="margin: 3px;">NIC ' + (i + 1) + exist+'</div> <select name="test' + i + '" id="test' + i + '" style="border-color:#989898; height: 27px; width:400px"><option value=' + nic_details[i].subnet_reference.uuid + '> ' + nic_details[i].subnet_reference.name + ' </option></select></div></span></div>';
+            } else {
+                console.log("i" + i + nic_delete_allowed);
+                spanOptions += '<div style="display: -webkit-inline-box; margin: 10px;"><span class="list-options" style="margin: 3px; padding-bottom: 10px; border: 1px solid rgb(242, 244, 245); line-height: 13px; font-size: 12px; display: inline-block; border-radius: 2px; background-color: rgb(242, 244, 245); color: #007eff;"><a href="#" onclick="selectNicOption(\'removeOption\',\'' + escape(temp) + '\', \'' + '' + '\')"></a><div class="info-message" style="  color: #000000; padding:10px; position: relative; width:440px;"><div style="margin: 3px;">NIC ' + (i + 1) + exist+'</div> <select name="test' + i + '" id="test' + i + '" style="border-color:#989898; height: 27px; width:400px"><option value=' + nic_details[i].subnet_reference.uuid + '> ' + nic_details[i].subnet_reference.name + ' </option></select></div></span></div>';
+            }
+			/*if (nic_details[i].operation + '' == 'add') {
+				var subnet_parsed=JSON.parse(subnet_reference);
+				console.log("subnet_parsed.length: "+subnet_parsed.length);
+				for(var m=0;m<subnet_parsed.length;m++) {
+					console.log("subnet_reference[m].name: "+subnet_parsed[m].name + i);
+					var option = '<option value="' + subnet_parsed[m].uuid + '">' + subnet_parsed[m].name + '</option>';
+					$j("#test2").append(option);
+				}
+			}*/
+        }
+    }
+    $j(".bodyData_NetworkAdaptors").html(spanOptions);
+	for (var i = 0; i < nic_details.length; i++) {
+        if (nic_details[i].editable + '' == 'true') {
+            $j('#test' + i).prop("disabled", false);
+        } else {
+            $j('#test' + i).prop("disabled", true);
+        }
+		if (nic_details[i].operation + '' == 'add') {
+				var subnet_parsed=JSON.parse(subnet_reference);
+				console.log("subnet_parsed.length: "+subnet_parsed.length);
+				for(var m=0;m<subnet_parsed.length;m++) {
+					console.log("subnet_reference[m].name: "+subnet_parsed[m].name + i);
+					var option = '<option value="' + subnet_parsed[m].uuid + '">' + subnet_parsed[m].name + '</option>';
+					$j("#test"+i).append(option);
+				}
+		}
+    }
+}
+
+// To add or delete Categories
+function Categories() {
+    var parsedData = JSON.parse(parsedApp);
+    var data = parsedData.attrs_list[0].data;
+    categories_delete_allowed = parsedData.attrs_list[0].data.categories_delete_allowed + '';
+    categories_add_allowed = parsedData.attrs_list[0].data.categories_add_allowed + '';
+    var category_details = data.pre_defined_categories;
+	pre_defined_categories = data.pre_defined_categories;
+	console.log("category_details : "+JSON.stringify(category_details));
+	if (categories_add_allowed == 'true') {
+        var inputType = '<select name="test" id="test" placeholder ="Key: Value" style="border-color:#87cefa; width: 500px; height: 30px;" onchange="selectOption(\'addOption\',this.value, \'' + '' + '\')"><option value=\'empty\'></option></select>';
+        $j(".bodyData_Categories").append(inputType);
+        for (var i = 0; i < credential_list_parsed.length; i++) {
+            var option = '<option value=' + credential_list_parsed[i] + '>' + credential_list_parsed[i] + '</option>';
+            $j("#test").append(option);
+        }
+    }
+    for (var i = 0; i < category_details.length; i++) {
+        tmp_array.push(category_details[i].value);
+        selectOption('', category_details[i].value, '');
+		console.log("category_details[i].value :"+category_details[i].value);
+		addRemoveCategories('add',category_details[i].value);
+    }
+}
+
+function selectOption(type, multiValOption, key) {
+	
+    if ((type == 'addOption' && tmp_array.indexOf(multiValOption) == -1 && multiValOption != '') && categories_add_allowed == 'true') {
+		tmp_array.push(multiValOption);
+		addRemoveCategories('add',multiValOption);
+        //$j('#test').find('option[value="' + multiValOption + '"]').remove();
+    }
+    if ((type == 'removeOption' && tmp_array.indexOf(multiValOption) != -1) && categories_delete_allowed == 'true') {
+       var index = tmp_array.indexOf(multiValOption);
+        if (index > -1) {
+            tmp_array.splice(index, 1);
+        }
+       /* var option = '<option value="' + multiValOption + '">' + multiValOption + '</option>';
+        $j("#test").append(option);*/
+		addRemoveCategories('remove',multiValOption);
+    }
+    var spanOptions = '';
+	console.log("tmp_array: "+tmp_array);
+    for (var i = 0; i < tmp_array.length; i++) {
+        if (categories_delete_allowed == 'true') {
+            spanOptions += '<div style="display: -webkit-inline-box; margin: 3px;"><span class="list-options" style="margin: 3px; padding: 5px; border: 1px solid rgba(0, 126, 255, 0.24); line-height: 13px; font-size: 12px; display: inline-block; border-radius: 2px; background-color: rgba(0, 126, 255, 0.08); color: #007eff;">' + tmp_array[i] + '<a href="#" onclick="selectOption(\'removeOption\',\'' + tmp_array[i] + '\', \'' + '' + '\')"><i class="icon-cross" style="padding-left: 7px;font-size: 11px;margin-top: -4px;"></i></a></span></div>';
+        } else {
+            spanOptions += '<div style="display: -webkit-inline-box; margin: 3px;"><span class="list-options" style="margin: 3px; padding: 5px; border: 1px solid rgba(0, 126, 255, 0.24); line-height: 13px; font-size: 12px; display: inline-block; border-radius: 2px; background-color: rgba(0, 126, 255, 0.08); color: #007eff;">' + tmp_array[i] + '<a href="#" onclick="selectOption(\'removeOption\',\'' + tmp_array[i] + '\', \'' + '' + '\')"></a></span></div>';
+        }
+    }
+    $j(".bodyData2_Categories").html(spanOptions);
+}
+
+function addRemoveCategories(key,value) {
+	if(key == 'add') {
+		var cat = value.split(":");
+		for(var i =0; i<credential_list_parsed.length; i++) {
+			if(credential_list_parsed[i].includes(cat[0])) {
+				$j('#test').find('option[value="' + credential_list_parsed[i] + '"]').remove();
+			}
+		}
+	}
+	if(key == 'remove'){
+		var cat = value.split(":");
+		for(var i =0; i<credential_list_parsed.length; i++) {
+			if(credential_list_parsed[i].includes(cat[0])) {
+				console.log("credential_list_parsed[i]: "+credential_list_parsed[i]);
+				var option = '<option value="' + credential_list_parsed[i] + '">' + credential_list_parsed[i] + '</option>';
+				$j("#test").append(option);
+			}
+		}
+	}
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_nuta2_nutanix_ca_update_patch_UI_page.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>  
+	<body>
+		<div class="errorData"></div>
+		<div>
+			<div id="update_form">
+				<div class="form-group">
+					<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;" data-toggle="collapse" aria-expanded="true" href="#collapseExample" aria-controls="collapseExample" ><strong>+ VM Configuration</strong></div>
+					<div class="collapse" id="collapseExample" style="margin: 10px 16px; width:500px">
+					<div class="form-group" style="width:400px">
+						<label>vCPUs</label>
+						<input type="text" class="form-control" name="num_sockets" id="num_sockets" placeholder="vCPUs" value="" disabled=""/>
+					</div>
+					<div class="form-group" style="width:400px">
+						<label>Cores per vCPU</label>
+						<input type="text" class="form-control" name="num_vcpus_per_socket" id="num_vcpus_per_socket" placeholder="Num cores" value="" disabled=""/>
+					</div>
+					<div class="form-group" style="width:400px">
+						<label>Memory (GiB)</label>
+						<input type="text" class="form-control" name="memory_size_mib" id="memory_size_mib" placeholder="Memory" value="" disabled=""/>
+					</div>
+					</div>
+					<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;" data-toggle="collapse" aria-expanded="true" href="#collapseExample2" aria-controls="collapseExample2" ><strong>+ Disks</strong></div>
+					<div class="collapse" id="collapseExample2">
+						<script>
+							addLoadEvent( function() {
+							Disks();
+							});
+						</script>
+						<div class="bodyData_DISK"></div>
+					</div>
+					<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;" data-toggle="collapse" aria-expanded="true" href="#collapseExample3" aria-controls="collapseExample3" ><strong>+ Network Adaptors</strong></div>
+					<div class="collapse" id="collapseExample3">
+						<script>
+							addLoadEvent( function() {
+							NetworkAdaptors();
+							});
+						</script>
+						<div class="bodyData_NetworkAdaptors"></div>
+					</div>
+					<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;" data-toggle="collapse" aria-expanded="true" href="#collapseExample4" aria-controls="collapseExample4" ><strong>+ Categories</strong></div>
+					<div class="collapse" id="collapseExample4">
+						<script>
+							addLoadEvent( function() {
+							Categories();
+							});
+						</script>
+						<div class="bodyData2_Categories"></div>
+						<div class="bodyData_Categories"></div>
+					</div>
+				</div>
+			</div>
+			<div id="diff_page" style="none">
+			</div>
+			<div id="final_status" style="display:none;"></div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-sm-9 pull-right" style="width: max-content;">
+						<button class="btn btn-default" id="backToUpdate" style="display:none;">Back</button>
+						<button class="btn btn-default" id="cancelAct">Cancel</button>
+						<button class="btn btn-primary" id="Update">Update</button>
+						<button class="btn btn-primary" id="Confirm_Submission" style="display:none;">Confirm</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<style>
+		#diff_table {
+		font-family: SourceSansPro, "Helvetica Neue", Arial;
+		border-collapse: collapse;
+		width: 100%;
+		}
+		#diff_table td,#diff_table th{
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+		}
+		
+	</style>
+</j:jelly>]]></html>
+        <name>update_patch_UI_page</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 07:15:37</sys_created_on>
+        <sys_id>0682926e9710111027f8fbc71153af91</sys_id>
+        <sys_mod_count>35</sys_mod_count>
+        <sys_name>update_patch_UI_page</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_page_0682926e9710111027f8fbc71153af91</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-01 07:33:43</sys_updated_on>
+    </sys_ui_page>
+</record_update>

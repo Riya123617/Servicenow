@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="Solr">f2b83d5e9790111027f8fbc71153afa2</sc_cat_item>
+        <sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:43:44</sys_created_on>
+        <sys_id>f6b8b19e9790111027f8fbc71153afad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Solr</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_f6b8b19e9790111027f8fbc71153afad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:43:44</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_f6b8b19e9790111027f8fbc71153afad</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="Solr">f2b83d5e9790111027f8fbc71153afa2</sc_cat_item><sc_category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 10:43:44</sys_created_on><sys_id>f6b8b19e9790111027f8fbc71153afad</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Marketplace Blueprint.Solr</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_f6b8b19e9790111027f8fbc71153afad</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 10:43:44</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-1943900128</payload_hash>
+        <record_name>Marketplace Blueprint.Solr</record_name>
+        <reverted_from/>
+        <source>9197755a9790111027f8fbc71153af96</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:43:44</sys_created_on>
+        <sys_id>b2b8b19e9790111027f8fbc71153afb0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a4c2948b0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:43:44</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>bab8b19e479011102cad763763634daf</update_guid>
+        <update_guid_history>bab8b19e479011102cad763763634daf:-1943900128</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Marketplace Blueprint.Solr">ad32262e97d0111027f8fbc71153af41</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:23:26</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>2c3bd63d217042809bbd29dc3f624000</sys_id>
+        <sys_metadata>f6b8b19e9790111027f8fbc71153afad</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Marketplace Blueprint.Solr</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_f6b8b19e9790111027f8fbc71153afad</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_f6b8b19e9790111027f8fbc71153afad">b2b8b19e9790111027f8fbc71153afb0</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:23:26</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

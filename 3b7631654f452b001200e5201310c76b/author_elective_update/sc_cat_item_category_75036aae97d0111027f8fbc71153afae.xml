@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="Nutanix IaaS SNOW">fd036aae97d0111027f8fbc71153afa0</sc_cat_item>
+        <sc_category display_value="Blueprint">7a30431637512300fdfc097973990ec8</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:00</sys_created_on>
+        <sys_id>75036aae97d0111027f8fbc71153afae</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Blueprint.Nutanix IaaS SNOW</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_75036aae97d0111027f8fbc71153afae</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:00</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_75036aae97d0111027f8fbc71153afae</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="Nutanix IaaS SNOW">fd036aae97d0111027f8fbc71153afa0</sc_cat_item><sc_category display_value="Blueprint">7a30431637512300fdfc097973990ec8</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:27:00</sys_created_on><sys_id>75036aae97d0111027f8fbc71153afae</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Blueprint.Nutanix IaaS SNOW</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_75036aae97d0111027f8fbc71153afae</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:27:00</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-371400309</payload_hash>
+        <record_name>Blueprint.Nutanix IaaS SNOW</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:00</sys_created_on>
+        <sys_id>b9036aae97d0111027f8fbc71153afb1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a96bc3040000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:00</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>b1036aaea5d0111040311438f4d2c2b1</update_guid>
+        <update_guid_history>b1036aaea5d0111040311438f4d2c2b1:-371400309</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Blueprint.Nutanix IaaS SNOW">b23339e09728951027f8fbc71153af3b</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:06:01</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>11072930e0db4a20814f297473892400</sys_id>
+        <sys_metadata>75036aae97d0111027f8fbc71153afae</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Blueprint.Nutanix IaaS SNOW</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_75036aae97d0111027f8fbc71153afae</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_75036aae97d0111027f8fbc71153afae">b9036aae97d0111027f8fbc71153afb1</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:06:01</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

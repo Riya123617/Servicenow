@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_nuta2_nutanix_ca.Nutanix_Action_Utils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Nutanix_Action_Utils</name>
+        <script><![CDATA[var Nutanix_Action_Utils = Class.create();
+Nutanix_Action_Utils.prototype = {
+    initialize: function() {
+        this.utils = new Nutanix_Calm_Utils();
+        this.logger = new Nutanix_Calm_Logger();
+        this.actBody = {
+            "api_version": "",
+            "metadata": "",
+            "spec": {
+                "target_uuid": "",
+                "target_kind": "Application",
+                "args": []
+            }
+        };
+    },
+
+    _common_action_body: function(app_resp) {
+        this.actBody.api_version = app_resp.api_version;
+        delete app_resp.metadata.owner_reference;
+        this.actBody.metadata = app_resp.metadata;
+    },
+
+    app_clone_body: function(app_resp, action_variables) {
+        action_variables = JSON.parse(action_variables);
+        this._common_action_body(app_resp);
+        this.actBody.spec = action_variables;
+        return JSON.stringify(this.actBody);
+    },
+    snapshot_crd_body: function(app_resp, action_variables) {
+
+        action_variables = JSON.parse(action_variables);
+        this._common_action_body(app_resp);
+        var substrate_uuid = app_resp.status.resources.deployment_list[0].substrate_configuration.element_list[0].uuid + '';
+        this.actBody.spec.target_uuid = app_resp.metadata.uuid;
+
+        for (var i in action_variables)
+            this.actBody.spec.args[i] = action_variables[i];
+        var snapshot_crd_json = {
+            "substratUUID": substrate_uuid,
+            "actionBody": this.actBody
+        };
+		return snapshot_crd_json;
+    },
+
+    image_create_body: function(app_resp, action_variables) {
+
+        action_variables = JSON.parse(action_variables);
+        this._common_action_body(app_resp);
+        var substrate_uuid = action_variables.substrate_uuid + "";
+        this.actBody.spec = {
+            "image_details_list": action_variables["image_details_list"]
+        };
+        var image_create_json = {
+            "substratUUID": substrate_uuid,
+            "actionBody": this.actBody
+        };
+//         gs.info(JSON.stringify(image_create_json));
+        return image_create_json;
+    },
+	
+	fetch_credential_list: function() {
+        gs.info("Inside fetch_credential_list");
+        var utils = new Nutanix_Calm_Utils();
+        var appResp = utils.makeCalmApiCall('POST', '/groups', '{"entity_type":"category","filter_criteria":"name!=CalmApplication;name!=CalmDeployment;name!=CalmService;name!=CalmPackage;name!=CalmProject;name!=CalmUser;name!=CalmVmUniqueIdentifier;name!=CalmClusterUuid","grouping_attribute":"abac_category_key","group_sort_attribute":"name","group_count":60,"group_attributes":[{"attribute":"name","ancestor_entity_type":"abac_category_key"},{"attribute":"immutable","ancestor_entity_type":"abac_category_key"},{"attribute":"total_policy_counts","ancestor_entity_type":"abac_category_key"},{"attribute":"total_entity_counts","ancestor_entity_type":"abac_category_key"}],"group_member_count":1000,"group_member_offset":0,"group_member_sort_attribute":"value","group_member_attributes":[{"attribute":"name"},{"attribute":"value"},{"attribute":"description"},{"attribute":"immutable"}],"query_name":"prism:CategoriesQueryModel"}');
+        var parsedAppResp = JSON.parse(appResp.getBody());
+        var group_list = parsedAppResp.group_results;
+        var category_list = [];
+        for (var i = 0; i < group_list.length; i++) {
+            var entity_results = group_list[i].entity_results;
+            var group_summaries = group_list[i]["group_summaries"]["sum:name"]["values"][0]["values"][0];
+            for (var j = 0; j < entity_results.length; j++) {
+                var temp = entity_results[j]["data"][1]["values"][0]["values"];
+                category_list.push(group_summaries + ':' + temp + '');
+            }
+        }
+        gs.info("category_list:" + JSON.stringify(category_list));
+        return (JSON.stringify(category_list));
+    },
+
+
+    default_actbody: function(app_resp, action_variables) {
+
+        if (action_variables != '')
+            action_variables = JSON.parse(action_variables);
+
+        this._common_action_body(app_resp);
+        this.actBody.spec.target_uuid = app_resp.metadata.uuid;
+
+        for (var i in action_variables)
+            this.actBody.spec.args[i] = action_variables[i];
+        var default_json = this.actBody;
+
+        return JSON.stringify(default_json);
+    },
+	
+	patch_actbody: function(app_resp, action_variables) {
+        try {
+            gs.info("RV1: patch_actbody" + JSON.stringify(app_resp));
+            gs.info("RV2: patch_actbody" + JSON.stringify(action_variables));
+            if (action_variables != '')
+                action_variables = JSON.parse(action_variables);
+
+            this._common_action_body(app_resp);
+            this.actBody.spec.target_uuid = app_resp.metadata.uuid;
+            this.actBody.spec.args = {
+                "patch": {},
+                "variables": []
+            };
+            for (var i in action_variables)
+                this.actBody.spec.args.patch[i] = action_variables[i];
+
+            /*for (var i in action_variables.variable_list)
+            	this.actBody.spec.args.variables[i] = action_variables.variable_list[i];*/
+
+            delete this.actBody.spec.args.patch.message_list;
+            delete this.actBody.spec.args.patch.runbook;
+            delete this.actBody.spec.args.patch.state;
+            var default_json = this.actBody;
+            gs.info("RV: patch_actbody" + JSON.stringify(default_json));
+            return JSON.stringify(default_json);
+        } catch (e) {
+            gs.info("RV:error patch_actbody" + e);
+        }
+    },
+
+    app_update_blueprint_call: function(action_sys_id) {
+
+        try {
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                var app_uuid = appGr.parent_uuid + '';
+
+                var getAppBlueprint = this.utils.makeCalmApiCall('GET', '/apps/' + app_uuid + '/blueprints/original', '');
+                if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201')
+                    return getAppBlueprint.getBody();
+                else
+ this.logger.error("Error in app_update_blueprint_call API call. Error: " + getAppBlueprint.getBody());
+					
+            }
+        } catch (e) {
+            this.logger.error("Error while fetching app blueprint[original] API call. Error: " + e);
+        }
+
+    },
+	
+	patch_app_update_blueprint_call: function(action_sys_id, action_name) {
+        try {
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                var app_uuid = appGr.parent_uuid + '';
+                var action_details = '';
+                var getAppBlueprint = this.utils.makeCalmApiCall('GET', '/apps/' + app_uuid, '');
+                if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201') {
+                    var blueprintDetail = JSON.parse(getAppBlueprint.getBody());
+                    /*var patch_list = blueprintDetail.status.resources.patch_list;
+                    for (var i in patch_list) {
+                        if (patch_list[i].name + '' == action_name) {
+                            action_details = patch_list[i];
+                        }
+                    }*/
+                    // gs.info("RV:action_details" + JSON.stringify(action_details));
+                    return JSON.stringify(blueprintDetail);
+                } else
+                    this.logger.error("Error in patch_app_update_blueprint_call API call. Error: " + getAppBlueprint.getBody());
+
+            }
+        } catch (e) {
+            this.logger.error("Error while fetching app blueprint[original] API call. Error: " + e);
+        }
+
+    },
+	
+	fetch_recovery_points: function(action_sys_id, parsedApp, action_name) {
+        try {
+            var appDetails = JSON.parse(parsedApp);
+            /*var action_list = appDetails.status.resources.action_list;
+                    for (var i in action_list) {
+                        if (action_list[i].name + '' == action_name) {
+                            var action_details = action_list[i];
+                        }
+                    }
+			gs.info("fetch_recovery_points 2"+JSON.stringify(action_details));
+			var task_list = action_details["runbook"]["task_definition_list"];
+			gs.info("fetch_recovery_points 3"+JSON.stringify(task_list));
+			for(var i in task_list){
+				if(task_list[i].type+''=='CALL_RUNBOOK') {
+					substrate_reference_uuid= task_list[i].target_any_local_reference.uuid+'';
+				}
+			}*/
+           // var substrate_reference_uuid = appDetails.status.resources.deployment_list[0].element_list[0].substrate_element_reference.name + '';
+            //var substrate_reference = substrate_reference_uuid.substring(0, substrate_reference_uuid.length - 2);
+			var substrate_reference = appDetails.status.resources.deployment_list[0].substrate_configuration.uuid + '';
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                var app_uuid = appGr.parent_uuid + '';
+                var getRecoveryList = this.utils.makeCalmApiCall('POST', '/apps/' + app_uuid + '/recovery_groups/list', '{"filter":"substrate_reference==' + substrate_reference + ';expiration_time=ge=1652034600000000","length":250,"offset":0}');
+                if (getRecoveryList.getStatusCode() == '200' || getRecoveryList.getStatusCode() == '201') {
+                    var RecoveryList = JSON.parse(getRecoveryList.getBody());
+
+                    gs.info(substrate_reference + "RV:RecoveryList: " + JSON.stringify(RecoveryList));
+                    return JSON.stringify(RecoveryList);
+                } else
+                    this.logger.error("Error in fetch_recovery_points API call. Error: " + getRecoveryList.getBody());
+
+            }
+        } catch (e) {
+            this.logger.error("Error while fetching recovery points. Error: " + e);
+        }
+
+    },
+    check_ngt_install: function(act_sys_id) {
+        try {
+            var appUtil = new Nutanix_Calm_Utils();
+            var not = new GlideRecordSecure(appUtil.configuration.table.NutanixCalmAction);
+            if (not.get(act_sys_id)) {
+                var app_id = not.parent_uuid + '';
+            }
+            var appGr = new GlideRecordSecure(appUtil.configuration.table.NutanixCalmApplication);
+            appGr.addQuery('uuid', app_id);
+            appGr.query();
+            if (appGr.next()) {
+                var enabled_services = appGr.services_enabled + '';
+                var appType = appGr.application_type + '';
+				var project_name = appGr.project_uuid + '';
+            }
+            var ngt_check = {
+                "enabled_services": enabled_services,
+                "appType": appType,
+				"project_name": project_name
+            };
+            return JSON.stringify(ngt_check);
+        } catch (e) {
+            this.logger.error("check_ngt_install. Error: " + e);
+        }
+    },
+	
+	check_ngt_install_2: function(act_sys_id) {
+        try {
+            var appUtil = new Nutanix_Calm_Utils();
+			var subnet_reference =[];
+            var not = new GlideRecordSecure(appUtil.configuration.table.NutanixCalmAction);
+            if (not.get(act_sys_id)) {
+                var app_id = not.parent_uuid + '';
+            }
+            var appGr = new GlideRecordSecure(appUtil.configuration.table.NutanixCalmApplication);
+            appGr.addQuery('uuid', app_id);
+            appGr.query();
+            if (appGr.next()) {
+                var enabled_services = appGr.services_enabled + '';
+                var appType = appGr.application_type + '';
+				var project_name = appGr.project_uuid + '';
+            }
+			var gr = new GlideRecord('x_nuta2_nutanix_ca_nutanix_project');
+			gr.addQuery('name',project_name);
+			gr.query();
+			if(gr.next()) {
+				var subnet_list = (gr.subnet).split(',');
+				for(var i=0;i<subnet_list.length;i++) {
+					var gsr = new GlideRecord('x_nuta2_nutanix_ca_subnet');
+					gsr.addQuery('sys_id',subnet_list[i]);
+					gsr.query();
+					if(gsr.next()) {
+						subnet_reference.push({"name":gsr.name+'',"uuid":gsr.uuid+''});
+					}
+				}
+			}
+            return JSON.stringify(subnet_reference);
+        } catch (e) {
+            this.logger.error("check_ngt_install_2. Error: " + e);
+        }
+    },
+
+    app_blueprint_validate_call: function(action_sys_id, updated_bp) {
+
+        try {
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                var app_uuid = appGr.parent_uuid + '';
+
+                var getAppBlueprint = this.utils.makeCalmApiCall('POST', '/apps/' + app_uuid + '/blueprints/new/validate', updated_bp);
+                if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201')
+                    return getAppBlueprint.getBody();
+                else{
+                    this.logger.error("Error in app_blueprint_validate_call API call. Error: " + getAppBlueprint.getBody());
+					return getAppBlueprint.getBody();
+				}
+			}
+        } catch (e) {
+            this.logger.error("Error while validating app blueprint[new]. Error: " + e);
+        }
+
+    },
+
+    update_app_blueprint: function(action_sys_id, updated_bp) {
+        try {
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                var app_uuid = appGr.parent_uuid + '';
+
+                var getAppBlueprint = this.utils.makeCalmApiCall('PUT', '/apps/' + app_uuid + '/blueprints/new', updated_bp);
+
+                if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201')
+                    return getAppBlueprint.getBody();
+                else
+                    this.logger.error("Error in app_update_blueprint_call API call. Error: " + getAppBlueprint.getBody());
+            }
+        } catch (e) {
+            this.logger.error("Error while updating app blueprint[new]. Error: " + e);
+        }
+    },
+
+    update_actBody: function(app_resp) {
+
+        this._common_action_body(app_resp);
+        this.actBody.spec.target_uuid = app_resp.metadata.uuid;
+
+        delete this.actBody.spec.args;
+        var default_json = this.actBody;
+
+        return JSON.stringify(default_json);
+    },
+
+    get_os_type_singleVM: function(action_sys_id) {
+        var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+        if (appGr.get(action_sys_id)) {
+            var app_uuid = appGr.parent_uuid + '';
+            var os_type = '';
+
+            var getAppBlueprint = this.utils.makeCalmApiCall('GET', '/apps/' + app_uuid, '');
+
+            if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201')
+                os_type = JSON.parse(getAppBlueprint.getBody()).status.resources.deployment_list[0].substrate_configuration.os_type + '';
+
+            return os_type;
+        }
+    },
+
+    get_provider_type_singleVM: function(action_sys_id, sys_id_type) {
+
+        var app_uuid = "";
+
+        if (sys_id_type == "actions") {
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                app_uuid = appGr.parent_uuid + '';
+            }
+        }
+
+        if (sys_id_type == "restore_points") {
+            var restoreGr = new GlideRecord(this.utils.configuration.table.recoveryPoints);
+            if (restoreGr.get(action_sys_id)) {
+                app_uuid = restoreGr.parent_uuid + '';
+            }
+        }
+
+        var getAppBlueprint = this.utils.makeCalmApiCall('GET', '/apps/' + app_uuid, '');
+        var provider_type = '';
+
+        if (getAppBlueprint.getStatusCode() == '200' || getAppBlueprint.getStatusCode() == '201')
+            provider_type = JSON.parse(getAppBlueprint.getBody()).status.resources.deployment_list[0].substrate_configuration.type + '';
+
+        return provider_type + '';
+    },
+
+    getDiskList: function(action_sys_id) {
+
+        try {
+            var app_uuid = "";
+            var disk_list = [];
+
+            var appGr = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+            if (appGr.get(action_sys_id)) {
+                app_uuid = appGr.parent_uuid + '';
+            }
+
+            var getAppBlueprint = this.utils.makeCalmApiCall('GET', '/apps/' + app_uuid, '');
+			if(getAppBlueprint.getStatusCode() != 200) {
+				this.logger.error("Failed getting application data with error code "+getAppBlueprint.getStatusCode()+" due to error:"+getAppBlueprint.getBody());
+				return "";
+			}
+
+            var deployment_list = JSON.parse(getAppBlueprint.getBody()).status.resources.deployment_list;
+
+            for (var i = 0; i < deployment_list.length; i++) {
+
+                if (deployment_list[i].substrate_configuration.type + "" != "AHV_VM")
+                    continue;
+
+                var element_list = deployment_list[i].substrate_configuration.element_list;
+                for (var j = 0; j < element_list.length; j++) {
+                    var plaform_data = (element_list[j].platform_data) ? JSON.parse(element_list[j].platform_data) : {};
+
+                    var boot_device = (plaform_data.status.resources.boot_config && plaform_data.status.resources.boot_config.boot_device && plaform_data.status.resources.boot_config.boot_device.disk_address) ? plaform_data.status.resources.boot_config.boot_device.disk_address : {};
+                    disk_list.push({
+                        "boot_device": boot_device,
+                        "substrate_uuid": element_list[j].uuid,
+                        "disk_list": plaform_data.status.resources.disk_list,
+                        "vm_name": element_list[j].name
+                    });
+                }
+            }
+
+            return JSON.stringify(disk_list);
+        } catch (e) {
+            this.logger.info("Error in fetching disk list:" + e);
+        }
+
+    },
+
+    negative_sync_actions: function(app_uuid, source_action_list) {
+
+        var updated_act_array = [];
+        var current_act_array = [];
+        var deleted_actions = [];
+
+        var parseAction = JSON.parse(source_action_list);
+        for (var i = 0; i < parseAction.length; i++)
+            updated_act_array.push(parseAction[i].uuid + "");
+
+        var grAction = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+        grAction.addQuery('parent_uuid', app_uuid);
+        grAction.query();
+        while (grAction.next())
+            current_act_array.push(grAction.uuid + "");
+
+        for (var uuid in current_act_array)
+            if (!(uuid in updated_act_array)) {
+                this.logger.info("Deleted actions:" + uuid);
+                var grActionDel = new GlideRecord(this.utils.configuration.table.NutanixCalmAction);
+                grActionDel.addQuery('uuid', uuid);
+                grActionDel.query();
+                if (grActionDel.next())
+                    grActionDel.deleteRecord();
+            }
+    },
+
+    type: 'Nutanix_Action_Utils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-07-03 07:55:10</sys_created_on>
+        <sys_id>76ca7b134f1e33008373224f9310c7e0</sys_id>
+        <sys_mod_count>127</sys_mod_count>
+        <sys_name>Nutanix_Action_Utils</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_script_include_76ca7b134f1e33008373224f9310c7e0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-01 07:00:07</sys_updated_on>
+    </sys_script_include>
+</record_update>

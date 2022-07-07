@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="catalog_script_client">
+    <catalog_script_client action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <applies_catalog>true</applies_catalog>
+        <applies_extended>false</applies_extended>
+        <applies_req_item>false</applies_req_item>
+        <applies_sc_task>false</applies_sc_task>
+        <applies_target_record>false</applies_target_record>
+        <applies_to>item</applies_to>
+        <cat_item display_value="test9">f67b52ec972c951027f8fbc71153af13</cat_item>
+        <cat_variable/>
+        <condition/>
+        <description>This script is auto created thorugh runtime module for checking application name on submit.</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>false</isolate_script>
+        <messages/>
+        <name>Check AppName OnSubmit</name>
+        <order>100</order>
+        <script><![CDATA[function onSubmit() { var result = true; var name = g_form.getValue('default_app_name'); if (!(/^[_-\w ]+$/.test(name) && (name.trim().lastIndexOf('-') != (name.trim().length - 1)))) { g_form.showErrorBox('default_app_name', 'Only alphanumeric characters, underscores(_), hyphens(-) and spaces are allowed and cannot end with hyphens(-).'); result = false; } var errorFieldName = ''; var errorIntFieldName = ''; var parse = JSON.parse(sessionStorage.getItem('FieldRegex_' + g_form.getUniqueValue())); var keys = Object.keys(parse); for (var i = 0; i < keys.length; i++) { var row = parse[keys[i] + '']; var patt = row.regex + ''; var reg = new RegExp(patt); var value = g_form.getValue(keys[i] + ''); var dataType = (row.data_type + '' == 'EXEC_SECRET' || row.data_type + '' == 'HTTP_SECRET' || row.data_type + '' == 'EXEC_LOCAL' || row.data_type + '' == 'HTTP_LOCAL') ? 'Dynamic' : row.data_type + ''; if (row.type + '' == 21) { var splitted = value.split(','); var actualVal = row.listRegex; var count = 0; for (var j = 0, n = splitted.length; j < n; j++) { var listVal = actualVal[splitted[j] + ''];  if ((dataType + '' == 'Dynamic' || dataType + '' == 'PREDEFINED') && j == n - 1 && listVal.includes('
+')){ while(listVal.indexOf('
+') != -1){ listVal = listVal.replace('
+','');} if (reg.test(listVal)) { count++;} } if (count == n) row.status = true; } else { if ((dataType + '' == 'Dynamic' || dataType + '' == 'PREDEFINED') && value.includes('
+')){while(value.indexOf('
+') != -1){value = value.replace('
+','');}} if (reg.test(value)) { row.status = true; } } if (value && row.status == false) { result = false; g_form.hideFieldMsg(keys[i] + ''); if(dataType == ''){ errorIntFieldName += g_form.getLabelOf(keys[i] + '') + ','; g_form.showErrorBox(keys[i] + '', 'This is a Integer field.Please provide a integer value.'); } else{ errorFieldName += g_form.getLabelOf(keys[i] + '') + ','; g_form.showErrorBox(keys[i] + '', 'Value does not match specified regex: ' + row.regex); } }} if (result) {   var parse = JSON.parse(sessionStorage.getItem('fieldValues_' + g_form.getUniqueValue())); for(var i in parse){ if(g_form.getValue(i)+''=='') g_form.setValue(i, parse[i]); } 			 parse = JSON.parse(sessionStorage.getItem('credentials_' + g_form.getUniqueValue())); for(var i in parse){ if(g_form.getValue(i)+''=='') g_form.setValue(i, parse[i]); } 		 sessionStorage.removeItem('fieldValues_' + g_form.getUniqueValue()); sessionStorage.removeItem('credentials_' + g_form.getUniqueValue());      sessionStorage.removeItem('clusterName_' + g_form.getUniqueValue()); sessionStorage.removeItem('FieldRegex_' + g_form.getUniqueValue());var loadingHTML="<div class='loading-container'><div class='loading-indicator icon-loading icon-lg'></div></div>" ;var loadingDialog = new GlideModal('loader', true); loadingDialog.setTitle('Validating field value with regex..'); loadingDialog.renderWithContent(''+loadingHTML);} else { errorIntFieldName = (errorIntFieldName.endsWith(',')) ? errorIntFieldName.substr(0, errorIntFieldName.length - 1) : errorIntFieldName; errorFieldName = (errorFieldName.endsWith(',')) ? errorFieldName.substr(0, errorFieldName.length - 1) : errorFieldName; if(errorIntFieldName != '' ) g_form.addErrorMessage('Variables are Integer field.Please provide suitable values: ' + errorIntFieldName); if(errorFieldName != '' ) g_form.addErrorMessage('Variables value does not match specified Regex.Please provide suitable values: ' + errorFieldName); new GlideModal().get('loader').destroy(); return false; }var loadingHTML="<div class='loading-container'><div class='loading-indicator icon-loading icon-lg'></div></div>"; var loadingDialog = new GlideModal('loader', true); loadingDialog.setTitle('Checking Blueprint Status...'); loadingDialog.renderWithContent(''+loadingHTML); var blueprintType = getParameterValue('type')+''; var blueprintUUID = getParameterValue('uuid')+''; var profileSysId = getParameterValue('profileSysId')+'';var profileName = (g_form.getValue('default_profile')+'').trim(); if(profileName == '') return; var projectUUID = (g_form.getValue('default_project')+'').trim(); if(projectUUID == '') return; var ga = new GlideAjax('x_nuta2_nutanix_ca.Nutanix_ClientServerScriptBridge'); ga.addParam('sysparm_name', 'checkCatalogValidity'); ga.addParam('blueprintType', blueprintType); ga.addParam('blueprintUUID', blueprintUUID); ga.addParam('profileSysId', profileSysId); ga.addParam('projectUUID', projectUUID); ga.addParam('profileName', profileName);ga.getXML(parseResponse, null, loadingDialog); function parseResponse(response, loadingDialog) { var answer = response.responseXML.documentElement.getAttribute('answer'); var message=''; if (answer + '' == 'INACTIVE') { message= 'Project/Profile/Blueprint/MPI is not available at Calm. So, Catalog Item can\'t be launched. Re-Directing back to catalog launch page.'; clearFieldValue(message); } else if (answer + '' == 'CANTCHECK') { message='Can\'t check whether the Project/Profile/BP/MPI from which the catalog item was created is available or not. Please check the connection with Calm. Re-Directing back to catalog launch page.'; clearFieldValue(message); } new GlideModal().get('loader').destroy(); }  function clearFieldValue(message){ var fldType = {}; var elemen = g_form.elements; for (var i in elemen) { fldType[elemen[i].fieldName + ''] = elemen[i].type + ''; } alert(message); var flds = g_form.nameMap; for (var i in flds) { if (fldType[flds[i].realName + ''] + '' == 'formatter' || fldType[flds[i].realName + ''] + '' == 'container' || fldType[flds[i].realName + ''] + '' == 'checkbox_container' || fldType[flds[i].realName + ''] + '' == 'undefined') { continue; }if(flds[i].label == "Project"  && flds[i].prettyName == "default_project")continue;if(flds[i].label == "Profile"  && flds[i].prettyName == "default_profile")continue;if (flds[i].prettyName.indexOf('cluster_name') == -1) g_form.clearValue(flds[i].prettyName);  /*	 self.location = '/x_nuta2_nutanix_ca_nutanix_runtime_configuration_list.do?sysparm_userpref_module=29d7d2e54f41230065e48020a310c7f6&sysparm_view=catalog_view&sysparm_query=GROUPBYitem_name.category&sysparm_clear_stack=true'; 	*/			} }  function getParameterValue(name) {   name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");   var regexS = "[\\?&]" + name + "=([^&#]*)";   var regex = new RegExp(regexS);   var results = regex.exec(self.location);   if (results == null) {   return "";   } else {   return unescape(results[1]);   }   }}]]></script>
+        <sys_class_name>catalog_script_client</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2022-07-04 13:01:57</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>cc8bd2ec972c951027f8fbc71153af69</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Check AppName OnSubmit</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>catalog_script_client_cc8bd2ec972c951027f8fbc71153af69</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2022-07-04 13:01:57</sys_updated_on>
+        <table/>
+        <type>onSubmit</type>
+        <ui_type>10</ui_type>
+        <variable_set/>
+        <view/>
+    </catalog_script_client>
+</record_update>

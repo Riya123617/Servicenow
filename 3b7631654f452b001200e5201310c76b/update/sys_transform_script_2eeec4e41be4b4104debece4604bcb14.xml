@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_transform_script">
+    <sys_transform_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <map display_value="Nutanix Transform Runbooks">addecb941ba0b4104debece4604bcbd9</map>
+        <order>100</order>
+        <script><![CDATA[(function runTransformScript(source, map, log, target /*undefined onStart*/ ) {
+    try {
+        var appUtil = new Nutanix_Calm_Utils();
+        var logger = new Nutanix_Calm_Logger();
+
+        var runbook = JSON.parse(source.runbook);
+        var runbook_variable = [];
+        var temp_json = {
+            "uuid": 'runbook',
+            "name": 'runbook',
+            "variable_list": runbook.variable_list
+        };
+        runbook_variable.push(temp_json);
+        var appBody = {
+            "parameter": target.sys_id + '',
+            "payload": runbook_variable,
+            "type": "runbook"
+        };
+		//Added for bringing credentials for Runbooks
+        var defaultCredentialBody = {
+            'type': 'runbook',
+            'sys_id': target.sys_id + ''
+        };
+        appUtil.insertIntoQueue("ProcessingCredentials", '', JSON.stringify(defaultCredentialBody), source.credential_definition_list + '', 'Process runbook credentials', 'This job processes the imported credentials.');
+
+        var call = new Nutanix_ImportApplicationProfiles();
+        call.processRunbookVariable(appBody);
+
+        var create_variable = new Nutanix_CreateCatalogVariables();
+        create_variable._createDefaultVariables(target.sys_id);
+
+        appUtil.insertIntoQueue("MapCatItemToProject", '', target.sys_id + '', source.project_reference + '', 'Map catalog items to project', 'This job maps the catalog items to their respective projects.');
+
+
+    } catch (e) {
+        this.logger.error("onAfter script of runbook import. Error :- " + e);
+    }
+
+})(source, map, log, target);]]></script>
+        <sys_class_name>sys_transform_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-06-01 10:30:42</sys_created_on>
+        <sys_id>2eeec4e41be4b4104debece4604bcb14</sys_id>
+        <sys_mod_count>39</sys_mod_count>
+        <sys_name>onAfter</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_transform_script_2eeec4e41be4b4104debece4604bcb14</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-09-08 08:43:10</sys_updated_on>
+        <when>onAfter</when>
+    </sys_transform_script>
+</record_update>

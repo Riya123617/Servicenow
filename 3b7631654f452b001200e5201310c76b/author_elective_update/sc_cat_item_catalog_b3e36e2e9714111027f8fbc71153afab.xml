@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Login Enterprise">b7e3662e9714111027f8fbc71153af98</sc_cat_item>
+        <sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:30:57</sys_created_on>
+        <sys_id>b3e36e2e9714111027f8fbc71153afab</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Login Enterprise</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_b3e36e2e9714111027f8fbc71153afab</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:30:57</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_catalog_b3e36e2e9714111027f8fbc71153afab</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Login Enterprise">b7e3662e9714111027f8fbc71153af98</sc_cat_item><sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:30:57</sys_created_on><sys_id>b3e36e2e9714111027f8fbc71153afab</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Nutanix Calm.Login Enterprise</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_catalog_b3e36e2e9714111027f8fbc71153afab</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:30:57</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>1674234995</payload_hash>
+        <record_name>Nutanix Calm.Login Enterprise</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:30:57</sys_created_on>
+        <sys_id>7be36e2e9714111027f8fbc71153afad</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a96f61860000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:30:57</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>73e36e2e57141110d5a3d8d3ef5d86ad</update_guid>
+        <update_guid_history>73e36e2e57141110d5a3d8d3ef5d86ad:1674234995</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Nutanix Calm.Login Enterprise">77e3b9689728951027f8fbc71153af8a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:09:06</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>3dba709237a04d5b93ffa635f6f24d61</sys_id>
+        <sys_metadata>b3e36e2e9714111027f8fbc71153afab</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Login Enterprise</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent display_value="">b7e3662e9714111027f8fbc71153af98</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_b3e36e2e9714111027f8fbc71153afab</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_b3e36e2e9714111027f8fbc71153afab">7be36e2e9714111027f8fbc71153afad</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:09:06</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

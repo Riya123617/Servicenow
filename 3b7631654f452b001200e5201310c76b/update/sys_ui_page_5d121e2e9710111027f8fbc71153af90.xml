@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var $j = jQuery.noConflict();
+
+var actSysId = "${JS:sysparm_sysId}";
+var action_name = "${JS:sysparm_actionName}";
+var appName = "${JS:sysparm_appName}";
+var parsedApp = "${JS:sysparm_parsedApp}";
+var appType = "${JS:sysparm_appType}";
+var enabled_services = "${JS:sysparm_enabled_services}";
+var task_call_config = 0;
+var ngt_installed = 0;
+var variable_list = '';
+var recovery_list="${JS:sysparm_recovery_list}";
+var restore_count=0;
+var snapshot_count=0;
+var deployment_list = '';
+//var $j = jQuery.noConflict();
+
+//new GlideModal().get("dialog_loading").destroy();
+enabled_services = enabled_services.split(',');
+
+if (enabled_services.indexOf('VSS') == -1) {
+    $j("#app_const").prop("disabled", true);
+    ngt_installed = 0;
+} else {
+    $j("#app_const").prop("disabled", false);
+    ngt_installed = 1;
+}
+
+$j('#snapshotSave').mousedown(runAction);
+$j('#cancelAct').mousedown(cancelDialog);
+
+function cancelDialog() {
+    GlideModal.get().destroy();
+}
+addLoadEvent(function() {
+    var blueprintDetail = JSON.parse(parsedApp);
+    var action_list = blueprintDetail.status.resources.action_list;
+	deployment_list = blueprintDetail.status.resources.deployment_list;
+    for (var i = 0; i < action_list.length; i++) {
+        if (action_list[i].type + '' == 'user' && action_name == action_list[i].name) {
+            console.log("action_list[i].name" + action_list[i].name);
+            getSnapshot(action_list[i]);
+        }
+    }
+	console.log("recovery_list: "+JSON.stringify(recovery_list));
+	console.log("parsedApp: "+ parsedApp);
+    //firstCheck();
+});
+
+function selectedDropdown (id, text, value, parent) {
+	console.log("id: "+id+" : "+text+" : "+value+" : "+parent);
+	$j("#"+id).text(text);
+}
+
+function getSnapshot(action) {
+    var task_definition_list = action.runbook.task_definition_list;
+    variable_list = action.runbook.variable_list;
+	console.log("variable_list: "+JSON.stringify(variable_list));
+    for (var i = 0; i < task_definition_list.length; i++) {
+        if (task_definition_list[i].type + '' == 'CALL_CONFIG') {
+            console.log("task_definition_list[i].name" + task_definition_list[i].name);
+			var service_uuid = task_definition_list[i].target_any_local_reference.uuid+'';
+			for(var j = 0; j < deployment_list.length; j++) {
+				if(service_uuid == deployment_list[j].uuid+'') {
+					task_definition_list[i].target_any_local_reference.name = deployment_list[j].service_list[0].name+'';
+				}
+			}
+            getTask(task_definition_list[i]);
+        }
+    }
+}
+
+function getTask(task) {
+    var name = task.attrs.config_spec_reference.name + '';
+    var cal_config_uuid = task.uuid;
+    var html_name = '<div class=\"info-message\" style=\"padding: 5px 16px; background-color: #e8f0fa; position: relative; margin: 10px 0px;\">' + name + '<span style="color: #22a5f7;border: 1px solid #91d2fb;border-radius: 4px;padding: 2px; margin:6px;">'+task.target_any_local_reference.name+'</span><\/div>';
+    $j(".SnapshotData").append(html_name);
+    for (var j = 0; j < task.attrs.inarg_list.length; j++) {
+        console.log("Task name: " + task.attrs.inarg_list[j].name + '');
+        if (task.attrs.inarg_list[j].name + '' == 'snapshot_name') {
+            var snapshot_name = task.attrs.inarg_list[j].value + '';
+            console.log("snapshot_name" + snapshot_name);
+            var html_snap_name = '<div class=\"form-group\"><label class=\"modal_label\"><strong>Snapshot Name<\/strong><\/label> <input type=\"text\" class=\"form-control\" name=\"' + cal_config_uuid + '\" id=\"snapshot_name' + task_call_config + '\" placeholder=\"Snapshot name\" maxlength=\"64\" value=\"' + snapshot_name + '"\/> <\/div>';
+            $j(".SnapshotData").append(html_snap_name);
+        } else if (task.attrs.inarg_list[j].name + '' == 'snapshot_type') {
+            if (appType == 'MultiVM') {
+				if(ngt_installed == 0){
+                var html_snap_type = '<div class=\"info-message\" style=\"padding: 5px 16px; background-color: rgb(242, 244, 245); position: relative; margin: 10px 0px;\">All snapshots are crash consistent<\/div>';
+                $j(".SnapshotData").append(html_snap_type);
+			}
+				else {
+					var snapshot_type = task.attrs.inarg_list[j].value + '';
+                console.log("snapshot_type" + snapshot_type);
+                var html_snap_type = '<div class=\"form-group\"> <label class=\"modal_label\"><strong>Snapshot Type<\/strong><\/label> <div class=\"form-group\" style=\"padding-top: 8px;\"> <span class=\"input-group-radio\"> <input class=\"radio\" type=\"radio\" name=\"' + cal_config_uuid + '\" id=\"app_const\" value=\"APPLICATION_CONSISTENT\"checked=\"false\"\/> <label for=\"app_const\" class=\"radio-label\">App consistent<\/label> <\/span> <span class=\"input-group-radio\"> <input class=\"radio\" type=\"radio\" name=\"' + cal_config_uuid + '\" id=\"crash_const\" value=\"CRASH_CONSISTENT\" checked=\"true\"\/> <label for=\"crash_const\" class=\"radio-label\">Crash consistent<\/label> <\/span> <\/div> <\/div>';
+                $j(".SnapshotData").append(html_snap_type);
+				}
+            } else {
+                var snapshot_type = task.attrs.inarg_list[j].value + '';
+                console.log("snapshot_type" + snapshot_type);
+                var html_snap_type = '<div class=\"form-group\"> <label class=\"modal_label\"><strong>Snapshot Type<\/strong><\/label> <div class=\"form-group\" style=\"padding-top: 8px;\"> <span class=\"input-group-radio\"> <input class=\"radio\" type=\"radio\" name=\"' + cal_config_uuid + '\" id=\"app_const\" value=\"APPLICATION_CONSISTENT\"checked=\"false\"\/> <label for=\"app_const\" class=\"radio-label\">App consistent<\/label> <\/span> <span class=\"input-group-radio\"> <input class=\"radio\" type=\"radio\" name=\"' + cal_config_uuid + '\" id=\"crash_const\" value=\"CRASH_CONSISTENT\" checked=\"true\"\/> <label for=\"crash_const\" class=\"radio-label\">Crash consistent<\/label> <\/span> <\/div> <\/div>';
+                $j(".SnapshotData").append(html_snap_type);
+                if (ngt_installed == 0) {
+                    $j("#app_const").attr("disabled", true);
+                    var html_snap_type = '<div class=\"info-message\" style=\"padding: 5px 16px; background-color: rgb(242, 244, 245); position: relative; margin: 10px 0px;\">Install Volume Snapshot Service (VSS) to take App consistent snapshots<\/div>';
+                    $j(".SnapshotData").append(html_snap_type);
+                }
+            }
+        } else if (task.attrs.inarg_list[j].name + '' == 'recovery_point_group_uuid') {
+			var dropDownString='';
+           // var html_restore = '<div style="margin: 3px;">Recovery Points</div> <select name="' + cal_config_uuid + '" id="recovery' + task_call_config + '" style="border-color:#989898; height: 27px; width:400px"></select></div>';
+			var html_restore = '<div style="margin: 3px;">Recovery Points</div>';
+            $j(".SnapshotData").append(html_restore);
+			var parsed_recovery_list=JSON.parse(recovery_list);
+			for(var i=0 ;i<parsed_recovery_list.entities.length;i++) {
+				/*var option = '<option value=' + parsed_recovery_list.entities[i].status.uuid + '>' + parsed_recovery_list.entities[i].status.recovery_point_info_list[0].name+'|'+ new Date(parsed_recovery_list.entities[i].status.recovery_point_info_list[0].expiration_time)+'</option>';
+            $j("#recovery"+ task_call_config).append(option);*/
+				var dropDownStr  = '<div class="dropdown-container" onclick=\'selectedDropdown( "recovery' + task_call_config + '" , "'+parsed_recovery_list.entities[i].status.name+''+'", "'+'h'+'", "'+'h'+'");\'><div class="row"><div class="col-md-6 credential-dropdown-menu-label">'+parsed_recovery_list.entities[i].status.name+'</div></div><div class="row"><div class="col-md-6"><div class="credential-dropdown-secondrow">'+new Date(parsed_recovery_list.entities[i].status.recovery_point_info_list[0].expiration_time).toLocaleString(undefined, {timeZone: 'Asia/Kolkata'})+'</div></div></div></div>';
+					dropDownString += dropDownStr;
+			}
+			var entityRow = '<div class="row" style="margin-top:10px;margin-bottom:10px;"><div class="col-md-7"><div class="dropdown"><button class="btn btn-default dropdown-toggle credential-dropdown" data-toggle="dropdown" ><span class="credential-dropdown-label" id="recovery' + task_call_config + '">'+'Select Recovery point'+'</span><span class="caret credential-caret"></span></button><div class="dropdown-menu credential-dropdown-menu" style="padding: 5px;">'+dropDownString+'</div></div></div></div>';
+			$j(".SnapshotData").append(entityRow);
+			//restore_count++;
+        }
+    }
+    task_call_config++;
+    /*'<div style="display: -webkit-inline-box; margin: 10px;"><span class="list-options" style="margin: 3px; padding-bottom: 10px; border: 1px solid rgb(242, 244, 245); line-height: 13px; font-size: 12px; display: inline-block; border-radius: 2px; background-color: rgb(242, 244, 245); color: #007eff;"> </div></span></div>'*/
+}
+
+function runAction() {
+    $j('#snapshotSave').prop("disabled", true);
+    $j('#cancelAct').prop("disabled", true);
+
+    var modVarString = [];
+    for (var i = 0; i < variable_list.length; i++) {
+        modVarString.push({
+            name: variable_list[i].name + '',
+            value: variable_list[i].value
+        });
+    }
+	console.log("task_call_config"+task_call_config);
+    for (var i = 0; i < task_call_config; i++) {
+        if($j("#snapshot_name" + i).prop("name")+''!='undefined')
+			modVarString.push({
+            name: "snapshot_name",
+            value: $j("#snapshot_name" + i).val() + '',
+            task_uuid: $j("#snapshot_name" + i).prop("name") + ''
+        });
+		if($j("#recovery" + i).prop("name")+''!='undefined')
+			modVarString.push({
+            name: "recovery_point_group_uuid",
+            value: $j("#recovery" + i).val() + '',
+            task_uuid: $j("#recovery" + i).prop("name") + ''
+        });
+    }
+    if ($j("#app_const").prop("checked") + '' == 'true') {
+        modVarString.push({
+            name: "snapshot_type",
+            value: $j("#app_const").val() + '',
+            task_uuid: $j("#app_const").prop("name") + ''
+        });
+    }
+    console.log("modVarString: " + JSON.stringify(modVarString));
+    var gajax = new GlideAjax('Run_App_Actions');
+    gajax.addParam('sysparm_name', 'runAction');
+    gajax.addParam('sysparm_actionsysid', actSysId + '');
+    gajax.addParam('sysparm_actionVars', JSON.stringify(modVarString));
+    gajax.getXML(getResponse);
+
+    function getResponse(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+        g_form.addInfoMessage(answer);
+        GlideModal.get().destroy();
+    }
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_nuta2_nutanix_ca_User_Snapshot.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<input type="hidden" name="ngt_services" id="ngt_services"/>
+	<style>
+		.dropdown-container {
+		padding: 6px;
+		<!-- border-bottom: 1px solid #a0a0a0; -->
+		}
+		.credential-dropdown-menu-label {
+		    font-size: 13px;
+		}
+		.credential-dropdown-label {
+		float: left;
+		<!-- padding-left: 10px; -->
+		}
+		.credential-dropdown-type {
+		color: #d0d0d0;
+		text-align: right;
+		color: #d0d0d0;
+		padding-right: 20px;
+		
+		}
+	</style>
+	<body>
+		<div class="SnapshotData"> </div>
+		<div class="RestoreData"> </div>
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-sm-9 pull-right" style="width: max-content;">
+						<button class="btn btn-default" id="cancelAct">Cancel</button>
+						<button class="btn btn-primary" id="snapshotSave">Run</button>
+					</div>
+				</div>
+			</div>
+	</body>
+</j:jelly>]]></html>
+        <name>User_Snapshot</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 07:13:37</sys_created_on>
+        <sys_id>5d121e2e9710111027f8fbc71153af90</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>User_Snapshot</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_page_5d121e2e9710111027f8fbc71153af90</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-06 10:16:53</sys_updated_on>
+    </sys_ui_page>
+</record_update>

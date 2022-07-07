@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="Endpoints" max_length="40" name="x_nuta2_nutanix_ca_endpoints" sizeclass="1" type="collection">
+        <element active="false" hint="Names" label="Name" max_length="500" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" hint="Project" label="Project" max_length="32" name="project" reference="x_nuta2_nutanix_ca_nutanix_project" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:current.getTableName();" dynamic_default_value="b5cb83a85f220100a9ad2572f2b4773c" label="Class" max_length="80" name="sys_class_name" type="sys_class_name" use_dynamic_default="true"/>
+        <element hint="UUID" label="UUID" max_length="500" name="uuid" type="string"/>
+        <index name="index">
+            <element name="project"/>
+        </index>
+        <index name="index2">
+            <element name="sys_class_name"/>
+        </index>
+    </element>
+</database>

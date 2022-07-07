@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems">
+    <x_nuta2_nutanix_ca_nutanix_marketplaceitems action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_state>PUBLISHED</app_state>
+        <appfamily>Databases</appfamily>
+        <author>Nutanix</author>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <bp_type>blueprint</bp_type>
+        <category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</category>
+        <checked_out/>
+        <cloned_bp_json/>
+        <cloned_bp_name/>
+        <cloned_bp_uuid/>
+        <cost>0</cost>
+        <creation_time>1654755913164806</creation_time>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <deprecation_reason/>
+        <description><![CDATA[<p>MongoDb is a multi-node distributed database. MongoDB uses sharding to support deployments with very large data sets and high throughput.
+This blueprint creates 4 (1 Config Node &#43; 2 Data Nodes or replicasets &#43; 1 Router Node) sharded MongoDb VMs.</p>
+<strong id="license">License:</strong>
+<ul style="list-style-position: inside;"><li>Apache License 2.0</li><li>GNU AGPL v3.0</li></ul>
+<strong id="hardwarerequirement">Hardware Requirement:</strong>
+<ul style="list-style-position: inside;"><li>By default </li><li>Router Nodes - 3 VMs each 2 vCPU, 2GB RAM</li><li>Config Set   - 3 VMs each 2 vCPU, 2GB RAM</li><li>Data Set     - 3 VMs each 2 vCPU, 4GB RAM</li></ul>
+<strong id="resourcesinstalled">Resources Installed:</strong>
+<ul style="list-style-position: inside;"><li>Config set with Mongo 3.4.2</li><li>Date Set with Mongo 3.4.2</li><li>Router VM with Mongo 3.4.2</li></ul>
+<strong id="operatingsystem">Operating System:</strong>
+<ul style="list-style-position: inside;"><li>CentOS Linux release CentOS-7-x86_64-2003</li><li>Select the <a href="https://goo.gl/td2eJJ" rel="nofollow">AMI</a> according to the region on AWS.</li><li>Select the <a href="https://goo.gl/51oD7D" rel="nofollow">Image</a> according to the zone on GCP.</li><li>Select the <a href="https://bit.ly/3c7sr9i" rel="nofollow">Image</a> according to the location on Azure.</li></ul>
+<strong id="platform">Platform:</strong>
+<ul style="list-style-position: inside;"><li>AHV</li><li>AWS</li><li>GCP</li><li>Azure</li><li>VMware</li></ul>
+<strong id="lifecycle">Lifecycle:</strong>
+<ul style="list-style-position: inside;"><li>ScaleOut</li><li>ScaleIn</li></ul>
+<strong id="limitations">Limitations:</strong>
+<ul style="list-style-position: inside;"><li>For evaluation purposes only. Not recommended for production use.</li></ul>
+<strong id="otherinstructions">Other Instructions:</strong>
+<ul style="list-style-position: inside;"><li>Open ports <code>39017</code>,<code>27017</code></li></ul>]]></description>
+        <description_markdown>MongoDb is a multi-node distributed database. MongoDB uses sharding to support deployments with very large data sets and high throughput.
+This blueprint creates 4 (1 Config Node + 2 Data Nodes or replicasets + 1 Router Node) sharded MongoDb VMs.
+#### License:
+* Apache License 2.0
+* GNU AGPL v3.0
+#### Hardware Requirement:
+* By default 
+  - Router Nodes - 3 VMs each 2 vCPU, 2GB RAM
+  - Config Set   - 3 VMs each 2 vCPU, 2GB RAM
+  - Data Set     - 3 VMs each 2 vCPU, 4GB RAM
+#### Resources Installed:
+* Config set with Mongo 3.4.2
+* Date Set with Mongo 3.4.2
+* Router VM with Mongo 3.4.2
+#### Operating System:
+* CentOS Linux release CentOS-7-x86_64-2003
+* Select the [AMI](https://goo.gl/td2eJJ) according to the region on AWS.
+* Select the [Image](https://goo.gl/51oD7D) according to the zone on GCP.
+* Select the [Image](https://bit.ly/3c7sr9i) according to the location on Azure.
+#### Platform:
+* AHV
+* AWS
+* GCP
+* Azure
+* VMware
+#### Lifecycle:
+* ScaleOut
+* ScaleIn
+#### Limitations:
+* For evaluation purposes only. Not recommended for production use.
+#### Other Instructions:
+* Open ports `39017`,`27017`
+</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <last_update_time>1654768627067212</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>MongoDB Sharding</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=e095bde89768951027f8fbc71153af38&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>240abede37112300fdfc097973990e24</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>MongoDB Sharding</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <spec_version>2</spec_version>
+        <start_closed>false</start_closed>
+        <state>active</state>
+        <support_status>SUPPORTED</support_status>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:16:15</sys_created_on>
+        <sys_id>e095bde89768951027f8fbc71153af38</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>MongoDB Sharding</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_e095bde89768951027f8fbc71153af38</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:16:30</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>9e67f85f-964b-4a26-bb6a-0e9355d33629</uuid>
+        <vendor/>
+        <version>4.2.0</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_marketplaceitems>
+    <sys_translated_text action="delete_multiple" query="documentkey=e095bde89768951027f8fbc71153af38"/>
+    <fx_price action="delete_multiple" query="id=e095bde89768951027f8fbc71153af38"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>e095bde89768951027f8fbc71153af38</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:16:15</sys_created_on>
+        <sys_id>e495bde89768951027f8fbc71153af39</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:16:15</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

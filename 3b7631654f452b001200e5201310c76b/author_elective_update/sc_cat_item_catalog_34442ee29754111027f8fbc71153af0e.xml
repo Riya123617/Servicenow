@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Ganglia">b0442ee29754111027f8fbc71153af0c</sc_cat_item>
+        <sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:32:24</sys_created_on>
+        <sys_id>34442ee29754111027f8fbc71153af0e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Ganglia</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_34442ee29754111027f8fbc71153af0e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:32:24</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_catalog_34442ee29754111027f8fbc71153af0e</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Ganglia">b0442ee29754111027f8fbc71153af0c</sc_cat_item><sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:32:24</sys_created_on><sys_id>34442ee29754111027f8fbc71153af0e</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Nutanix Calm.Ganglia</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_catalog_34442ee29754111027f8fbc71153af0e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:32:24</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>-1990074161</payload_hash>
+        <record_name>Nutanix Calm.Ganglia</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:32:24</sys_created_on>
+        <sys_id>f8442ee29754111027f8fbc71153af10</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a970b37d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:32:24</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>f0442ee2305411104eac950b88c80410</update_guid>
+        <update_guid_history>f0442ee2305411104eac950b88c80410:-1990074161</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Nutanix Calm.Ganglia">e2e3b5689728951027f8fbc71153afcc</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:09:00</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>13e2357de7784170a137061e937df900</sys_id>
+        <sys_metadata>34442ee29754111027f8fbc71153af0e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Ganglia</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent display_value="">b0442ee29754111027f8fbc71153af0c</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_34442ee29754111027f8fbc71153af0e</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_34442ee29754111027f8fbc71153af0e">f8442ee29754111027f8fbc71153af10</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:09:00</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

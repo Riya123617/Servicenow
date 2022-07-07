@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems">
+    <x_nuta2_nutanix_ca_nutanix_marketplaceitems action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_state>PUBLISHED</app_state>
+        <appfamily>DevOps</appfamily>
+        <author>Nutanix</author>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <bp_type>blueprint</bp_type>
+        <category display_value="Marketplace Blueprint">88bfbad237512300fdfc097973990e06</category>
+        <checked_out/>
+        <cloned_bp_json/>
+        <cloned_bp_name/>
+        <cloned_bp_uuid/>
+        <cost>0</cost>
+        <creation_time>1654755904789665</creation_time>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <deprecation_reason/>
+        <description><![CDATA[<p>GravityZone® Datacenter Security protects server and VDI workloads with award-winning next-generation defenses, while streamlining security management and maximizing infrastructure performance.<br />
+GravityZone improves the efficiency of security operations with single-pane-of-glass visibility and simplified security manageability encompassing the entire enterprise cloud. Uniquely supporting fast, automated security provisioning on Nutanix, GravityZone allows IT operations teams to spin up thousands of secured virtual machines (VMs) in a matter of hours. </p>
+<strong id="license">License:</strong>
+<ul style="list-style-position: inside;"><li><a href="https://www.bitdefender.com/business/free-trials/2596/" rel="nofollow">Free Trial</a></li></ul>
+<strong id="supportinformation">Support Information:</strong>
+<ul style="list-style-position: inside;"><li>Email: b2bsupport&#64;bitdefender.com</li><li>Phone: (&#43;40) 31 620 4235, (&#43;40) 374 303 035  </li><li>Website: <code>https://www.bitdefender.com/support/contact-us.html</code></li></ul>
+<strong id="accessibility">Accessibility:</strong>
+<ul style="list-style-position: inside;"><li>Follow the <a href="https://download.bitdefender.com/business/GravityZoneEnterprise/Current/Documentation/en_US/Bitdefender_GravityZone_InstallationGuide_7_enUS.pdf" rel="nofollow">Installation guide</a></li><li>Follow the <a href="https://download.bitdefender.com/business/GravityZoneEnterprise/Current/Documentation/en_US/Bitdefender_GravityZone_AdministratorsGuide_7_enUS.pdf" rel="nofollow">Administration guide</a></li></ul>
+<strong id="accessibility-1">Accessibility:</strong>
+<ul style="list-style-position: inside;"><li>Click on the &#39;Explore&#39; tab in Prism Central</li><li>Select the &#39;GravityZoneVM&#39; and click on &#39;Action&#39; select &#39;Launch Console&#39;</li><li>Follow the Installation Guide</li></ul>]]></description>
+        <description_markdown>GravityZone® Datacenter Security protects server and VDI workloads with award-winning next-generation defenses, while streamlining security management and maximizing infrastructure performance.  
+GravityZone improves the efficiency of security operations with single-pane-of-glass visibility and simplified security manageability encompassing the entire enterprise cloud. Uniquely supporting fast, automated security provisioning on Nutanix, GravityZone allows IT operations teams to spin up thousands of secured virtual machines (VMs) in a matter of hours. 
+#### License:
+* [Free Trial](https://www.bitdefender.com/business/free-trials/2596/)
+#### Support Information:
+* Email: b2bsupport@bitdefender.com
+* Phone: (+40) 31 620 4235, (+40) 374 303 035  
+* Website: `https://www.bitdefender.com/support/contact-us.html`
+#### Accessibility:
+* Follow the [Installation guide](https://download.bitdefender.com/business/GravityZoneEnterprise/Current/Documentation/en_US/Bitdefender_GravityZone_InstallationGuide_7_enUS.pdf)
+* Follow the [Administration guide](https://download.bitdefender.com/business/GravityZoneEnterprise/Current/Documentation/en_US/Bitdefender_GravityZone_AdministratorsGuide_7_enUS.pdf)
+#### Accessibility: 
+* Click on the 'Explore' tab in Prism Central
+* Select the 'GravityZoneVM' and click on 'Action' select 'Launch Console'
+* Follow the Installation Guide
+</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>false</ignore_price>
+        <image/>
+        <last_update_time>1654769203697733</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Gravity Zone</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=e9e531a497a8951027f8fbc71153af72&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>240abede37112300fdfc097973990e24</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>Gravity Zone</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <spec_version>2</spec_version>
+        <start_closed>false</start_closed>
+        <state>active</state>
+        <support_status>SUPPORTED</support_status>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:17:41</sys_created_on>
+        <sys_id>e9e531a497a8951027f8fbc71153af72</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Gravity Zone</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_e9e531a497a8951027f8fbc71153af72</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:17:41</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>09064a22-6bbf-4af1-bc39-4973299ef054</uuid>
+        <vendor/>
+        <version>2.0.0</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_marketplaceitems>
+    <sys_translated_text action="delete_multiple" query="documentkey=e9e531a497a8951027f8fbc71153af72"/>
+    <fx_price action="delete_multiple" query="id=e9e531a497a8951027f8fbc71153af72"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>e9e531a497a8951027f8fbc71153af72</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:17:41</sys_created_on>
+        <sys_id>ede531a497a8951027f8fbc71153af73</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:17:41</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

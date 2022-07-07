@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>calm_admin_password</field>
+        <mandatory>false</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-03-15 12:20:44</sys_created_on>
+        <sys_id>fb3d3ad72f7e6810da242f2ef699b6da</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>calm_admin_password</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_policy_action_fb3d3ad72f7e6810da242f2ef699b6da</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-03-15 12:20:44</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_calm_plugin_configuration</table>
+        <ui_policy display_value="Toggle credential system">48918ffe1b1ecc50ac43877ddc4bcb96</ui_policy>
+        <visible>false</visible>
+    </sys_ui_policy_action>
+</record_update>

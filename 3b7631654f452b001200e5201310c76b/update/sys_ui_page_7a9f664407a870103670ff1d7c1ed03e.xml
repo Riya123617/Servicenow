@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var $j = jQuery.noConflict();
+
+$j('#snapshotSave').mousedown(validateForm);
+$j('#cancelAct').mousedown(cancelDialog);
+
+function cancelDialog() {
+    GlideModal.get().destroy();
+}
+
+function validateForm() {
+    if ($j('#snapshot_name').val())
+        runAction();
+    else {
+        $j(".error_body").html('<div class="notification notification-danger">Snapshot name is required!</div>');
+    }
+}
+
+function runAction() {
+    $j('#snapshotSave').prop("disabled", true);
+    $j('#cancelAct').prop("disabled", true);
+
+    var snapshotName = $j('#snapshot_name').val();
+    var snapshotDescription = $j('#snapshot_description').val();
+
+    var storageType = $j('#exampleFormControlSelect1').val();
+
+    var modVarString = [{
+        "name": "snapshot_name",
+        "value": snapshotName
+    }, {
+        "name": "snapshot_description",
+        "value": snapshotDescription
+    }, {
+        "name": "snapshot_type",
+        "value": storageType
+    }];
+
+    var actSysId = "${JS:sysparm_sysId}";
+
+    var gajax = new GlideAjax('Run_App_Actions');
+    gajax.addParam('sysparm_name', 'runAction');
+    gajax.addParam('sysparm_actionsysid', actSysId + '');
+    gajax.addParam('sysparm_actionVars', JSON.stringify(modVarString));
+    gajax.getXML(getResponse);
+
+    function getResponse(response) {
+        var answer = response.responseXML.documentElement.getAttribute("answer");
+        g_form.addInfoMessage(answer);
+        GlideModal.get().destroy();
+    }
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_nuta2_nutanix_ca_Save_Snapshot_Azure.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	
+	<body>
+		<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;">Ensure that the Snapshot name is unique</div>
+		<div class="error_body"></div>
+		<div>
+			<div class="form-group">
+				<label class="modal_label"><strong>Snapshot Name</strong></label>
+				<input type="text" class="form-control" name="snapshot_name" id="snapshot_name" placeholder="Snapshot Name" maxlength="64" value="snap-@@{calm_time}@@"/>
+				<label class="modal_label"><strong>Snapshot Description</strong></label>
+				<textarea class="form-control" name="snapshot_description" id="snapshot_description" placeholder="Snapshot Description" value=""/>
+			</div>
+			
+		</div>
+		 <div class="form-group">
+    <label for="exampleFormControlSelect1">Storage Type</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option value="Standard_LRS">Standard HDD</option>
+      <option value="Premium_LRS">Premium SDD</option>
+      <option value="Standard_ZRS">Zone-redundant</option>  
+    </select>
+  </div>
+		<div class="info-message" style="padding: 5px 16px; background-color: #e8f0fa; color: #5f96e3; position: relative; margin: 5px 0px;">Snapshot Pricing is based on the Snapshot Storage type</div>
+		<p>Created snapshots will be available in the "Snapshots" tab</p>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-sm-9 pull-right" style="width: max-content;">
+					<button class="btn btn-default" id="cancelAct">Cancel</button>
+					<button class="btn btn-primary" id="snapshotSave">Save</button>
+				</div>
+			</div>
+		</div>
+		
+	</body>
+	<style>
+		.modal_label {
+		margin: 4px 30px 6px 0px;
+		}
+		input[type="radio"]  {
+			margin: 2px auto auto 0px;
+		}
+	</style>
+</j:jelly>]]></html>
+        <name>Save_Snapshot_Azure</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-05-31 08:51:10</sys_created_on>
+        <sys_id>7a9f664407a870103670ff1d7c1ed03e</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>Save_Snapshot_Azure</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_ui_page_7a9f664407a870103670ff1d7c1ed03e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-06-02 09:25:26</sys_updated_on>
+    </sys_ui_page>
+</record_update>

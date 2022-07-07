@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="project_uuid" label="Project uuid" language="en" table="x_nuta2_nutanix_ca_nutanix_staging_endpoint">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>project_uuid</element>
+            <help/>
+            <hint>Project uuids</hint>
+            <label>Project uuid</label>
+            <language>en</language>
+            <name>x_nuta2_nutanix_ca_nutanix_staging_endpoint</name>
+            <plural>Project uuids</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-06-07 04:36:33</sys_created_on>
+            <sys_id>9e98f95e1b2830504debece4604bcbf6</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Project uuid</sys_name>
+            <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+            <sys_update_name>sys_documentation_x_nuta2_nutanix_ca_nutanix_staging_endpoint_project_uuid_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-06-14 20:59:40</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="runbook_template_info" label="Runbook Template Info" language="en" table="x_nuta2_nutanix_ca_nutanix_staging_marketplace_items">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>runbook_template_info</element>
+            <help/>
+            <hint/>
+            <label>Runbook Template Info</label>
+            <language>en</language>
+            <name>x_nuta2_nutanix_ca_nutanix_staging_marketplace_items</name>
+            <plural>Runbook Template Infos</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2021-06-21 10:34:58</sys_created_on>
+            <sys_id>1de093761bf4b4904debece4604bcbcf</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_name>Runbook Template Info</sys_name>
+            <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+            <sys_update_name>sys_documentation_x_nuta2_nutanix_ca_nutanix_staging_marketplace_items_runbook_template_info_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2021-07-01 09:33:57</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

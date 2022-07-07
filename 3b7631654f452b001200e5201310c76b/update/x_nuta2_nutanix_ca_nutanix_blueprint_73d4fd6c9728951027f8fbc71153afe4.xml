@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_blueprint">
+    <x_nuta2_nutanix_ca_nutanix_blueprint action="INSERT_OR_UPDATE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_uuid/>
+        <application_count>0</application_count>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <category display_value="Blueprint">7a30431637512300fdfc097973990ec8</category>
+        <checked_out/>
+        <cost>0</cost>
+        <creation_time>2022-7-2 11:14:8</creation_time>
+        <custom_cart/>
+        <deleted>false</deleted>
+        <deletion_time>1970-1-1 0:0:0</deletion_time>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <description><![CDATA[<p>1<em>4</em>4<em>Variable</em>Dependent<em>Blueprint</em>6</p>]]></description>
+        <description_markdown>1_4_4_Variable_Dependent_Blueprint_6</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <entity_verison>2</entity_verison>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <is_cloned>false</is_cloned>
+        <kind>blueprint</kind>
+        <last_update_time>2022-7-2 11:15:35</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>1_4_4_Variable_Dependent_Blueprint_6</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid>00000000-0000-0000-0000-000000000000</owner_uuid>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=73d4fd6c9728951027f8fbc71153afe4&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <project_name>default</project_name>
+        <project_uuid>a85cf005-5ff0-43a0-b75e-97ba6068587f</project_uuid>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs>240abede37112300fdfc097973990e24</sc_catalogs>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <schema_version>1.1.0</schema_version>
+        <short_description>1_4_4_Variable_Dependent_Blueprint_6</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <source_mpi/>
+        <start_closed>false</start_closed>
+        <state>ACTIVE</state>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_blueprint</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:13:11</sys_created_on>
+        <sys_id>73d4fd6c9728951027f8fbc71153afe4</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>1_4_4_Variable_Dependent_Blueprint_6</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_blueprint_73d4fd6c9728951027f8fbc71153afe4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:13:13</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>df069471-b37c-48f2-9034-757411381597</uuid>
+        <vendor/>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_blueprint>
+    <sys_translated_text action="delete_multiple" query="documentkey=73d4fd6c9728951027f8fbc71153afe4"/>
+    <fx_price action="delete_multiple" query="id=73d4fd6c9728951027f8fbc71153afe4"/>
+    <fx_price action="INSERT_OR_UPDATE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>73d4fd6c9728951027f8fbc71153afe4</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:13:12</sys_created_on>
+        <sys_id>bbd431ac9728951027f8fbc71153af03</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:13:12</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_blueprint</table>
+        <type>calculated</type>
+    </fx_price>
+</record_update>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems">
+    <x_nuta2_nutanix_ca_nutanix_marketplaceitems action="DELETE">
+        <access_type>restricted</access_type>
+        <active>false</active>
+        <app_state>PUBLISHED</app_state>
+        <appfamily>Containers</appfamily>
+        <author>Nutanix</author>
+        <availability>on_desktop</availability>
+        <billable>false</billable>
+        <blueprint_name/>
+        <bp_type>blueprint</bp_type>
+        <category/>
+        <checked_out/>
+        <cloned_bp_json/>
+        <cloned_bp_name/>
+        <cloned_bp_uuid/>
+        <cost>0</cost>
+        <creation_time>1654755910351696</creation_time>
+        <custom_cart/>
+        <delivery_plan/>
+        <delivery_plan_script/>
+        <delivery_time>1970-01-01 00:00:00</delivery_time>
+        <deprecation_reason/>
+        <description><![CDATA[<p>Kubernetes is an open-source platform for automating deployment, scaling, and operations of application containers across clusters of hosts, providing container-centric infrastructure.</p>
+<strong id="license">License:</strong>
+<ul style="list-style-position: inside;"><li>Apache License 2.0</li></ul>
+<strong id="hardwarerequirement">Hardware Requirement:</strong>
+<ul style="list-style-position: inside;"><li>By default, three master VMs each 2 vCPU, 2GB RAM and three workers 4 vCPU, 4GB RAM</li><li>OS Disk 8GB, Master - Data Disks 6 x 10GB, Worker - Data Disks 3 x 10GB.</li></ul>
+<strong id="resourcesinstalled">Resources Installed:</strong>
+<ul style="list-style-position: inside;"><li>Etcd version v3.3.12</li><li>Kubernetes 1.12.x to 1.18.x</li><li>Supported Network plugins: Flannel (Default), Canal, Calico</li><li>Docker versions: 17.12.1.ce, 18.03.1.ce, 18.06.3.ce, 18.09.9, 19.03.8 (default) (Please check release notes for validated docker versions.)</li></ul>
+<strong id="operatingsystem">Operating System:</strong>
+<ul style="list-style-position: inside;"><li>CentOS Linux release 7.8.2003</li><li>Select the <a href="https://goo.gl/td2eJJ" rel="nofollow">AMI</a> on AWS.</li><li>Select the <a href="https://goo.gl/51oD7D" rel="nofollow">Image</a> on GCP.</li><li>Select the <a href="https://bit.ly/3c7sr9i" rel="nofollow">Image</a> according to the location on Azure.</li></ul>
+<strong id="platform">Platform:</strong>
+<ul style="list-style-position: inside;"><li>AHV</li><li>AWS</li><li>GCP</li><li>Azure</li><li>VMware</li></ul>
+<strong id="lifecycle">Lifecycle:</strong>
+<ul style="list-style-position: inside;"><li>ScaleOut</li><li>ScaleIn</li><li>Upgrade</li></ul>
+<strong id="limitations">Limitations:</strong>
+<ul style="list-style-position: inside;"><li>User containers will be scheduled only on Workers.</li><li>A unique Service IP Subnet has to be used while deploying blueprint, and the subnet has to be routable to any one of the workers within your network.</li><li>Canal &amp; Calico network plugin are officially supported with kubernetes version 1.10, 1.11, 1.12.</li><li>Self signed certificates are created during deployment. User cannot create certificates.</li></ul>]]></description>
+        <description_markdown>Kubernetes is an open-source platform for automating deployment, scaling, and operations of application containers across clusters of hosts, providing container-centric infrastructure.
+#### License:
+* Apache License 2.0
+#### Hardware Requirement:
+* By default, three master VMs each 2 vCPU, 2GB RAM and three workers 4 vCPU, 4GB RAM
+* OS Disk 8GB, Master - Data Disks 6 x 10GB, Worker - Data Disks 3 x 10GB.
+#### Resources Installed:
+* Etcd version v3.3.12
+* Kubernetes 1.12.x to 1.18.x
+* Supported Network plugins: Flannel (Default), Canal, Calico
+* Docker versions: 17.12.1.ce, 18.03.1.ce, 18.06.3.ce, 18.09.9, 19.03.8 (default) (Please check release notes for validated docker versions.)
+#### Operating System:
+* CentOS Linux release 7.8.2003
+* Select the [AMI](https://goo.gl/td2eJJ) on AWS.
+* Select the [Image](https://goo.gl/51oD7D) on GCP.
+* Select the [Image](https://bit.ly/3c7sr9i) according to the location on Azure.
+#### Platform:
+* AHV
+* AWS
+* GCP
+* Azure
+* VMware
+#### Lifecycle:
+* ScaleOut
+* ScaleIn
+* Upgrade
+#### Limitations:
+* User containers will be scheduled only on Workers.
+* A unique Service IP Subnet has to be used while deploying blueprint, and the subnet has to be routable to any one of the workers within your network.
+* Canal &amp; Calico network plugin are officially supported with kubernetes version 1.10, 1.11, 1.12.
+* Self signed certificates are created during deployment. User cannot create certificates.
+</description_markdown>
+        <display_price_property>non_zero</display_price_property>
+        <entitlement_script/>
+        <flow_designer_flow/>
+        <group/>
+        <hide_sp>false</hide_sp>
+        <icon/>
+        <ignore_price>true</ignore_price>
+        <image/>
+        <last_update_time>1654768373661274</last_update_time>
+        <location/>
+        <mandatory_attachment>false</mandatory_attachment>
+        <meta/>
+        <mobile_hide_price>false</mobile_hide_price>
+        <mobile_picture/>
+        <mobile_picture_type>use_desktop_picture</mobile_picture_type>
+        <model/>
+        <name>Kubernetes</name>
+        <no_attachment_v2>false</no_attachment_v2>
+        <no_cart>true</no_cart>
+        <no_cart_v2>false</no_cart_v2>
+        <no_delivery_time_v2>false</no_delivery_time_v2>
+        <no_order>false</no_order>
+        <no_order_now>false</no_order_now>
+        <no_proceed_checkout>true</no_proceed_checkout>
+        <no_quantity>true</no_quantity>
+        <no_quantity_v2>false</no_quantity_v2>
+        <no_search>false</no_search>
+        <no_wishlist_v2>false</no_wishlist_v2>
+        <omit_price>true</omit_price>
+        <order>0</order>
+        <ordered_item_link/>
+        <owner display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</owner>
+        <owner_name>admin</owner_name>
+        <owner_uuid/>
+        <picture/>
+        <preview>JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;sysparm_id=bb99bd1e97d0111027f8fbc71153aff1&amp;sysparm_preview=true", "summary");</preview>
+        <price>0</price>
+        <published_ref/>
+        <recurring_frequency/>
+        <request_method/>
+        <roles/>
+        <sc_catalogs/>
+        <sc_ic_item_staging/>
+        <sc_ic_version/>
+        <sc_template/>
+        <short_description>Kubernetes</short_description>
+        <show_variable_help_on_load>false</show_variable_help_on_load>
+        <spec_version>2</spec_version>
+        <start_closed>false</start_closed>
+        <state>active</state>
+        <support_status>SUPPORTED</support_status>
+        <sys_class_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:47:37</sys_created_on>
+        <sys_id>bb99bd1e97d0111027f8fbc71153aff1</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Kubernetes</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_bb99bd1e97d0111027f8fbc71153aff1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:22:24</sys_updated_on>
+        <template/>
+        <template_manager_roles/>
+        <template_type>Multi Vm/Pod</template_type>
+        <type>item</type>
+        <use_sc_layout>false</use_sc_layout>
+        <uuid>d19f5041-c0e1-4cab-983c-8768f04fea0d</uuid>
+        <vendor/>
+        <version>5.1.0</version>
+        <visible_bundle>true</visible_bundle>
+        <visible_guide>true</visible_guide>
+        <visible_standalone>true</visible_standalone>
+        <workflow display_value="Nutanix - Blueprint Launch to CALM">30421c83375d2300d27b8cf6c3990e01</workflow>
+    </x_nuta2_nutanix_ca_nutanix_marketplaceitems>
+    <sys_translated_text action="DELETE" query="documentkey=bb99bd1e97d0111027f8fbc71153aff1"/>
+    <fx_price action="DELETE" query="id=bb99bd1e97d0111027f8fbc71153aff1"/>
+    <fx_price action="DELETE">
+        <amount>0</amount>
+        <currency display_value="USD">USD</currency>
+        <field>price</field>
+        <id>bb99bd1e97d0111027f8fbc71153aff1</id>
+        <parent/>
+        <reference_amount>0</reference_amount>
+        <reference_currency display_value="USD">USD</reference_currency>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:47:37</sys_created_on>
+        <sys_id>bf99bd1e97d0111027f8fbc71153aff2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:47:37</sys_updated_on>
+        <table>x_nuta2_nutanix_ca_nutanix_marketplaceitems</table>
+        <type>calculated</type>
+    </fx_price>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_bb99bd1e97d0111027f8fbc71153aff1</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="x_nuta2_nutanix_ca_nutanix_marketplaceitems"&gt;&lt;x_nuta2_nutanix_ca_nutanix_marketplaceitems action="INSERT_OR_UPDATE"&gt;&lt;access_type&gt;restricted&lt;/access_type&gt;&lt;active&gt;false&lt;/active&gt;&lt;app_state&gt;PUBLISHED&lt;/app_state&gt;&lt;appfamily&gt;Containers&lt;/appfamily&gt;&lt;author&gt;Nutanix&lt;/author&gt;&lt;availability&gt;on_desktop&lt;/availability&gt;&lt;billable&gt;false&lt;/billable&gt;&lt;blueprint_name/&gt;&lt;bp_type&gt;blueprint&lt;/bp_type&gt;&lt;category/&gt;&lt;checked_out/&gt;&lt;cloned_bp_json/&gt;&lt;cloned_bp_name/&gt;&lt;cloned_bp_uuid/&gt;&lt;cost&gt;0&lt;/cost&gt;&lt;creation_time&gt;1654755910351696&lt;/creation_time&gt;&lt;custom_cart/&gt;&lt;delivery_plan/&gt;&lt;delivery_plan_script/&gt;&lt;delivery_time&gt;1970-01-01 00:00:00&lt;/delivery_time&gt;&lt;deprecation_reason/&gt;&lt;description&gt;&lt;![CDATA[&lt;p&gt;Kubernetes is an open-source platform for automating deployment, scaling, and operations of application containers across clusters of hosts, providing container-centric infrastructure.&lt;/p&gt;
+&lt;strong id="license"&gt;License:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;Apache License 2.0&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="hardwarerequirement"&gt;Hardware Requirement:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;By default, three master VMs each 2 vCPU, 2GB RAM and three workers 4 vCPU, 4GB RAM&lt;/li&gt;&lt;li&gt;OS Disk 8GB, Master - Data Disks 6 x 10GB, Worker - Data Disks 3 x 10GB.&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="resourcesinstalled"&gt;Resources Installed:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;Etcd version v3.3.12&lt;/li&gt;&lt;li&gt;Kubernetes 1.12.x to 1.18.x&lt;/li&gt;&lt;li&gt;Supported Network plugins: Flannel (Default), Canal, Calico&lt;/li&gt;&lt;li&gt;Docker versions: 17.12.1.ce, 18.03.1.ce, 18.06.3.ce, 18.09.9, 19.03.8 (default) (Please check release notes for validated docker versions.)&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="operatingsystem"&gt;Operating System:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;CentOS Linux release 7.8.2003&lt;/li&gt;&lt;li&gt;Select the &lt;a href="https://goo.gl/td2eJJ" rel="nofollow"&gt;AMI&lt;/a&gt; on AWS.&lt;/li&gt;&lt;li&gt;Select the &lt;a href="https://goo.gl/51oD7D" rel="nofollow"&gt;Image&lt;/a&gt; on GCP.&lt;/li&gt;&lt;li&gt;Select the &lt;a href="https://bit.ly/3c7sr9i" rel="nofollow"&gt;Image&lt;/a&gt; according to the location on Azure.&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="platform"&gt;Platform:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;AHV&lt;/li&gt;&lt;li&gt;AWS&lt;/li&gt;&lt;li&gt;GCP&lt;/li&gt;&lt;li&gt;Azure&lt;/li&gt;&lt;li&gt;VMware&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="lifecycle"&gt;Lifecycle:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;ScaleOut&lt;/li&gt;&lt;li&gt;ScaleIn&lt;/li&gt;&lt;li&gt;Upgrade&lt;/li&gt;&lt;/ul&gt;
+&lt;strong id="limitations"&gt;Limitations:&lt;/strong&gt;
+&lt;ul style="list-style-position: inside;"&gt;&lt;li&gt;User containers will be scheduled only on Workers.&lt;/li&gt;&lt;li&gt;A unique Service IP Subnet has to be used while deploying blueprint, and the subnet has to be routable to any one of the workers within your network.&lt;/li&gt;&lt;li&gt;Canal &amp;amp; Calico network plugin are officially supported with kubernetes version 1.10, 1.11, 1.12.&lt;/li&gt;&lt;li&gt;Self signed certificates are created during deployment. User cannot create certificates.&lt;/li&gt;&lt;/ul&gt;]]&gt;&lt;/description&gt;&lt;description_markdown&gt;Kubernetes is an open-source platform for automating deployment, scaling, and operations of application containers across clusters of hosts, providing container-centric infrastructure.
+#### License:
+* Apache License 2.0
+#### Hardware Requirement:
+* By default, three master VMs each 2 vCPU, 2GB RAM and three workers 4 vCPU, 4GB RAM
+* OS Disk 8GB, Master - Data Disks 6 x 10GB, Worker - Data Disks 3 x 10GB.
+#### Resources Installed:
+* Etcd version v3.3.12
+* Kubernetes 1.12.x to 1.18.x
+* Supported Network plugins: Flannel (Default), Canal, Calico
+* Docker versions: 17.12.1.ce, 18.03.1.ce, 18.06.3.ce, 18.09.9, 19.03.8 (default) (Please check release notes for validated docker versions.)
+#### Operating System:
+* CentOS Linux release 7.8.2003
+* Select the [AMI](https://goo.gl/td2eJJ) on AWS.
+* Select the [Image](https://goo.gl/51oD7D) on GCP.
+* Select the [Image](https://bit.ly/3c7sr9i) according to the location on Azure.
+#### Platform:
+* AHV
+* AWS
+* GCP
+* Azure
+* VMware
+#### Lifecycle:
+* ScaleOut
+* ScaleIn
+* Upgrade
+#### Limitations:
+* User containers will be scheduled only on Workers.
+* A unique Service IP Subnet has to be used while deploying blueprint, and the subnet has to be routable to any one of the workers within your network.
+* Canal &amp;amp; Calico network plugin are officially supported with kubernetes version 1.10, 1.11, 1.12.
+* Self signed certificates are created during deployment. User cannot create certificates.
+&lt;/description_markdown&gt;&lt;display_price_property&gt;non_zero&lt;/display_price_property&gt;&lt;entitlement_script/&gt;&lt;flow_designer_flow/&gt;&lt;group/&gt;&lt;hide_sp&gt;false&lt;/hide_sp&gt;&lt;icon/&gt;&lt;ignore_price&gt;true&lt;/ignore_price&gt;&lt;image/&gt;&lt;last_update_time&gt;1654768373661274&lt;/last_update_time&gt;&lt;location/&gt;&lt;mandatory_attachment&gt;false&lt;/mandatory_attachment&gt;&lt;meta/&gt;&lt;mobile_hide_price&gt;false&lt;/mobile_hide_price&gt;&lt;mobile_picture/&gt;&lt;mobile_picture_type&gt;use_desktop_picture&lt;/mobile_picture_type&gt;&lt;model/&gt;&lt;name&gt;Kubernetes&lt;/name&gt;&lt;no_attachment_v2&gt;false&lt;/no_attachment_v2&gt;&lt;no_cart&gt;true&lt;/no_cart&gt;&lt;no_cart_v2&gt;false&lt;/no_cart_v2&gt;&lt;no_delivery_time_v2&gt;false&lt;/no_delivery_time_v2&gt;&lt;no_order&gt;false&lt;/no_order&gt;&lt;no_order_now&gt;false&lt;/no_order_now&gt;&lt;no_proceed_checkout&gt;true&lt;/no_proceed_checkout&gt;&lt;no_quantity&gt;true&lt;/no_quantity&gt;&lt;no_quantity_v2&gt;false&lt;/no_quantity_v2&gt;&lt;no_search&gt;false&lt;/no_search&gt;&lt;no_wishlist_v2&gt;false&lt;/no_wishlist_v2&gt;&lt;omit_price&gt;true&lt;/omit_price&gt;&lt;order&gt;0&lt;/order&gt;&lt;ordered_item_link/&gt;&lt;owner display_value="System Administrator"&gt;6816f79cc0a8016401c5a33be04be441&lt;/owner&gt;&lt;owner_name&gt;admin&lt;/owner_name&gt;&lt;owner_uuid/&gt;&lt;picture/&gt;&lt;preview&gt;JavaScript: popupOpenStandard("com.glideapp.servicecatalog_cat_item_view.do?v=1&amp;amp;sysparm_id=bb99bd1e97d0111027f8fbc71153aff1&amp;amp;sysparm_preview=true", "summary");&lt;/preview&gt;&lt;price&gt;0&lt;/price&gt;&lt;published_ref/&gt;&lt;recurring_frequency/&gt;&lt;request_method/&gt;&lt;roles/&gt;&lt;sc_catalogs/&gt;&lt;sc_ic_item_staging/&gt;&lt;sc_ic_version/&gt;&lt;sc_template/&gt;&lt;short_description&gt;Kubernetes&lt;/short_description&gt;&lt;show_variable_help_on_load&gt;false&lt;/show_variable_help_on_load&gt;&lt;spec_version&gt;2&lt;/spec_version&gt;&lt;start_closed&gt;false&lt;/start_closed&gt;&lt;state&gt;active&lt;/state&gt;&lt;support_status&gt;SUPPORTED&lt;/support_status&gt;&lt;sys_class_name&gt;x_nuta2_nutanix_ca_nutanix_marketplaceitems&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-06-27 10:47:37&lt;/sys_created_on&gt;&lt;sys_id&gt;bb99bd1e97d0111027f8fbc71153aff1&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Kubernetes&lt;/sys_name&gt;&lt;sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Nutanix Calm"&gt;3b7631654f452b001200e5201310c76b&lt;/sys_scope&gt;&lt;sys_update_name&gt;x_nuta2_nutanix_ca_nutanix_marketplaceitems_bb99bd1e97d0111027f8fbc71153aff1&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-06-28 08:22:24&lt;/sys_updated_on&gt;&lt;template/&gt;&lt;template_manager_roles/&gt;&lt;template_type&gt;Multi Vm/Pod&lt;/template_type&gt;&lt;type&gt;item&lt;/type&gt;&lt;use_sc_layout&gt;false&lt;/use_sc_layout&gt;&lt;uuid&gt;d19f5041-c0e1-4cab-983c-8768f04fea0d&lt;/uuid&gt;&lt;vendor/&gt;&lt;version&gt;5.1.0&lt;/version&gt;&lt;visible_bundle&gt;true&lt;/visible_bundle&gt;&lt;visible_guide&gt;true&lt;/visible_guide&gt;&lt;visible_standalone&gt;true&lt;/visible_standalone&gt;&lt;workflow display_value="Nutanix - Blueprint Launch to CALM"&gt;30421c83375d2300d27b8cf6c3990e01&lt;/workflow&gt;&lt;/x_nuta2_nutanix_ca_nutanix_marketplaceitems&gt;&lt;sys_translated_text action="delete_multiple" query="documentkey=bb99bd1e97d0111027f8fbc71153aff1"/&gt;&lt;fx_price action="delete_multiple" query="id=bb99bd1e97d0111027f8fbc71153aff1"/&gt;&lt;fx_price action="INSERT_OR_UPDATE"&gt;&lt;amount&gt;0&lt;/amount&gt;&lt;currency display_value="USD"&gt;USD&lt;/currency&gt;&lt;field&gt;price&lt;/field&gt;&lt;id&gt;bb99bd1e97d0111027f8fbc71153aff1&lt;/id&gt;&lt;parent/&gt;&lt;reference_amount&gt;0&lt;/reference_amount&gt;&lt;reference_currency display_value="USD"&gt;USD&lt;/reference_currency&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2022-06-27 10:47:37&lt;/sys_created_on&gt;&lt;sys_id&gt;bf99bd1e97d0111027f8fbc71153aff2&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2022-06-27 10:47:37&lt;/sys_updated_on&gt;&lt;table&gt;x_nuta2_nutanix_ca_nutanix_marketplaceitems&lt;/table&gt;&lt;type&gt;calculated&lt;/type&gt;&lt;/fx_price&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1744807358</payload_hash>
+        <record_name>Kubernetes</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:22:24</sys_created_on>
+        <sys_id>12f1a6aa97d0111027f8fbc71153af7e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a9678c060000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:22:24</sys_updated_on>
+        <type>Marketplace Items</type>
+        <update_guid>5af1a6aa1bd011104b3da4fcd741f87d</update_guid>
+        <update_guid_history>5af1a6aa1bd011104b3da4fcd741f87d:-1744807358,e1a9f55e8dd01110dc615caf7cbe660e:2028437770,7f99bd1ebfd011103e8eef6dbb0ee1fa:561114873</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Kubernetes">dd022eaa97d0111027f8fbc71153afb0</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:22:36</sys_created_on>
+        <sys_db_object display_value="" name="x_nuta2_nutanix_ca_nutanix_marketplaceitems">x_nuta2_nutanix_ca_nutanix_marketplaceitems</sys_db_object>
+        <sys_id>0789c6a6a190412f80afb20e992a72e1</sys_id>
+        <sys_metadata>bb99bd1e97d0111027f8fbc71153aff1</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Kubernetes</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>x_nuta2_nutanix_ca_nutanix_marketplaceitems_bb99bd1e97d0111027f8fbc71153aff1</sys_update_name>
+        <sys_update_version display_value="x_nuta2_nutanix_ca_nutanix_marketplaceitems_bb99bd1e97d0111027f8fbc71153aff1">12f1a6aa97d0111027f8fbc71153af7e</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:22:36</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

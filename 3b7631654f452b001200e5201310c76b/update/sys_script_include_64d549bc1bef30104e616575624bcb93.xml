@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_nuta2_nutanix_ca.catalog_item_read_acl_script</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>catalog_item_read_acl_script</name>
+        <script><![CDATA[var catalog_item_read_acl_script = Class.create();
+catalog_item_read_acl_script.prototype = {
+    initialize: function() {},
+    showCatalogItem: function() {
+
+        if (gs.hasRole('x_nuta2_nutanix_ca.calm_admin'))
+            return true;
+
+        var gr = new GlideRecord('sc_cat_item_user_criteria_mtom');
+        var tmp = '';
+        var gr2 = new GlideRecord('sys_user_grmember');
+        gr2.addQuery('user', gs.getUserID());
+        gr2.addQuery('group.active', 'true');
+        gr2.query();
+        if (gr2.hasNext())
+            tmp = gr2.group;
+        while (gr2.next())
+            tmp = tmp + ',' + gr2.group;
+
+        gr.addEncodedQuery('sc_cat_item=' + current.sys_id + '^user_criteria.userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^ORuser_criteria.groupIN' + tmp);
+        gr.query();
+
+        if (gr.hasNext())
+            return true;
+
+        return false;
+    },
+    type: 'catalog_item_read_acl_script'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-10-29 12:16:32</sys_created_on>
+        <sys_id>64d549bc1bef30104e616575624bcb93</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>catalog_item_read_acl_script</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sys_script_include_64d549bc1bef30104e616575624bcb93</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-10-29 12:16:32</sys_updated_on>
+    </sys_script_include>
+</record_update>

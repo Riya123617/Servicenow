@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Solr">8d33a2629714111027f8fbc71153af27</sc_cat_item>
+        <sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:46</sys_created_on>
+        <sys_id>0133a2629714111027f8fbc71153af2a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Solr</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_0133a2629714111027f8fbc71153af2a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:46</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_catalog_0133a2629714111027f8fbc71153af2a</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Solr">8d33a2629714111027f8fbc71153af27</sc_cat_item><sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:27:46</sys_created_on><sys_id>0133a2629714111027f8fbc71153af2a</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Nutanix Calm.Solr</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_catalog_0133a2629714111027f8fbc71153af2a</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:27:46</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>-486325846</payload_hash>
+        <record_name>Nutanix Calm.Solr</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:46</sys_created_on>
+        <sys_id>c533a2629714111027f8fbc71153af2c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a96c770f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:46</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>cd33a2621b141110f73507d0b732872b</update_guid>
+        <update_guid_history>cd33a2621b141110f73507d0b732872b:-486325846</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Nutanix Calm.Solr">28b3f5e49728951027f8fbc71153afe6</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:08:04</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>0e4e0a789ac349a3a8e77ec7997ae3c1</sys_id>
+        <sys_metadata>0133a2629714111027f8fbc71153af2a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Solr</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent display_value="">8d33a2629714111027f8fbc71153af27</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_0133a2629714111027f8fbc71153af2a</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_0133a2629714111027f8fbc71153af2a">c533a2629714111027f8fbc71153af2c</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:08:04</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category">
+    <sc_cat_item_category action="DELETE">
+        <sc_cat_item display_value="ServiceNow_Runbook12">330366ee97d0111027f8fbc71153af1e</sc_cat_item>
+        <sc_category display_value="Runbook">48b233101ba4b4104debece4604bcb7f</sc_category>
+        <sys_class_name>sc_cat_item_category</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:08</sys_created_on>
+        <sys_id>730366ee97d0111027f8fbc71153af61</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Runbook.ServiceNow_Runbook12</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_category_730366ee97d0111027f8fbc71153af61</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:08</sys_updated_on>
+    </sc_cat_item_category>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_category_730366ee97d0111027f8fbc71153af61</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_category"><sc_cat_item_category action="INSERT_OR_UPDATE"><sc_cat_item display_value="ServiceNow_Runbook12">330366ee97d0111027f8fbc71153af1e</sc_cat_item><sc_category display_value="Runbook">48b233101ba4b4104debece4604bcb7f</sc_category><sys_class_name>sc_cat_item_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-28 08:27:08</sys_created_on><sys_id>730366ee97d0111027f8fbc71153af61</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Runbook.ServiceNow_Runbook12</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_category_730366ee97d0111027f8fbc71153af61</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-28 08:27:08</sys_updated_on></sc_cat_item_category></record_update>]]></payload>
+        <payload_hash>-622914413</payload_hash>
+        <record_name>Runbook.ServiceNow_Runbook12</record_name>
+        <reverted_from/>
+        <source>1c8f795a9714111027f8fbc71153af19</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:27:08</sys_created_on>
+        <sys_id>3f0366ee97d0111027f8fbc71153af63</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a96be2590000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:27:08</sys_updated_on>
+        <type>Catalog Item Category</type>
+        <update_guid>370366eeacd01110693e9e4076fa8263</update_guid>
+        <update_guid_history>370366eeacd01110693e9e4076fa8263:-622914413</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Runbook.ServiceNow_Runbook12">4d34712c9728951027f8fbc71153afb1</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-07-04 10:10:17</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_category">sc_cat_item_category</sys_db_object>
+        <sys_id>0e97c51dcca547528785c0f14825d2e4</sys_id>
+        <sys_metadata>730366ee97d0111027f8fbc71153af61</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Runbook.ServiceNow_Runbook12</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_category_730366ee97d0111027f8fbc71153af61</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_category_730366ee97d0111027f8fbc71153af61">3f0366ee97d0111027f8fbc71153af63</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-07-04 10:10:17</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

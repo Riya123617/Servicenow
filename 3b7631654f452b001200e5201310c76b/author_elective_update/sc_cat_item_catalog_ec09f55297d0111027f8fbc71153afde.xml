@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog">
+    <sc_cat_item_catalog action="DELETE">
+        <sc_cat_item display_value="Palo Alto Networks">ac09f15297d0111027f8fbc71153af89</sc_cat_item>
+        <sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog>
+        <sys_class_name>sc_cat_item_catalog</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:44:56</sys_created_on>
+        <sys_id>ec09f55297d0111027f8fbc71153afde</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Palo Alto Networks</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_update_name>sc_cat_item_catalog_ec09f55297d0111027f8fbc71153afde</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:44:56</sys_updated_on>
+    </sc_cat_item_catalog>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</application>
+        <file_path/>
+        <instance_id>454d4c19db2670104d2bac44d49619d2</instance_id>
+        <instance_name>dev119363</instance_name>
+        <name>sc_cat_item_catalog_ec09f55297d0111027f8fbc71153afde</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sc_cat_item_catalog"><sc_cat_item_catalog action="INSERT_OR_UPDATE"><sc_cat_item display_value="Palo Alto Networks">ac09f15297d0111027f8fbc71153af89</sc_cat_item><sc_catalog display_value="Nutanix Calm">240abede37112300fdfc097973990e24</sc_catalog><sys_class_name>sc_cat_item_catalog</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-06-27 10:44:56</sys_created_on><sys_id>ec09f55297d0111027f8fbc71153afde</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Nutanix Calm.Palo Alto Networks</sys_name><sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package><sys_policy/><sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope><sys_update_name>sc_cat_item_catalog_ec09f55297d0111027f8fbc71153afde</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2022-06-27 10:44:56</sys_updated_on></sc_cat_item_catalog></record_update>]]></payload>
+        <payload_hash>1529060395</payload_hash>
+        <record_name>Nutanix Calm.Palo Alto Networks</record_name>
+        <reverted_from/>
+        <source>9197755a9790111027f8fbc71153af96</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-27 10:44:56</sys_created_on>
+        <sys_id>a409f55297d0111027f8fbc71153afe1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>181a4c3af2f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-27 10:44:56</sys_updated_on>
+        <type>Catalog Items Catalog</type>
+        <update_guid>ac09f5527bd011103eb192bfe27b2ee0</update_guid>
+        <update_guid_history>ac09f5527bd011103eb192bfe27b2ee0:1529060395</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Nutanix Calm.Palo Alto Networks">dee1ae6a97d0111027f8fbc71153af45</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-06-28 08:22:07</sys_created_on>
+        <sys_db_object display_value="" name="sc_cat_item_catalog">sc_cat_item_catalog</sys_db_object>
+        <sys_id>e2f19445cc134f90976d0921aacea100</sys_id>
+        <sys_metadata>ec09f55297d0111027f8fbc71153afde</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Nutanix Calm.Palo Alto Networks</sys_name>
+        <sys_package display_value="Nutanix Calm" source="x_nuta2_nutanix_ca">3b7631654f452b001200e5201310c76b</sys_package>
+        <sys_parent display_value="">ac09f15297d0111027f8fbc71153af89</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Nutanix Calm">3b7631654f452b001200e5201310c76b</sys_scope>
+        <sys_scope_delete display_value="">95ea2bff1894484eaf6ed890fbb98d24</sys_scope_delete>
+        <sys_update_name>sc_cat_item_catalog_ec09f55297d0111027f8fbc71153afde</sys_update_name>
+        <sys_update_version display_value="sc_cat_item_catalog_ec09f55297d0111027f8fbc71153afde">a409f55297d0111027f8fbc71153afe1</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-06-28 08:22:07</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
